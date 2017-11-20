@@ -5,7 +5,7 @@
     * [c基础](./c基础.md#c基础)
         * [数据类型说明](./c基础.md#数据类型说明)
         * [volatile](./c基础.md#volatile)
-        * [函数指针](./c基础.md#函数指针)
+        * [指针](./c基础.md#函数指针)
         * [const](./c基础.md#const)
         * [main函数的返回值](./c基础.md#main函数的返回值)
         * [浮点数存储方式](./c基础.md#浮点数存储方式)
@@ -22,7 +22,7 @@
         * [快速排序](./c基础.md#快速排序)
 * [linux知识点](./linux.md)
     * [关键命令说明](./linux.md#关键命令说明)
-        * [系统`关机命令](./linux.md#系统关机命令)
+        * [系统关机命令](./linux.md#系统关机命令)
         * [linux查看文本的指令](./linux.md#linux查看文本的指令)
         * [mount](./linux.md#mount指令)
         * [dmesg](./linux.md#dmesg)
@@ -44,7 +44,7 @@
         * [fork函数](./linux.md#fork函数)
         * [僵尸进程](./linux.md#僵尸进程)
         * [常见文件说明](./linux.md#常见文件说明)
-        * [/proc目录说明](./linux.md#/proc目录说明)
+        * [proc目录说明](./linux.md#proc目录说明)
         * [fopen参数说明](./linux.md#fopen参数说明)
     * [linux驱动开发知识点](./linux.md#linux驱动开发知识点)
     * [makefile](./linux.md#makefile)
@@ -64,7 +64,7 @@
 4. ARM cortex-m0 m3 m4 A8等芯片架构
 5. 操作系统（内存管理 进程管理 实时性要求 任务间通讯等）
 6. tcpip协议栈（tcpip模型 分层结构 ip tcp udp icmp igmp tftp http ftp等协议）
-7. linux 多线程 多进程通讯 
+7. linux 多线程 多进程通讯 linux系统任务调度和中断
 8. bash命令 shell makefile python github go javascript
 
 linux 启动过程

@@ -292,7 +292,7 @@ zsh     8465 xiaxiaowen  cwd    DIR   8,17     8192    5 /media/xiaxiaowen/机�
 * [fork函数](#fork函数)
 * [僵尸进程](#僵尸进程)
 * [常见文件说明](#常见文件说明)
-* [/proc目录说明](#/proc目录说明)
+* [proc目录说明](#proc目录说明)
 * [fopen参数说明](#fopen参数说明)
 
 ### linux进程间通讯方式
@@ -1368,7 +1368,7 @@ ps -A -ostat,pid,cmd |grep -iE '^z'
 /var/spool/clientmqueue
 /proc/interrupts
 /etc/fstab        Linux内核引导时,从文件/etc/fstab 中读取要加载的文件系统.
-### /proc目录说明
+### proc目录说明
 ```sh
 proc文件系统是一个伪文件系统，它只存在内存当中。
 /proc/buddyinfo   每个内存区中的每个order有多少块可用，和内存碎片问题有关
