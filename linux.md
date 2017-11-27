@@ -1461,6 +1461,33 @@ proc文件系统是一个伪文件系统，它只存在内存当中。
 ### linux启动过程
 系统上电--->bootrom--->uboot--->kernel加载--->init--->应用程序
 ## makefile
+### makefile的规则
+```makefile
+target xxx : prerequisites aaa
+	[command]
+	...
+	...
+```
+> prerequisites中如果有一个以上的文件比target文件要新的话，command所定义的命令就会被执行
+
+### gcc工具链
+|命令|描述|
+|---|----|
+|Binutils |由汇编器（as）产生的目标代码（*.o）是不能直接在computer上运行的，它必须经过链接器（ld）的处理才能生成可执行代码。|
+|add2line |将地址转换成文件名或行号对，以便调试程序|
+|ar       |从文件中创建、修改、扩展文件|
+|gasp     |汇编宏处理器|
+|nm       |从目标文件列举所有变量|
+|objcopy  |使用GNU BSD库把目标文件的内容从一种文件格式复制到另一种格式的目标文件中。|
+|objdump  |显示目标文件信息可发编译二进制文件，也可以对对象文件进行反汇编，并查看机器代码。|
+|readelf  |显示elf文件信息|
+|ranlib   |生成索引以加快对归档文件的访问，并将其保存到这个归档文件中。|
+|size     |列出目标模块或文件的代码尺寸。|
+|strings  |打印可打印的目标代码符号（至少4个字符）|
+|strip    |放弃所有符号连接，一般应用程序最终都要strip处理|
+|C++filt  |链接器ld通过该命令可过滤C++符号和JAVA符号，防止重载函数冲突。|
+|gprof    |显示程序调用段的各种数据|
+
 ### 简单的makefile
 ```makefile
 CROSS_COMPILE=/opt/4.5.1/bin/arm-linux-
