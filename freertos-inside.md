@@ -113,6 +113,27 @@ void vTaskStartScheduler( void )
 }
 ```
 
+## 队列
+### 创建队列
+```c
+xQueueHandle xQueueCreate( unsigned portBASE_TYPE uxQueueLength,unsigned portBASE_TYPE uxItemSize );
+```
+
+### 写入到队列首
+```c
+portBASE_TYPE xQueueSendToFront( xQueueHandle xQueue,
+                                  const void * pvItemToQueue,
+                                  portTickType xTicksToWait );
+```
+### 写入到队列尾
+```c
+portBASE_TYPE xQueueSendToBack( xQueueHandle xQueue,
+                                const void * pvItemToQueue,
+                                portTickType xTicksToWait );
+```
+
+### 发送队列
+
 * [协程--croutine.c](#协程--croutine.c)
 
 ## 系统运行过程
