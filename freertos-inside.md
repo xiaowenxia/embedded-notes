@@ -147,3 +147,28 @@ portBASE_TYPE xQueueSendToBack( xQueueHandle xQueue,
 ## 任务管理
 
 ## 内存管理
+
+## 优先级反转
+有优先级为A、B和C三个任务，优先级A>B>C，任务A，B处于挂起状态，等待某一事件发生，任务C正在运行，此时任务C开始使用某一共享资源S。在使用中，任务A等待事件到来，任务A转为就绪态，因为它比任务C优先级高，所以立即执行。当任务A要使用共享资源S时，由于其正在被任务C使用，因此任务A被挂起，任务C开始运行。如果此时任务B等待事件到来，则任务B转为就绪态。由于任务B优先级比任务C高，因此任务B开始运行，直到其运行完毕，任务C才开始运行。直到任务C释放共享资源S后，任务A才得以执行。在这种情况下，优先级发生了翻转，任务B先于任务A运行。
+
+## 优先级继承
+> freertos 使用优先级继承来解决优先级反转问题
+当任务A 申请共享资源S 时， 如果S正在被任务C 使用，通过比较任务C 与自身的优先级，如发现任务C 的优先级小于自身的优先级， 则将任务C的优先级提升到自身的优先级， 任务C 释放资源S 后，再恢复任务C 的原优先级。
+
+## freertos HOOK函数
+* vApplicationIdleHook()
+    idle的hook函数
+* vApplicationTickHook()
+    系统tick的hook函数
+* vApplicationMallocFailedHook()
+    malloc失败的hook函数
+* vApplicationStackOverflowHook()
+    栈溢出的hook函数
+* vApplicationDaemonTaskStartupHook()
+    vTaskStartScheduler()函数第一次执行的时候调用。
+
+## freertos栈溢出检测的2种方法
+* 第一种
+    每次调度都检查一下任务的当前栈有没有超过任务的栈区域。
+* 第二种
+    每个任务栈最下面会有16个字节是特定的内容，每次调度的时候如果发现这16个字节不正常了，就说明有谁踩到了这个栈。
