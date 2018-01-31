@@ -222,7 +222,7 @@ IP地址=网络地址＋主机地址
 ## MQTT协议
 https://mcxiaoke.gitbooks.io/mqtt-cn/content/mqtt/04-OperationalBehavior.html
 ### MQTT有3种网络连接方式
-tcp TLS websocket
+tcp（1883端口） TLS（8883端口） websocket
 ### 主题过滤器 Topic Filter
 订阅中包含的一个表达式，用于表示相关的一个或多个主题。主题过滤器可以使用通配符。
 ### 控制报文 MQTT Control Packet
@@ -443,14 +443,77 @@ Error 501 - 未实现
 HTTP 1.0 使用短连接
 HTTP 1.1版本默认使用长连接
 
+### HTTP 请求消息格式
+请求行
+通用信息头|请求头|实体头
+CRLF(回车换行)
+
+比如：
+
+```c
+GET /hello.htm HTTP/1.1
+Accept: */*
+Accept-Language: zh-cn
+Accept-Encoding: gzip, deflate
+If-Modified-Since: Wed, 17 Oct 2007 02:15:55 GMT
+If-None-Match: W/"158-1192587355000"
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)
+Host: 192.168.2.162:8080
+Connection: Keep-Alive
+```
+### HTTP 响应消息格式
+状态行
+
+通用信息头|响应头|实体头
+
+CRLF
+
+```c
+HTTP/1.1 200 OK
+ETag: W/"158-1192590101000"
+Last-Modified: Wed, 17 Oct 2007 03:01:41 GMT
+Content-Type: text/html
+Content-Length: 158
+Date: Wed, 17 Oct 2007 03:01:59 GMT
+Server: Apache-Coyote/1.1
+```
+
+### HTTP post发送文件
+使用post方法发送文件内容
+
+### HTTP用户名密码机制
+使用cookie的方式：
+登录成功后用javascript调用cookie的相关接口，创建一个浏览器上的全局变量，变量名和值由你自己约定，然后每个页面载入时检查cookie是否存在，其值是否为你默认的那个值，如果不是的话就跳转到登录页面。
 ### HTTPS的通信过程
 
 ![https通讯过程](res/https通讯过程.png)
 
-### HTTPS、SSH 公钥、秘钥、对称加密、非对称加密
-非对称加密：
+### HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法
+* 非对称加密：
     DES 秘钥长度为56bit
     AES 秘钥长度支持128 196 256
-非对称加密：
+* 非对称加密：
     DSA 用于数字签名和认证中。和RSA不同之处在于它不能用作加密和解密，也不能进行密钥交换，只用于签名,它比RSA要快很多，DSA只能与SHA-1一起使用，而RSA可以与任何摘要算法一起使用。DSA主要依赖于整数有限域离散对数难题。
+* HASH算法：
+    MD5 SHA1 SHA256
 > DSA 用于签名，而 RSA 可用于签名和加密。
+
+### 数字签名和数字证书
+
+#### 数字签名
+服务器把发送内容用hash算法生成摘要（就是校验码），然后用私钥加密这个摘要，就是数字签名。
+#### 数字证书
+证书中心把服务器的公钥和一些其他的必要信息通过证书中心的私钥加密生成一个证书，服务器每次把数字签名，内容，数字证书一起发送给客户端，客户端用证书中心的公钥验证数字证书是不是可信任的就可以了。
+
+### websocket
+WebSocket协议支持客户端与远程主机之间进行全双工通信。
+
+### coap
+
+### nb-iot
+
+### freertos
+
+### alios-things
+
+### meos
