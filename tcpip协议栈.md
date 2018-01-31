@@ -507,8 +507,80 @@ Server: Apache-Coyote/1.1
 
 ### websocket
 WebSocket协议支持客户端与远程主机之间进行全双工通信。
+协议标识符是ws（如果加密，则为wss），服务器网址就是 URL,比如：
+```sh
+ws://example.com:80/some/path`
+```
+#### websocket握手协议
+* 浏览器请求
+```
+GET /webfin/websocket/ HTTP/1.1
+Host: localhost
+　　Upgrade: websocket
+Connection: Upgrade
+　　Sec-WebSocket-Key: xqBt3ImNzJbYqRINxEFlkg==
+　　Origin: http://服务器地址
+　　Sec-WebSocket-Version: 13
+```
 
+> WebSocket借用http请求进行握手，相比正常的http请求，多了一些内容。其中，
+`Upgrade: websocket`
+`Connection: Upgrade`
+表示希望将http协议升级到Websocket协议。
+`Sec-WebSocket-Key`是浏览器随机生成的base64 encode的值，用来询问服务器是否是支持WebSocket。
+
+* 服务器回应
+```
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: K7DJLdLooIwIG/MOpvWFB3y3FE8=
+```
+> 服务器返回
+`Upgrade: websocket`
+`Connection: Upgrade`
+告诉浏览器即将升级的是Websocket协议
+#### HTML5 Web Socket API
+* 创建对象
+```js
+var ws = new WebSocket(url,name);
+// url为WebSocket服务器的地址，name为发起握手的协议名称，为可选择项。
+```
+* 发送文本消息
+```js
+ws.send(msg);
+// msg为文本消息，对于其他类型的可以通过二进制形式发送。
+```
+* 接收消息
+```js
+ws.onmessage = (function(){...})();
+```
+* 错误处理
+```js
+ws.onerror = (function(){...})();
+```
+* 关闭连接
+```js
+ws.close();
+```
 ### coap
+
+HTTP 与 COAP协议都是通过4个请求方法（GET, PUT, POST, DELETE）对服务器端资源进行操作。 
+两者之间明显的区别在于HTTP是通过文本描述方式描述协议包内容，协议包里面会包含一些空格符，换行符等,协议包可读性很强。
+而COAP是通过定义二进制各位段功能来描述协议包内容。 因此COAP协议包大小更小，更紧凑。COAP协议最小的协议包只有4B。 协议包需要经过解析后才能知道里面具体内容
+
+#### coap 特点
+* 二进制通讯
+* 对云端设备资源操作都是通过请求与响应机制来完成，类似HTTP，设备端可通过4个请求方法（GET, PUT, POST, DELETE）对服务器端资源进行操作。
+* 协议包轻量级，最小长度仅为4B。
+* 支持可靠传输，数据重传，块传输。 确保数据可靠到达。
+* 支持IP多播, 即可以同时向多个设备发送请求
+* 非长连接通信，适用于低功耗物联网场景
+
+#### 协议结构
+> coap基于UDP之上
+
+UDP--->Messages--->request/response--->payload
 
 ### nb-iot
 
