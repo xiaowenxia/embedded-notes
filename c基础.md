@@ -669,3 +669,10 @@ unsigned int DJBHash(char* str, unsigned int len)
 }
 /* End Of DJB Hash Function */
 ```
+
+## javascript数据类型
+字符串 数字 布尔 对象 数组 undefined null
+
+> js只有一种数字类型
+> undefined：当声明的变量没有初始化的话，那这个变量的值就是undefined
+> null表示尚未存在的对象。
