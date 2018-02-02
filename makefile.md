@@ -1,5 +1,22 @@
 # 目录
 
+=   基本的赋值 会在makefile的最后才赋值
+:=  覆盖之前的值 会立即赋值
+?=  如果没有赋值过就赋值
++=  添加后面的值
+
+.PHONY : clean  伪目标
+make命令支持的文件名：  GNUmakefile makefile Makefile
+include     makefile包含
+-include    makefile包含，当include过程中出现错误，不报错继续执行
+MAKEFILES   make会自动include这个环境变量中的值
+
+VPATH       指定makefile文件搜寻路径
+vpath       make 关键词 设置文件搜寻路径
+vpath %.h ../headers    设置头文件搜索路径为../headers
+$(shell pwd)    makefile调用shell执行pwd命令
+
+
 ## Makefile内建函数
 
 ### 文本处理和分析函数
