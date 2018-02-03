@@ -486,6 +486,12 @@ Server: Apache-Coyote/1.1
 登录成功后用javascript调用cookie的相关接口，创建一个浏览器上的全局变量，变量名和值由你自己约定，然后每个页面载入时检查cookie是否存在，其值是否为你默认的那个值，如果不是的话就跳转到登录页面。
 ### HTTPS的通信过程
 
+```seq
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+```
+
 ![https通讯过程](res/https通讯过程.png)
 
 ### HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法
@@ -541,6 +547,18 @@ Sec-WebSocket-Accept: K7DJLdLooIwIG/MOpvWFB3y3FE8=
 `Connection: Upgrade`
 告诉浏览器即将升级的是Websocket协议
 #### HTML5 Web Socket API
+
+```flow
+st=>start: Start
+op=>operation: Your Operation
+cond=>condition: Yes or No?
+e=>end
+
+st->op->cond
+cond(yes)->e
+cond(no)->op
+```
+
 * 创建对象
 ```js
 var ws = new WebSocket(url,name);
