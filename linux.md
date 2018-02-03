@@ -1533,41 +1533,6 @@ target xxx : prerequisites aaa
 |C++filt  |链接器ld通过该命令可过滤C++符号和JAVA符号，防止重载函数冲突。|
 |gprof    |显示程序调用段的各种数据|
 
-### 简单的makefile
-```makefile
-CROSS_COMPILE=/opt/4.5.1/bin/arm-linux-
-
-CC=$(CROSS_COMPILE)gcc
-AS=$(CROSS_COMPILE)as
-LD=$(CROSS_COMPILE)ld
-
-CFLAGS=-g -Wall
-LIBS=-lpthread
-
-all:main
-
-main:main.o gsm_gprs.o socket.o telosb.o wifi.o 
-	$(CC) $(CFLAGS) $(LIBS) $^ -o $@
-
-main.o: main.c gsm_gprs.h option.h telosb.h
-	$(CC) $(CFLAGS) -c $<
-
-gsm_gprs.o:gsm_gprs.c gsm_gprs.h socket.h
-	$(CC) $(CFLAGS) -c $<
-
-socket.o:socket.c socket.h option.h
-	$(CC) $(CFLAGS) -c $<
-
-telosb.o: telosb.c telosb.h option.h
-	$(CC) $(CFLAGS) -c $<
-
-wifi.o: wifi.c wifi.h option.h
-	$(CC) $(CFLAGS) -c $<
-
-clean:
-	-rm main -f *\.o *\*~ *~
-```
-
 ### nm命令
 显示二进制目标文件的符号表
 ```sh

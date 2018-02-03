@@ -1,21 +1,76 @@
 # 目录
 
-=   基本的赋值 会在makefile的最后才赋值
-:=  覆盖之前的值 会立即赋值
-?=  如果没有赋值过就赋值
-+=  添加后面的值
+## 简单的makefile
+```makefile
+CROSS_COMPILE=/opt/4.5.1/bin/arm-linux-
 
-.PHONY : clean  伪目标
-make命令支持的文件名：  GNUmakefile makefile Makefile
-include     makefile包含
--include    makefile包含，当include过程中出现错误，不报错继续执行
-MAKEFILES   make会自动include这个环境变量中的值
+CC=$(CROSS_COMPILE)gcc
+AS=$(CROSS_COMPILE)as
+LD=$(CROSS_COMPILE)ld
 
-VPATH       指定makefile文件搜寻路径
-vpath       make 关键词 设置文件搜寻路径
-vpath %.h ../headers    设置头文件搜索路径为../headers
-$(shell pwd)    makefile调用shell执行pwd命令
+CFLAGS=-g -Wall
+LIBS=-lpthread
 
+all:main
+
+main:main.o gsm_gprs.o socket.o telosb.o wifi.o 
+	$(CC) $(CFLAGS) $(LIBS) $^ -o $@
+
+main.o: main.c gsm_gprs.h option.h telosb.h
+	$(CC) $(CFLAGS) -c $<
+
+gsm_gprs.o:gsm_gprs.c gsm_gprs.h socket.h
+	$(CC) $(CFLAGS) -c $<
+
+socket.o:socket.c socket.h option.h
+	$(CC) $(CFLAGS) -c $<
+
+telosb.o: telosb.c telosb.h option.h
+	$(CC) $(CFLAGS) -c $<
+
+wifi.o: wifi.c wifi.h option.h
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	-rm main -f *\.o *\*~ *~
+```
+
+## makefile赋值
+|赋值|说明|
+|:-:|-|
+|`=`|基本的赋值 会在makefile的最后才赋值|
+|`:=`|覆盖之前的值 会立即赋值|
+|`?=`|如果没有赋值过就赋值|
+|`+=`|添加后面的值|
+
+## .PHONY : clean
+    伪目标
+
+## make命令默认支持的文件名
+> make指令如果没有指定具体的makefile文件，就会自动寻找如下的makefile文件
+
+<table>
+    <tr>
+        <td>GNUmakefile</td>
+        <td>makefile</td>
+        <td>Makefile</td>
+    <tr>
+</table>
+
+## include
+    makefile包含
+
+## -include
+    makefile包含，当include过程中出现错误，不报错继续执行
+
+## MAKEFILES
+    make会自动include这个环境变量中的值
+
+## VPATH
+    指定makefile文件搜寻路径
+
+## vpath
+    make 关键词 设置文件搜寻路径
 
 ## Makefile内建函数
 
