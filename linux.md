@@ -1550,3 +1550,46 @@ target xxx : prerequisites aaa
 -d：执行重定位和报告任何丢失的对象；
 -r：执行数据对象和函数的重定位，并且报告任何丢失的对象和函数；
 ```
+
+### 交叉编译工具链说明
+
+#### gcc 交叉编译器
+> 将写好的C程序代码编译为ARM架构下的可执行文件.
+
+```sh
+gcc hello.c -o hello
+```
+#### ld 交叉链接器
+> 将多个编译后产生的过程文件连接为一个最终的可执行文件。
+
+```sh
+ld [options] 链接器脚本 -o 文件名.elf
+```
+#### readelf 交叉ELF文件查看器
+> 用来查看一个可执行文件的相关信息
+
+可以查看elf文件的运行架构，大小端等信息:
+```sh
+readelf -a 文件名.elf
+```
+显示程序需要的动态链接库:
+```sh
+readelf -d 文件名.elf
+```
+#### objdump 交叉反汇编器
+> 将一个可执行文件转换为汇编下的程序
+
+```sh
+-objdump -D -S elf文件名 >目标文件
+```
+
+#### objcopy 交叉转换器
+> 将elf格式文件转换成其他的格式
+
+```sh
+objcopy -O 目标文件格式 原ELF文件 目标文件
+```
+例子:
+```sh
+objcopy -O binary a.elf a.bin
+```

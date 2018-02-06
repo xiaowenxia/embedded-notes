@@ -209,8 +209,17 @@ all:
 ```
 The first output line would be ATH, since the `$P` would be expanded as a make variable, while the second output line would be the current value of your $PATH environment variable, since the value function avoided the expansion.
 
- 
+### realpath
+```makefile
+$(realpath ../../)
+```
+获取绝对路径
 
+### wildcard
+根据通配符获取列表
+```makefile
+src = $(wildcard *.c)
+```
 ### origin函数
 ```makefile
 $(origin variable)
