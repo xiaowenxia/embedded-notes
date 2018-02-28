@@ -12,7 +12,7 @@
     
     <title>
         
-            归档 | 
+            嵌入式笔记：git操作 | 
         
         xiaxiaowen的个人博客
     </title>
@@ -65,15 +65,18 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="归档 | xiaxiaowen的个人博客">
+    <meta property="og:title" content="嵌入式笔记：git操作 | xiaxiaowen的个人博客">
     <meta property="og:image" content="/embedded-notes/img/favicon.png" />
     <meta property="og:description" content="">
     
 
     
+        <meta property="article:published_time" content="2月 28, 2018" />
+        <meta property="article:modified_time" content="2月 28, 2018" />
+    
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="归档 | xiaxiaowen的个人博客">
+    <meta name="twitter:title" content="嵌入式笔记：git操作 | xiaxiaowen的个人博客">
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
     <meta name="twitter:card" content="summary_large_image" />
@@ -81,13 +84,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/archives/index.html" />
+        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/git/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "xiaxiaowen的个人博客",
+        "logo": "/embedded-notes/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xiaxiaowen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/embedded-notes/img/favicon.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "headline": "嵌入式笔记：git操作",
+    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/git/index.html",
+    "datePublished": "2月 28, 2018",
+    "dateModified": "2月 28, 2018",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://xiaowenxia.github.io/embedded-notes"
+    }
+}
+</script>
 
 
     
@@ -275,642 +308,247 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#说明"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">说明</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加文件"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">添加文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#删除文件"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">删除文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#提交改动到本地"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">提交改动到本地</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#上传改动到服务器"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">上传改动到服务器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#列出当前分支"><span class="post-toc-number">1.1.5.</span> <span class="post-toc-text">列出当前分支</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#列出所有分支，包括远程分支"><span class="post-toc-number">1.1.6.</span> <span class="post-toc-text">列出所有分支，包括远程分支</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从已有的分支创建新的分支-如从master分支-创建一个dev分支"><span class="post-toc-number">1.1.7.</span> <span class="post-toc-text">从已有的分支创建新的分支(如从master分支),创建一个dev分支</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从服务器拉取分支到本地分支"><span class="post-toc-number">1.1.8.</span> <span class="post-toc-text">从服务器拉取分支到本地分支</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#上传本地分支到远程分支"><span class="post-toc-number">1.1.9.</span> <span class="post-toc-text">上传本地分支到远程分支</span></a></li></ol></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/shell/">嵌入式笔记：shell脚本</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：shell脚本
-...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/shell/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/git/">嵌入式笔记：git操作</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：git操作
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/git/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/makefile/">嵌入式笔记：Makefile学习</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：Makefile学习
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/makefile/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/uboot/">嵌入式笔记：uboot学习</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：uboot学习
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/uboot/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/linux/">嵌入式笔记：linux软件开发</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：linux软件开发
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/linux/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/tcpip协议栈/">嵌入式笔记：tcpip协议栈</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：tcpip协议栈
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/tcpip协议栈/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/gpu/">嵌入式笔记：gpu知识点</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：gpu知识点
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/gpu/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/freertos-inside/">嵌入式笔记：freertos RTOS</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：freertos RTOS
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/freertos-inside/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/c基础/">嵌入式笔记：C基础</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：C基础
-...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/c基础/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/driver/">嵌入式笔记：linux驱动</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：linux驱动
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/driver/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <span class="page-number current">1</span><a class="page-number" href="/embedded-notes/archives/page/2/">2</a><a class="extend next" rel="next" href="/embedded-notes/archives/page/2/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
-        </nav>
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                嵌入式笔记：git操作
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xiaxiaowen</strong>
+        <span>2月 28, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：git操作&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/git/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：git操作&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/git/index.html&via=xiaxiaowen" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/git/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/git/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：git操作&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/git/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>嵌入式笔记：git操作</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>git操作笔记</p>
+<h3 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm .</span><br></pre></td></tr></table></figure>
+<h3 id="提交改动到本地"><a href="#提交改动到本地" class="headerlink" title="提交改动到本地"></a>提交改动到本地</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"first commit"</span></span><br></pre></td></tr></table></figure>
+<h3 id="上传改动到服务器"><a href="#上传改动到服务器" class="headerlink" title="上传改动到服务器"></a>上传改动到服务器</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
+<h3 id="列出当前分支"><a href="#列出当前分支" class="headerlink" title="列出当前分支"></a>列出当前分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<h3 id="列出所有分支，包括远程分支"><a href="#列出所有分支，包括远程分支" class="headerlink" title="列出所有分支，包括远程分支"></a>列出所有分支，包括远程分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
+<h3 id="从已有的分支创建新的分支-如从master分支-创建一个dev分支"><a href="#从已有的分支创建新的分支-如从master分支-创建一个dev分支" class="headerlink" title="从已有的分支创建新的分支(如从master分支),创建一个dev分支"></a>从已有的分支创建新的分支(如从master分支),创建一个dev分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
+<h3 id="从服务器拉取分支到本地分支"><a href="#从服务器拉取分支到本地分支" class="headerlink" title="从服务器拉取分支到本地分支"></a>从服务器拉取分支到本地分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin gh-pages:gh-pages</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要本地没有gh-pages分支，否则会提示已拒绝</p>
+</blockquote>
+<h3 id="上传本地分支到远程分支"><a href="#上传本地分支到远程分支" class="headerlink" title="上传本地分支到远程分支"></a>上传本地分支到远程分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch --<span class="built_in">set</span>-upstream-to=gh-pages</span><br><span class="line">git push origin gh-pages</span><br></pre></td></tr></table></figure>
+
+    
+
     
 </div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/shell/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/makefile/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     

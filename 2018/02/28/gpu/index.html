@@ -12,7 +12,7 @@
     
     <title>
         
-            归档 | 
+            嵌入式笔记：gpu知识点 | 
         
         xiaxiaowen的个人博客
     </title>
@@ -65,15 +65,18 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="归档 | xiaxiaowen的个人博客">
+    <meta property="og:title" content="嵌入式笔记：gpu知识点 | xiaxiaowen的个人博客">
     <meta property="og:image" content="/embedded-notes/img/favicon.png" />
     <meta property="og:description" content="">
     
 
     
+        <meta property="article:published_time" content="2月 28, 2018" />
+        <meta property="article:modified_time" content="2月 28, 2018" />
+    
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="归档 | xiaxiaowen的个人博客">
+    <meta name="twitter:title" content="嵌入式笔记：gpu知识点 | xiaxiaowen的个人博客">
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
     <meta name="twitter:card" content="summary_large_image" />
@@ -81,13 +84,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/archives/index.html" />
+        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/gpu/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "xiaxiaowen的个人博客",
+        "logo": "/embedded-notes/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xiaxiaowen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/embedded-notes/img/favicon.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "headline": "嵌入式笔记：gpu知识点",
+    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/gpu/index.html",
+    "datePublished": "2月 28, 2018",
+    "dateModified": "2月 28, 2018",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://xiaowenxia.github.io/embedded-notes"
+    }
+}
+</script>
 
 
     
@@ -275,642 +308,415 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vivante图芯技术有限公司"><span class="post-toc-number">1.</span> <span class="post-toc-text">vivante图芯技术有限公司</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#硬件抽象层"><span class="post-toc-number">2.</span> <span class="post-toc-text">硬件抽象层</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Alpha-Blending"><span class="post-toc-number">3.</span> <span class="post-toc-text">Alpha Blending</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android-SurfaceFlinger"><span class="post-toc-number">4.</span> <span class="post-toc-text">android SurfaceFlinger</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android专有驱动"><span class="post-toc-number">5.</span> <span class="post-toc-text">android专有驱动</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android-上的设备驱动"><span class="post-toc-number">6.</span> <span class="post-toc-text">android 上的设备驱动</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android-图形名词"><span class="post-toc-number">7.</span> <span class="post-toc-text">android 图形名词</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用GPU硬件加速需要做的工作"><span class="post-toc-number">8.</span> <span class="post-toc-text">使用GPU硬件加速需要做的工作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#framebuffer"><span class="post-toc-number">9.</span> <span class="post-toc-text">framebuffer</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/shell/">嵌入式笔记：shell脚本</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：shell脚本
-...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/shell/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/git/">嵌入式笔记：git操作</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：git操作
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/git/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/makefile/">嵌入式笔记：Makefile学习</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：Makefile学习
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/makefile/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/uboot/">嵌入式笔记：uboot学习</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：uboot学习
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/uboot/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/linux/">嵌入式笔记：linux软件开发</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：linux软件开发
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/linux/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/tcpip协议栈/">嵌入式笔记：tcpip协议栈</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：tcpip协议栈
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/tcpip协议栈/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/gpu/">嵌入式笔记：gpu知识点</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：gpu知识点
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/gpu/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/freertos-inside/">嵌入式笔记：freertos RTOS</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：freertos RTOS
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/freertos-inside/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/c基础/">嵌入式笔记：C基础</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：C基础
-...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/c基础/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/driver/">嵌入式笔记：linux驱动</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：linux驱动
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/driver/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <span class="page-number current">1</span><a class="page-number" href="/embedded-notes/archives/page/2/">2</a><a class="extend next" rel="next" href="/embedded-notes/archives/page/2/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
-        </nav>
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                嵌入式笔记：gpu知识点
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xiaxiaowen</strong>
+        <span>2月 28, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：gpu知识点&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/gpu/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：gpu知识点&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/gpu/index.html&via=xiaxiaowen" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/gpu/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/gpu/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：gpu知识点&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/gpu/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>嵌入式笔记：gpu知识点</p>
+<h2 id="vivante图芯技术有限公司"><a href="#vivante图芯技术有限公司" class="headerlink" title="vivante图芯技术有限公司"></a>vivante图芯技术有限公司</h2><h2 id="硬件抽象层"><a href="#硬件抽象层" class="headerlink" title="硬件抽象层"></a>硬件抽象层</h2><pre><code>Hardware Abstraction Layer (HAL)
+</code></pre><h2 id="Alpha-Blending"><a href="#Alpha-Blending" class="headerlink" title="Alpha Blending"></a>Alpha Blending</h2><pre><code>是按照“Alpha”混合向量的值来混合源像素和目标像素的一种图像处理技术。
+</code></pre><h2 id="android-SurfaceFlinger"><a href="#android-SurfaceFlinger" class="headerlink" title="android SurfaceFlinger"></a>android SurfaceFlinger</h2><pre><code>SurfaceFlinger服务负责绘制Android应用程序的UI
+</code></pre><h2 id="android专有驱动"><a href="#android专有驱动" class="headerlink" title="android专有驱动"></a>android专有驱动</h2><table>
+<thead>
+<tr>
+<th>驱动</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Android Ashmem</code></td>
+<td>匿名共享内存； 为用户空间程序提供分配内存的机制</td>
+</tr>
+<tr>
+<td><code>Android Logger</code></td>
+<td>轻量级的LOG（日志）驱动</td>
+</tr>
+<tr>
+<td><code>Android Binder</code></td>
+<td>基于 OpenBinder 框架的一个驱动</td>
+</tr>
+<tr>
+<td><code>Android Power Management</code></td>
+<td>电源管理模块</td>
+</tr>
+<tr>
+<td><code>Low Memory Killer</code></td>
+<td>低内存管理器</td>
+</tr>
+<tr>
+<td><code>Android PMEM</code></td>
+<td>物理内存驱动</td>
+</tr>
+<tr>
+<td><code>USB Gadget</code></td>
+<td>USB 驱动（基于 gaeget 框架）</td>
+</tr>
+<tr>
+<td><code>Ram Console</code></td>
+<td>用于调试写入日志信息的设备</td>
+</tr>
+<tr>
+<td><code>Time Device</code></td>
+<td>定时控制设备</td>
+</tr>
+<tr>
+<td><code>Android Alarm</code></td>
+<td>硬件时钟</td>
+</tr>
+</tbody>
+</table>
+<h2 id="android-上的设备驱动"><a href="#android-上的设备驱动" class="headerlink" title="android 上的设备驱动"></a>android 上的设备驱动</h2><table>
+<thead>
+<tr>
+<th>驱动</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Framebuff</code></td>
+<td>显示驱动</td>
+</tr>
+<tr>
+<td><code>surfaceflinger</code></td>
+<td>显示驱动</td>
+</tr>
+<tr>
+<td><code>gralloc</code></td>
+<td>显示驱动</td>
+</tr>
+<tr>
+<td><code>Event</code></td>
+<td>输入设备驱动</td>
+</tr>
+<tr>
+<td><code>ALSA</code></td>
+<td>音频驱动</td>
+</tr>
+<tr>
+<td><code>OSS</code></td>
+<td>音频驱动</td>
+</tr>
+<tr>
+<td><code>v412</code></td>
+<td>摄像头视频驱动</td>
+</tr>
+<tr>
+<td><code>MTD</code></td>
+<td>驱动</td>
+</tr>
+<tr>
+<td></td>
+<td>蓝牙驱动</td>
+</tr>
+<tr>
+<td><code>WLAN</code></td>
+<td>wifi驱动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="android-图形名词"><a href="#android-图形名词" class="headerlink" title="android 图形名词"></a>android 图形名词</h2><table>
+<thead>
+<tr>
+<th>名词</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OpenGL</code></td>
+<td>开放图形库（open graphics library）用于生成2D 3D图像</td>
+</tr>
+<tr>
+<td><code>OpenGL ES</code></td>
+<td>（OpenGL for Embedded Systems）是OpenGL三维图形API的子集，针对手机、PDA和游戏主机等嵌入式设备而设计</td>
+</tr>
+<tr>
+<td><code>OpenVG</code></td>
+<td>（Open Vector Graphics）2D矢量图形处理标准函式库</td>
+</tr>
+<tr>
+<td><code>OpenCL</code></td>
+<td>（Open Computing Language）开放运算语言</td>
+</tr>
+<tr>
+<td><code>DirectFB</code></td>
+<td>（Direct Frame Buffer），提供硬体图形加速库</td>
+</tr>
+<tr>
+<td><code>GDI</code></td>
+<td>（Graphics Device Interface），图形设备接口，负责系统与绘图程序之间的信息交换</td>
+</tr>
+<tr>
+<td><code>DirectDraw</code></td>
+<td>DirectX中的关于视频输入输出的基本部分，使用DirectDraw可以方便地编制出高效的视频处理程序，只要用户的硬件支持DirectDraw，就能保证你的代码可以处理它们。</td>
+</tr>
+<tr>
+<td><code>Skia</code></td>
+<td>Android中的2D图形库</td>
+</tr>
+<tr>
+<td><code>libagl</code></td>
+<td>Android中通过软件方法实现的一套OpenGL动态库</td>
+</tr>
+<tr>
+<td><code>libhgl</code></td>
+<td>为区别libagl，自定义的一种叫法。特指GPU厂商提供的硬件实现的OpenGL</td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>特指使用OpenGL动态库进行3D渲染</td>
+</tr>
+<tr>
+<td><code>copybit</code></td>
+<td>Android使用2D引擎来加速图形操作（主要是Surface之间的composition操作）的一种技术，对应着一个或几个动态库。</td>
+</tr>
+<tr>
+<td><code>pmem</code></td>
+<td>Android特有驱动，从linux内核中reserve物理连续内存，可以为2d、3d引擎、vpu等设备分配物理连续内存。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用GPU硬件加速需要做的工作"><a href="#使用GPU硬件加速需要做的工作" class="headerlink" title="使用GPU硬件加速需要做的工作"></a>使用GPU硬件加速需要做的工作</h2><ul>
+<li>Linux内核方面：<ul>
+<li>添加GPU驱动支持，以模块方式编译GPU驱动，Android启动时加载内核模块。</li>
+<li>添加PMEM支持，预留内存供GPU使用</li>
+</ul>
+</li>
+<li>Android方面：<ul>
+<li>添加copybit HAL</li>
+<li>修改gralloc gralloc负责显存等的分配，以及对framebuffer操作</li>
+<li>修改libagl</li>
+<li>修改surfaceflinger<h2 id="framebuffer"><a href="#framebuffer" class="headerlink" title="framebuffer"></a>framebuffer</h2>framebuffer字符设备</li>
+</ul>
+</li>
+</ul>
+<p>设备位于<code>/dev/graphics/fb*</code>,主设备号为29<br>相关代码：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">include/linux/fb.h</span><br><span class="line">driver/video/fbmem.c</span><br><span class="line">fbmem.c	<span class="comment"># 提供用户接口</span></span><br><span class="line">xxxfb.c	<span class="comment"># 提供硬件操作接口</span></span><br></pre></td></tr></table></figure></p>
+<p>用户操作：<br>|函数|说明|<br>|-|-|<br>|<code>ioctl()</code>|获取/设置信息|<br>|<code>mmap()</code>|映射内存|</p>
+
+    
+
     
 </div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/tcpip协议栈/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/freertos-inside/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     

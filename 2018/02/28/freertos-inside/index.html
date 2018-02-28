@@ -12,6 +12,8 @@
     
     <title>
         
+            嵌入式笔记：freertos RTOS | 
+        
         xiaxiaowen的个人博客
     </title>
 
@@ -63,15 +65,18 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="xiaxiaowen的个人博客">
+    <meta property="og:title" content="嵌入式笔记：freertos RTOS | xiaxiaowen的个人博客">
     <meta property="og:image" content="/embedded-notes/img/favicon.png" />
     <meta property="og:description" content="">
     
 
     
+        <meta property="article:published_time" content="2月 28, 2018" />
+        <meta property="article:modified_time" content="2月 28, 2018" />
+    
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="xiaxiaowen的个人博客">
+    <meta name="twitter:title" content="嵌入式笔记：freertos RTOS | xiaxiaowen的个人博客">
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
     <meta name="twitter:card" content="summary_large_image" />
@@ -79,35 +84,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes" />
+        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/freertos-inside/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
+
+
 <script type="application/ld+json">
 {
-    "@context": "http://schema.org",
-    "@type": "Website",
+    "@context": "https://schema.org",
+    "@type": "Article",
     "publisher": {
         "@type": "Organization",
         "name": "xiaxiaowen的个人博客",
         "logo": "/embedded-notes/img/favicon.png"
     },
-    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/index.html",
-    "image": {
-        "@type": "ImageObject",
-        "url": "/embedded-notes/img/favicon.png"
+    "author": {
+        "@type": "Person",
+        "name": "xiaxiaowen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/embedded-notes/img/favicon.png"
+        },
+        "description": "Hi, nice to meet you"
     },
+    "headline": "嵌入式笔记：freertos RTOS",
+    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/freertos-inside/index.html",
+    "datePublished": "2月 28, 2018",
+    "dateModified": "2月 28, 2018",
+    "description": "",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "http://xiaowenxia.github.io/embedded-notes"
-    },
-    "description": ""
+    }
 }
 </script>
-
-
 
 
     
@@ -295,776 +308,297 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
+                    <!-- Post TOC -->
+
     
-        <!-- Paradox Header -->
-        <!-- Daily pic -->
-<div class="mdl-card mdl-shadow--2dp daily-pic mdl-cell mdl-cell--8-col index-top-block">
-
-    <!-- Pic & Slogan -->
-    <div class="mdl-card__media mdl-color-text--grey-50" style="background-image:url(/embedded-notes/img/daily_pic.png)">
-        <p class="index-top-block-slogan"><a href="#">
-        
-            
-                Hi, nice to meet you
-            
-        
-        </a></p>
-    </div>
-
-    <!-- Avatar & Name -->
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <!-- Author Avatar -->
-        <div id="author-avatar">
-            <img src="/embedded-notes/img/avatar.png" width="32px" height="32px" alt="avatar">
-        </div>
-        <div>
-            <strong>xiaxiaowen</strong>
-        </div>
-    </div>
-</div>
-
-        <!-- Blog info -->
-<div class="mdl-card mdl-shadow--2dp something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop index-top-block">
-
-    <!-- Search -->
-    
-    <!-- Google -->
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable" method="post" action="">
-        <label id="search-label" class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent mdl-shadow--4dp" for="search">
-            <i class="material-icons mdl-color-text--white" role="presentation">search</i>
-        </label>
-
-        <form autocomplete="off" id="search-form" method="get" action="//google.com/search" accept-charset="UTF-8" class="mdl-textfield__expandable-holder" target="_blank">
-            <input class="mdl-textfield__input search-input" type="search" name="q" id="search" placeholder="">
-            <label id="search-form-label" class="mdl-textfield__label" for="search"></label>
-
-            <input type="hidden" name="sitesearch" value="http://xiaowenxia.github.io/embedded-notes">
-        </form>
-    </div>
-
-
-
-
-
-
-
-    <!-- LOGO -->
-    <div class="something-else-logo mdl-color--white mdl-color-text--grey-600">
-        <a href="#" target="_blank">
-            <img src="/embedded-notes/img/logo.png" alt="logo" />
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
         </a>
     </div>
+    -->
 
-    <!-- Infomation -->
-    <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
-        <!-- Blog Title -->
-        <div>
-            <strong>xiaxiaowen的个人博客</strong>
-        </div>
-        <div class="section-spacer"></div>
-
-        <!-- Pages -->
-        <button id="show-pages-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">view_carousel</i>
-            <span class="visuallyhidden">Pages</span>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="show-pages-button">
-            
-        </ul>
-
-        <!-- Menu -->
-        <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">more_vert</i>
-            <span class="visuallyhidden">show menu</span>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menubtn">
-            
-
-            
-
-            
-                <a class="index_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=xiaxiaowen的个人博客&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/&pic=&searchPic=false&style=simple" target="_blank">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        分享到微博
-                    </li>
-                </a>
-            
-
-            
-                <a class="index_share-link" href="https://twitter.com/intent/tweet?text=xiaxiaowen的个人博客&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/&via=xiaxiaowen" target="_blank">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        分享到 Twitter
-                    </li>
-                </a>
-            
-
-            
-                <a class="index_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/index.html" target="_blank">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        分享到 Facebook
-                    </li>
-                </a>
-            
-
-            
-                <a class="index_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/" target="_blank">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        分享到 Google+
-                    </li>
-                </a>
-            
-
-            
-
-            
-                <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=xiaxiaowen的个人博客&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/" target="_blank">
-                    <li class="mdl-menu__item">
-                        分享到 QQ
-                    </li>
-                </a>
-            
-
-            
-        </ul>
-    </div>
-</div>
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
 
     
-    <div class="locate-thumbnail-symbol"></div>
-
-    <!-- Pin on top -->
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简单的任务函数"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">简单的任务函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建任务函数"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">创建任务函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除任务函数"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">删除任务函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#任务优先级"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">任务优先级</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#延时函数"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">延时函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#精确延时函数"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">精确延时函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#空闲任务"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">空闲任务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#队列"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">队列</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建队列"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">创建队列</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#写入到队列首"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">写入到队列首</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#写入到队列尾"><span class="post-toc-number">1.7.3.</span> <span class="post-toc-text">写入到队列尾</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#发送队列"><span class="post-toc-number">1.7.4.</span> <span class="post-toc-text">发送队列</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#系统运行过程"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">系统运行过程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#协程–croutine-c"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">协程–croutine.c</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#链表设计–List-c"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">链表设计–List.c</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#系统调度"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">系统调度</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#任务管理"><span class="post-toc-number">1.12.</span> <span class="post-toc-text">任务管理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#内存管理"><span class="post-toc-number">1.13.</span> <span class="post-toc-text">内存管理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优先级反转"><span class="post-toc-number">1.14.</span> <span class="post-toc-text">优先级反转</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优先级继承"><span class="post-toc-number">1.15.</span> <span class="post-toc-text">优先级继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#freertos-HOOK函数"><span class="post-toc-number">1.16.</span> <span class="post-toc-text">freertos HOOK函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#freertos栈溢出检测的2种方法"><span class="post-toc-number">1.17.</span> <span class="post-toc-text">freertos栈溢出检测的2种方法</span></a></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/shell/">嵌入式笔记：shell脚本</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：shell脚本
-...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/shell/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/git/">嵌入式笔记：git操作</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：git操作
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/git/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/makefile/">嵌入式笔记：Makefile学习</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：Makefile学习
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/makefile/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/uboot/">嵌入式笔记：uboot学习</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：uboot学习
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/uboot/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/linux/">嵌入式笔记：linux软件开发</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：linux软件开发
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/linux/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/tcpip协议栈/">嵌入式笔记：tcpip协议栈</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：tcpip协议栈
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/tcpip协议栈/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/gpu/">嵌入式笔记：gpu知识点</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：gpu知识点
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/gpu/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/freertos-inside/">嵌入式笔记：freertos RTOS</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：freertos RTOS
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/freertos-inside/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/c基础/">嵌入式笔记：C基础</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：C基础
-...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/c基础/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/embedded-notes/2018/02/28/driver/">嵌入式笔记：linux驱动</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            嵌入式笔记：linux驱动
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/embedded-notes/2018/02/28/driver/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="xiaxiaowen's avatar">
-            </div>
-            <div>
-                <strong>xiaxiaowen</strong>
-                <span>2月 28, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <span class="page-number current">1</span><a class="page-number" href="/embedded-notes/page/2/">2</a><a class="extend next" rel="next" href="/embedded-notes/page/2/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
-        </nav>
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                嵌入式笔记：freertos RTOS
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xiaxiaowen</strong>
+        <span>2月 28, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：freertos RTOS&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/freertos-inside/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：freertos RTOS&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/freertos-inside/index.html&via=xiaxiaowen" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/freertos-inside/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/freertos-inside/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：freertos RTOS&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/freertos-inside/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>嵌入式笔记：freertos RTOS</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><h2 id="简单的任务函数"><a href="#简单的任务函数" class="headerlink" title="简单的任务函数"></a>简单的任务函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ATaskFunction</span><span class="params">( <span class="keyword">void</span> *pvParameters )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> iVariableExample = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 任务通常实现在一个死循环中。 */</span></span><br><span class="line">    <span class="keyword">for</span>( ;; )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* 完成任务功能的代码将放在这里。 */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 如果任务的具体实现会跳出上面的死循环，则此任务必须在函数运行完之前删除。传入NULL参数表示删除的是当前任务 */</span></span><br><span class="line">    vTaskDelete( <span class="literal">NULL</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建任务函数"><a href="#创建任务函数" class="headerlink" title="创建任务函数"></a>创建任务函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 函数原型 */</span></span><br><span class="line"><span class="function">portBASE_TYPE <span class="title">xTaskCreate</span><span class="params">( pdTASK_CODE pvTaskCode,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="keyword">const</span> <span class="keyword">signed</span> portCHAR * <span class="keyword">const</span> pcName,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="keyword">unsigned</span> portSHORT usStackDepth,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="keyword">void</span> *pvParameters,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="keyword">unsigned</span> portBASE_TYPE uxPriority,</span></span></span><br><span class="line"><span class="function"><span class="params">                            xTaskHandle *pxCreatedTask )</span></span>;</span><br><span class="line"><span class="comment">/* 函数示例 */</span></span><br><span class="line"><span class="keyword">static</span> TaskHandle_t myTaskHandler = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">xTaskCreate(ATaskFunction, <span class="string">"myTask"</span>, <span class="number">512</span>, <span class="literal">NULL</span>, configMAX_PRIORITIES - <span class="number">4</span>, &amp;myTaskHandler);</span><br></pre></td></tr></table></figure>
+<h2 id="删除任务函数"><a href="#删除任务函数" class="headerlink" title="删除任务函数"></a>删除任务函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 函数原型 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vTaskDelete</span><span class="params">( xTaskHandle pxTaskToDelete )</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="任务优先级"><a href="#任务优先级" class="headerlink" title="任务优先级"></a>任务优先级</h2><p>低优先级号表示任务的优先级低，优先级号0表示最低优先级。有效的优先级号范围从0到<code>(configMAX_PRIORITES – 1)</code>。</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vTaskPrioritySet()</td>
+<td>可以动态的更改任务优先级</td>
+</tr>
+<tr>
+<td>uxTaskPriorityGet()</td>
+<td>获取任务优先级</td>
+</tr>
+<tr>
+<td>uxTaskPriorityGetFromISR()</td>
+<td>在ISR函数中获取任务优先级</td>
+</tr>
+</tbody>
+</table>
+<h2 id="延时函数"><a href="#延时函数" class="headerlink" title="延时函数"></a>延时函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vTaskDelay</span><span class="params">( portTickType xTicksToDelay )</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>xTicksToDelay 表示延时多少个tick \<br>该函数会把task切出到阻塞态</p>
+</blockquote>
+<h3 id="精确延时函数"><a href="#精确延时函数" class="headerlink" title="精确延时函数"></a>精确延时函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vTaskDelayUntil</span><span class="params">( portTickType * pxPreviousWakeTime, portTickType xTimeIncrement )</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>调用此函数的任务解除阻塞的时间是绝对时刻，比起vTaskDelay()延时时间更精确</p>
+</blockquote>
+<p>使用方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vTaskFunction</span><span class="params">( <span class="keyword">void</span> *pvParameters )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *pcTaskName;</span><br><span class="line">    portTickType xLastWakeTime;</span><br><span class="line">    pcTaskName = ( <span class="keyword">char</span> * ) pvParameters;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 变量xLastWakeTime需要被初始化为当前心跳计数值。说明一下，这是该变量唯一一次被显式赋值。之后，</span></span><br><span class="line"><span class="comment">    xLastWakeTime将在函数vTaskDelayUntil()中自动更新。 */</span></span><br><span class="line">    xLastWakeTime = xTaskGetTickCount();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( ;; )</span><br><span class="line">    &#123;</span><br><span class="line">        vPrintString( pcTaskName );</span><br><span class="line">        <span class="comment">/* 本任务将精确的以250毫秒为周期执行。同vTaskDelay()函数一样，时间值是以心跳周期为单位的，</span></span><br><span class="line"><span class="comment">        可以使用常量portTICK_RATE_MS将毫秒转换为心跳周期。变量xLastWakeTime会在</span></span><br><span class="line"><span class="comment">        vTaskDelayUntil()中自动更新，因此不需要应用程序进行显示更新。 */</span></span><br><span class="line">        vTaskDelayUntil( &amp;xLastWakeTime, ( <span class="number">250</span> / portTICK_RATE_MS ) );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="空闲任务"><a href="#空闲任务" class="headerlink" title="空闲任务"></a>空闲任务</h2><blockquote>
+<p>调用vTaskStartScheduler()时，调度器会自动创建一个空闲任务 \<br>空闲任务拥有最低优先级(优先级0) \<br>空闲任务是一个非常短小的循环</p>
+</blockquote>
+<p>具体代码在vTaskStartScheduler()中可以看到：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vTaskStartScheduler</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BaseType_t xReturn;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Add the idle task at the lowest priority. */</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">if</span> ( INCLUDE_xTaskGetIdleTaskHandle == 1 )</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* Create the idle task, storing its handle in xIdleTaskHandle so it can</span></span><br><span class="line"><span class="comment">        be returned by the xTaskGetIdleTaskHandle() function. */</span></span><br><span class="line">        xReturn = xTaskCreate( prvIdleTask, <span class="string">"IDLE"</span>, tskIDLE_STACK_SIZE, ( <span class="keyword">void</span> * ) <span class="literal">NULL</span>, ( tskIDLE_PRIORITY | portPRIVILEGE_BIT ), &amp;xIdleTaskHandle ); <span class="comment">/*lint !e961 MISRA exception, justified as it is not a redundant explicit cast to all supported compilers. */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* Create the idle task without storing its handle. */</span></span><br><span class="line">        xReturn = xTaskCreate( prvIdleTask, <span class="string">"IDLE"</span>, tskIDLE_STACK_SIZE, ( <span class="keyword">void</span> * ) <span class="literal">NULL</span>, ( tskIDLE_PRIORITY | portPRIVILEGE_BIT ), <span class="literal">NULL</span> );  <span class="comment">/*lint !e961 MISRA exception, justified as it is not a redundant explicit cast to all supported compilers. */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* INCLUDE_xTaskGetIdleTaskHandle */</span></span></span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><h3 id="创建队列"><a href="#创建队列" class="headerlink" title="创建队列"></a>创建队列</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">xQueueHandle <span class="title">xQueueCreate</span><span class="params">( <span class="keyword">unsigned</span> portBASE_TYPE uxQueueLength,<span class="keyword">unsigned</span> portBASE_TYPE uxItemSize )</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="写入到队列首"><a href="#写入到队列首" class="headerlink" title="写入到队列首"></a>写入到队列首</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">portBASE_TYPE <span class="title">xQueueSendToFront</span><span class="params">( xQueueHandle xQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">const</span> <span class="keyword">void</span> * pvItemToQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  portTickType xTicksToWait )</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="写入到队列尾"><a href="#写入到队列尾" class="headerlink" title="写入到队列尾"></a>写入到队列尾</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">portBASE_TYPE <span class="title">xQueueSendToBack</span><span class="params">( xQueueHandle xQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                                <span class="keyword">const</span> <span class="keyword">void</span> * pvItemToQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                                portTickType xTicksToWait )</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="发送队列"><a href="#发送队列" class="headerlink" title="发送队列"></a>发送队列</h3><ul>
+<li><a href="#协程--croutine.c">协程–croutine.c</a></li>
+</ul>
+<h2 id="系统运行过程"><a href="#系统运行过程" class="headerlink" title="系统运行过程"></a>系统运行过程</h2><h2 id="协程–croutine-c"><a href="#协程–croutine-c" class="headerlink" title="协程–croutine.c"></a>协程–croutine.c</h2><p>4个链表：readyList  pendingList  delayList（2个）</p>
+<h2 id="链表设计–List-c"><a href="#链表设计–List-c" class="headerlink" title="链表设计–List.c"></a>链表设计–List.c</h2><h2 id="系统调度"><a href="#系统调度" class="headerlink" title="系统调度"></a>系统调度</h2><h2 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h2><h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h2 id="优先级反转"><a href="#优先级反转" class="headerlink" title="优先级反转"></a>优先级反转</h2><p>有优先级为A、B和C三个任务，优先级A&gt;B&gt;C，任务A，B处于挂起状态，等待某一事件发生，任务C正在运行，此时任务C开始使用某一共享资源S。在使用中，任务A等待事件到来，任务A转为就绪态，因为它比任务C优先级高，所以立即执行。当任务A要使用共享资源S时，由于其正在被任务C使用，因此任务A被挂起，任务C开始运行。如果此时任务B等待事件到来，则任务B转为就绪态。由于任务B优先级比任务C高，因此任务B开始运行，直到其运行完毕，任务C才开始运行。直到任务C释放共享资源S后，任务A才得以执行。在这种情况下，优先级发生了翻转，任务B先于任务A运行。</p>
+<h2 id="优先级继承"><a href="#优先级继承" class="headerlink" title="优先级继承"></a>优先级继承</h2><blockquote>
+<p>freertos 使用优先级继承来解决优先级反转问题<br>当任务A 申请共享资源S 时， 如果S正在被任务C 使用，通过比较任务C 与自身的优先级，如发现任务C 的优先级小于自身的优先级， 则将任务C的优先级提升到自身的优先级， 任务C 释放资源S 后，再恢复任务C 的原优先级。</p>
+</blockquote>
+<h2 id="freertos-HOOK函数"><a href="#freertos-HOOK函数" class="headerlink" title="freertos HOOK函数"></a>freertos HOOK函数</h2><ul>
+<li>vApplicationIdleHook()<br>  idle的hook函数</li>
+<li>vApplicationTickHook()<br>  系统tick的hook函数</li>
+<li>vApplicationMallocFailedHook()<br>  malloc失败的hook函数</li>
+<li>vApplicationStackOverflowHook()<br>  栈溢出的hook函数</li>
+<li>vApplicationDaemonTaskStartupHook()<br>  vTaskStartScheduler()函数第一次执行的时候调用。</li>
+</ul>
+<h2 id="freertos栈溢出检测的2种方法"><a href="#freertos栈溢出检测的2种方法" class="headerlink" title="freertos栈溢出检测的2种方法"></a>freertos栈溢出检测的2种方法</h2><ul>
+<li>第一种<br>  每次调度都检查一下任务的当前栈有没有超过任务的栈区域。</li>
+<li>第二种<br>  每个任务栈最下面会有16个字节是特定的内容，每次调度的时候如果发现这16个字节不正常了，就说明有谁踩到了这个栈。</li>
+</ul>
+
+    
+
     
 </div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/gpu/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/c基础/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
@@ -1346,12 +880,6 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
 
-
-    <!-- Swiftye -->
-    
-
-    <!-- Local Search-->
-    
 
 
 <!-- UC Browser Compatible -->
