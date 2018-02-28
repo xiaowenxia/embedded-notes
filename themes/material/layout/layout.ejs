@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html style="display: none;" <% if(config.language !== null) { %>lang="<%- config.language.substring(0,2) %>"<% } %>>
+    <%- partial('_partial/head') %>
+
+    <% if(page.layout === 'gallery') { %>
+        <!-- Single Gallery Page -->
+        <%- partial('_widget/page-gallery') %>
+    <% } else { %>
+        <body id="scheme-<%= theme.scheme %>" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                <% if(theme.scheme === 'Isolation') { %>
+                    <!-- Isolation Header -->
+                    <%- partial('_partial/isolate_info') %>
+                <% } %>
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    <% if(theme.scheme === 'Paradox') { %>
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    <% } %>
+
+                    <%- body %>
+
+                    <% if(theme.scheme === 'Paradox') { %>
+                        <%- partial('_partial/sidebar') %>
+                    <% } %>
+
+                    <% if( (theme.scheme === 'Paradox') && (is_post() || is_home() || is_archive() || is_category() || (page.totop === true) ) ) { %>
+                        <!-- Footer Top Button -->
+                        <%- partial('_partial/footer_top')  %>
+                    <% } %>
+
+                    <%- partial('_partial/footer') %>
+
+                    <%- partial('_partial/import_js') %>
+                </main>
+            </div>
+        </body>
+    <% } %>
+</html>

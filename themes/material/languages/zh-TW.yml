@@ -1,0 +1,28 @@
+sidebar:
+    homepage: "首頁"
+    archive: "過往"
+    article_num: "文章總數"
+post:
+    visitor: "訪客"
+    views: "瀏覽量"
+    continue: "繼續閱讀"
+    older: "舊篇"
+    newer: "新篇"
+    qrcode: "在其他設備中閱讀本文章"
+    comments_load_button: "閱讀評論 「請確認 disq.us & disquscdn.com & disqus.com 可正常載入」"    
+share:
+    article_rss: "文章 RSS"
+    comment_rss: "評論 RSS"
+    toTwitter: "分享到 Twitter"
+    toFacebook: "分享到 Facebook"
+    toLinkedIn: "分享到 LinkedIn"
+    toTelegram: "分享到 Telegram"
+    toGplus: "分享到 Google+"
+    toWeibo: "分享到微博"
+    toQQ: "分享到 QQ"
+title:
+    category: "分類"
+    tag: "標籤"
+misc:
+    home: "主頁"
+    theme: "主題"

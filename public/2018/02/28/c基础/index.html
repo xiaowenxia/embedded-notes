@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            嵌入式笔记：C基础 | 
+        
+        xiaxiaowen的个人博客
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="xiaxiaowen">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/embedded-notes/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/embedded-notes/img/favicon.png">
+    <link rel="apple-touch-icon" href="/embedded-notes/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="xiaxiaowen的个人博客">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="嵌入式笔记：C基础 | xiaxiaowen的个人博客">
+    <meta property="og:image" content="/embedded-notes/img/favicon.png" />
+    <meta property="og:description" content="">
+    
+
+    
+        <meta property="article:published_time" content="2月 28, 2018" />
+        <meta property="article:modified_time" content="2月 28, 2018" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="嵌入式笔记：C基础 | xiaxiaowen的个人博客">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://xiaowenxia.github.io/embedded-notes" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/c基础/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "xiaxiaowen的个人博客",
+        "logo": "/embedded-notes/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xiaxiaowen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/embedded-notes/img/favicon.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "headline": "嵌入式笔记：C基础",
+    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/c基础/index.html",
+    "datePublished": "2月 28, 2018",
+    "dateModified": "2月 28, 2018",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://xiaowenxia.github.io/embedded-notes"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/embedded-notes/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/embedded-notes/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    .footer-sns-facebook {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNjU3LjYgODcuOGw0LjggMy44djU1LjJjMCA1NC42IDAgNTUuMi00LjYgNTkuNi00LjQgNC40LTYgNC42LTUwLjIgNS42bC00NS42IDEtNy4yIDUuNmMtMTAuNCA4LTE2LjggMTcuMi0xOS4yIDI3LjQtMSA1LTEuOCAyNC44LTEuOCA0NCAuMiAzOCAxLjYgNDQuNiAxMC44IDQ4IDIuOCAxLjIgMjguNCAyIDU2LjggMiA0Ny44IDAgNTIgLjIgNTYuMiAzLjhsNC44IDMuOHY1NS4yYzAgNTQuNiAwIDU1LjItNC42IDU5LjYtNC40IDQuNi01LjQgNC42LTU3IDUuMi0yOC44LjItNTQuNC44LTU2LjggMS40LTIuNC42LTUuNiAzLTYuOCA1LjQtMS44IDMuMi0yLjQgNDEuNC0yLjYgMTQzLjJsLS4yIDEzOC44LTUuNiA0LjgtNS42IDQuOEg2MDljLTUyLjQgMC01Mi44IDAtNTguMi00LjZsLTUuNC00LjYtLjItMTQwLjYtLjItMTQwLjYtNC44LTMuOGMtNC4yLTMuNC04LTMuOC0zNS42LTMuOC0zMi44IDAtNDEtMS44LTQzLjYtMTAtLjYtMi4yLTEuMi0yNS40LTEuMi01MS40IDAtNjAuOC0uMi01NyAzLjQtNjEuNiAyLjgtMy42IDYtNCAzNy44LTUgMzMtMSAzNS4yLTEuMiAzOS40LTUuNiA0LjYtNC40IDQuNi01LjIgNS44LTcxIDEuMi03My40LjItNjcuMiAxNi42LTk5LjQgOC0xNS44IDEyLjgtMjIgMjgtMzcgMTUuMi0xNS4yIDIxLjQtMTkuNiAzOC4yLTI4IDExLTUuNCAyNC0xMSAyOS0xMi4yIDYuMi0xLjggMjguNi0yLjYgNzEuMi0yLjYgNTguNi0uMiA2Mi42IDAgNjcgMy42eiIvPjwvc3ZnPg==);
+    }
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    .footer-sns-gplus {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHpNNDMwIDI5NS40YzQwLjYgMTUuNCA1Ni42IDIzLjggNzIuNiAzOC40IDYuOCA2LjIgNy4yIDE1LjIgMSAyMy40LTYuMiA4LTMzLjYgMzMuOC0zOSAzNi42LTUuNiAyLjgtMTcuNiAyLjgtMjMuMi0uMi0yLjQtMS4yLTguMi01LjItMTMtOC44LTExLjItOC42LTI0LjYtMTEuMi01NS4yLTExLjItMjcuNCAwLTQwLjYgMi42LTUyLjIgMTAuNC00LjQgMi44LTEyLjIgNy42LTE3LjIgMTAuNi0yMyAxMy4yLTUxLjQgNTUtNTUuOCA4Mi40LTIuNiAxNS42LTIuNCAzNC44LjIgNTEgMi44IDE3LjQgMTkuOCA0OC44IDM1LjIgNjUuMiAxNiAxNi42IDQ1IDMzLjYgNjIuOCAzNi42IDI2LjggNC40IDY1LjggMS42IDc5LjQtNS44IDIwLjYtMTEuNCAzMS0xOSA0MS0zMC40IDE4LjgtMjEuNiAyMy40LTM0LjIgMTUuNi00My44LTMuOC00LjgtNC40LTQuOC01MS01LjgtNjAuOC0xLjItNTYuMiAyLjItNTYuMi00My4yIDAtMzIuNC4yLTMzLjIgNC44LTM3IDQuNC0zLjYgOS0zLjggOTItMy44IDc5IDAgODcuOC40IDk0LjIgMy42IDExLjIgNS42IDEzIDExLjQgMTIuOCA0My40IDAgMjUuNC0uOCAzMC44LTcuNiA1OC00IDE2LjYtOS44IDM0LTEyLjYgMzktMi44IDUtOC4yIDE0LjItMTEuNiAyMC42LTguNCAxNS40LTI3LjIgMzYuOC00MC44IDQ2LjYtNS44IDQuNC0xMy44IDEwLjItMTcuNiAxMy4yLTMuOCAzLTExIDctMTYuMiA4LjgtNS4yIDEuOC0xNi4yIDYuNC0yNC40IDEwLTIyLjQgOS42LTM0LjggMTEuNi03MyAxMS42LTM3LjYuMi00Ny0xLjQtNzEtMTItOC4yLTMuNi0xNy42LTcuMi0yMC44LTgtMTUuOC0zLjgtNjctNDUuMi03Ny44LTYyLjgtMi4yLTMuOC03LjYtMTEuNi0xMS44LTE3LjItNC4yLTUuNC05LTE0LTEwLjYtMTktMS44LTQuOC02LjItMTYtMTAtMjQuOC0zLjYtOC44LTcuOC0yMi4yLTkuMi0yOS42LTMuMi0xOC44LTEuNC03OS40IDIuOC05MS40IDEzLjgtNDAuNiAzNS42LTc4IDU4LjgtMTAwLjIgMTQtMTMuNiA0Ny4yLTM2LjQgNTgtMzkuOCA0LjItMS40IDEzLjQtNS4yIDIwLjYtOC40IDIyLTEwIDMyLjgtMTEuNiA3Ni0xMSAzMy44LjYgNDAuNCAxLjIgNTAgNC44em0zNDAuOCA4MC44YzggMy42IDkuNiAxMS4yIDkuMiAzOS4yLS42IDM0LjQtLjYgMzQgNSAzOS42IDQuOCA1IDUuNCA1IDM3LjYgNSA0My40IDAgNDQuNC44IDQzLjIgMzYuMi0uOCAxNy0xLjIgMTguNC02LjQgMjMtNS40IDQuNi02LjYgNC44LTM3LjYgNC44LTMxLjIgMC0zMiAuMi0zNi44IDUtNS42IDUuNC01LjYgNC40LTUgNDEuMi40IDI2LjQuMiAyNy40LTQuNiAzMy00LjggNS42LTYgNS44LTI0LjQgNi40LTIwLjguOC0yOS42LTEuNC0zMy40LTguNC0xLjQtMi42LTItMTUuNi0xLjgtMzUuNi40LTMxLjIuNC0zMS42LTQuNi0zNi42cy01LjYtNS0zNi01Yy0xOC44IDAtMzMtLjgtMzYtMi4yLTcuNi0zLjYtOS42LTExLjItOC44LTMzLjguOC0yOC4yLjQtMjggNDEtMjggNDUuNCAwIDQ1LjQgMCA0NC42LTQyLjYtLjYtMzMtLjYtMzMgNS0zOC40IDQuNC00LjYgNi4yLTUgMjQuOC01IDExIDAgMjIuMiAxIDI1IDIuMnoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/embedded-notes/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#c基础"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">c基础</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据类型说明"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">数据类型说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#volatile"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">volatile</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#指针"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">指针</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#函数指针"><span class="post-toc-number">1.1.3.1.</span> <span class="post-toc-text">函数指针</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#函数指针数组"><span class="post-toc-number">1.1.3.2.</span> <span class="post-toc-text">函数指针数组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#指针数组"><span class="post-toc-number">1.1.3.3.</span> <span class="post-toc-text">指针数组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数组指针"><span class="post-toc-number">1.1.3.4.</span> <span class="post-toc-text">数组指针</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#指针的指针"><span class="post-toc-number">1.1.3.5.</span> <span class="post-toc-text">指针的指针</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#main函数的返回值"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">main函数的返回值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#const"><span class="post-toc-number">1.1.5.</span> <span class="post-toc-text">const</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#const-T"><span class="post-toc-number">1.1.5.1.</span> <span class="post-toc-text">const T</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#const-T-1"><span class="post-toc-number">1.1.5.2.</span> <span class="post-toc-text">const T*</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#const-int-与int-const的区别"><span class="post-toc-number">1.1.5.3.</span> <span class="post-toc-text">const int 与int const的区别</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#const助记方法"><span class="post-toc-number">1.1.5.4.</span> <span class="post-toc-text">const助记方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#把一个声明从右向左读。-读成-pointer-to"><span class="post-toc-number">1.1.5.4.1.</span> <span class="post-toc-text">把一个声明从右向左读。( * 读成 pointer to )</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#C-标准规定，const关键字放在类型或变量名之前等价的。"><span class="post-toc-number">1.1.5.4.2.</span> <span class="post-toc-text">C++标准规定，const关键字放在类型或变量名之前等价的。</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#浮点数存储方式"><span class="post-toc-number">1.1.6.</span> <span class="post-toc-text">浮点数存储方式</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#c题目"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">c题目</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#printf返回值"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">printf返回值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#enum枚举类型"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">enum枚举类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可变参数函数"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">可变参数函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#大小端区分"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">大小端区分</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#链表"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">链表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#排序算法"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">排序算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#选择排序"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">选择排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#时间复杂度"><span class="post-toc-number">1.4.1.1.</span> <span class="post-toc-text">时间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#空间复杂度"><span class="post-toc-number">1.4.1.2.</span> <span class="post-toc-text">空间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#算法步骤"><span class="post-toc-number">1.4.1.3.</span> <span class="post-toc-text">算法步骤</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#动图演示"><span class="post-toc-number">1.4.1.4.</span> <span class="post-toc-text">动图演示</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#插入排序"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">插入排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#时间复杂度-1"><span class="post-toc-number">1.4.2.1.</span> <span class="post-toc-text">时间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#空间复杂度-1"><span class="post-toc-number">1.4.2.2.</span> <span class="post-toc-text">空间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#算法步骤-1"><span class="post-toc-number">1.4.2.3.</span> <span class="post-toc-text">算法步骤</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#动图演示-1"><span class="post-toc-number">1.4.2.4.</span> <span class="post-toc-text">动图演示</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#希尔排序"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">希尔排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#时间复杂度-2"><span class="post-toc-number">1.4.3.1.</span> <span class="post-toc-text">时间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#空间复杂度-2"><span class="post-toc-number">1.4.3.2.</span> <span class="post-toc-text">空间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#算法步骤-2"><span class="post-toc-number">1.4.3.3.</span> <span class="post-toc-text">算法步骤</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#冒泡排序"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">冒泡排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#时间复杂度-3"><span class="post-toc-number">1.4.4.1.</span> <span class="post-toc-text">时间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#空间复杂度-3"><span class="post-toc-number">1.4.4.2.</span> <span class="post-toc-text">空间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#算法步骤-3"><span class="post-toc-number">1.4.4.3.</span> <span class="post-toc-text">算法步骤</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#快速排序"><span class="post-toc-number">1.4.5.</span> <span class="post-toc-text">快速排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#时间复杂度-4"><span class="post-toc-number">1.4.5.1.</span> <span class="post-toc-text">时间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#空间复杂度-4"><span class="post-toc-number">1.4.5.2.</span> <span class="post-toc-text">空间复杂度</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#算法步骤-4"><span class="post-toc-number">1.4.5.3.</span> <span class="post-toc-text">算法步骤</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#动图演示-2"><span class="post-toc-number">1.4.5.4.</span> <span class="post-toc-text">动图演示</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hash算法"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">hash算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hash构造方法"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">hash构造方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hash冲突及解决"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">hash冲突及解决</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#冲突原因："><span class="post-toc-number">1.5.2.1.</span> <span class="post-toc-text">冲突原因：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#解决冲突的办法"><span class="post-toc-number">1.5.2.2.</span> <span class="post-toc-text">解决冲突的办法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#常用的hash函数"><span class="post-toc-number">1.5.2.3.</span> <span class="post-toc-text">常用的hash函数</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#javascript数据类型"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">javascript数据类型</span></a></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                嵌入式笔记：C基础
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xiaxiaowen</strong>
+        <span>2月 28, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：C基础&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/c基础/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：C基础&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/c基础/index.html&via=xiaxiaowen" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/c基础/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/c基础/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：C基础&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/c基础/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>嵌入式笔记：C基础</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li><a href="#c基础">c基础</a><ul>
+<li><a href="#数据类型说明">数据类型说明</a></li>
+<li><a href="#volatile">volatile</a></li>
+<li><a href="#指针">指针</a><ul>
+<li><a href="#函数指针">函数指针</a></li>
+<li><a href="#函数指针数组">函数指针数组</a></li>
+<li><a href="#指针数组">指针数组</a></li>
+<li><a href="#数组指针">数组指针</a></li>
+<li><a href="#指针的指针">指针的指针</a></li>
+</ul>
+</li>
+<li><a href="#main函数的返回值">main函数的返回值</a></li>
+<li><a href="#const">const</a></li>
+<li><a href="#浮点数存储方式">浮点数存储方式</a></li>
+</ul>
+</li>
+<li><a href="#c题目">c题目</a><ul>
+<li><a href="#printf返回值">printf返回值</a></li>
+<li><a href="#enum枚举类型">enum枚举类型</a></li>
+<li><a href="#可变参数函数">可变参数函数</a></li>
+</ul>
+</li>
+<li><a href="#链表">链表</a></li>
+<li><a href="#排序算法">排序算法</a><ul>
+<li><a href="#选择排序">选择排序</a></li>
+<li><a href="#插入排序">插入排序</a></li>
+<li><a href="#希尔排序">希尔排序</a></li>
+<li><a href="#冒泡排序">冒泡排序</a></li>
+<li><a href="#快速排序">快速排序</a></li>
+</ul>
+</li>
+<li><a href="#hash算法">hash算法</a><ul>
+<li><a href="#hash构造方法">hash构造方法</a></li>
+<li><a href="#hash冲突及解决">hash冲突及解决</a></li>
+<li><a href="#常用的hash函数">常用的hash函数</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="c基础"><a href="#c基础" class="headerlink" title="c基础"></a>c基础</h2><ul>
+<li><a href="#数据类型说明">数据类型说明</a></li>
+<li><a href="#volatile">volatile</a></li>
+<li><a href="#指针">指针</a></li>
+<li><a href="#const">const</a></li>
+<li><a href="#main函数的返回值">main函数的返回值</a></li>
+<li><a href="#浮点数存储方式">浮点数存储方式</a></li>
+</ul>
+<h3 id="数据类型说明"><a href="#数据类型说明" class="headerlink" title="数据类型说明"></a>数据类型说明</h3><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th style="text-align:center">16位平台</th>
+<th style="text-align:center">32位平台</th>
+<th style="text-align:center">64位平台</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td style="text-align:center">1 字节</td>
+<td style="text-align:center">1 字节</td>
+<td style="text-align:center">1 字节</td>
+</tr>
+<tr>
+<td>pointer</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">8 字节</td>
+</tr>
+<tr>
+<td>short</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">2 字节</td>
+</tr>
+<tr>
+<td>int</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">4 字节</td>
+</tr>
+<tr>
+<td>float</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">4 字节</td>
+</tr>
+<tr>
+<td>double</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">8 字节</td>
+</tr>
+<tr>
+<td>long</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">8 字节</td>
+</tr>
+<tr>
+<td>long long</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">8 字节</td>
+</tr>
+</tbody>
+</table>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>volatile 指出变量是随时可能发生变化的，每次使用它的时候必须从变量的地址中读取，因而编译器生成的汇编代码会重新从变量的地址读取数据。</p>
+<ol>
+<li>并行设备的硬件寄存器，</li>
+<li>一个中断服务子程序中会访问到的非自动变量（Non-automatic variables),可以使用关键区保护</li>
+<li>多线程应用中被几个任务共享的变量，可以关闭系统调度</li>
+</ol>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><h4 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*fun)(<span class="keyword">int</span> *a);</span><br></pre></td></tr></table></figure>
+<h4 id="函数指针数组"><a href="#函数指针数组" class="headerlink" title="函数指针数组"></a>函数指针数组</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*fun[<span class="number">10</span>])(<span class="keyword">int</span> *data, <span class="keyword">int</span> size);</span><br></pre></td></tr></table></figure>
+<p>使用方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*sort_fun[<span class="number">5</span>])(<span class="keyword">int</span> *data, <span class="keyword">int</span> size) = &#123;</span><br><span class="line">    quick_sort,     <span class="comment">/* 快速排序 */</span></span><br><span class="line">    insert_sort,    <span class="comment">/* 插入排序 */</span></span><br><span class="line">    bubble_sort,    <span class="comment">/* 冒泡排序 */</span></span><br><span class="line">    heap_sort,      <span class="comment">/* 堆排序 */</span></span><br><span class="line">    selection_sort  <span class="comment">/* 选择排序 */</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">sort_fun[<span class="number">0</span>] = quick_sort;</span><br><span class="line">sort_fun[<span class="number">1</span>] = insert_sort;</span><br></pre></td></tr></table></figure></p>
+<h4 id="指针数组"><a href="#指针数组" class="headerlink" title="指针数组"></a>指针数组</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *a[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+<h4 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* a为指向含10个元素的一维数组的指针变量，</span></span><br><span class="line"><span class="comment"> * ()优先级高，说明a是一个指针，指向一个整型的一维数组.</span></span><br><span class="line"><span class="comment"> * a+1时，a要跨过10个整型数据的长度 */</span></span><br><span class="line"><span class="keyword">int</span> (*a)[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+<h4 id="指针的指针"><a href="#指针的指针" class="headerlink" title="指针的指针"></a>指针的指针</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> **a;</span><br></pre></td></tr></table></figure>
+<h3 id="main函数的返回值"><a href="#main函数的返回值" class="headerlink" title="main函数的返回值"></a>main函数的返回值</h3><ol>
+<li>0 表示程序正常退出</li>
+<li>负数表示程序异常退出</li>
+</ol>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><h4 id="const-T"><a href="#const-T" class="headerlink" title="const T"></a>const T</h4><p>定义一个常量，声明的同时必须进行初始化。一旦声明，这个值将不能被改变。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> constInt = <span class="number">10</span>;        <span class="comment">//正确</span></span><br><span class="line">constInt = <span class="number">20</span>;                  <span class="comment">//错误，常量值不可被改变</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> constInt3;            <span class="comment">//错误，未被初始化</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="const-T-1"><a href="#const-T-1" class="headerlink" title="const T*"></a>const T*</h4><p>指向常量的指针，不能用于改变其所指向的对象的值。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> i = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> i2 = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>* pInt = &amp;i;           <span class="comment">//正确，指向一个const int对象，即i的地址</span></span><br><span class="line"><span class="comment">//*pInt = 10;                   //错误，不能改变其所指缶的对象</span></span><br><span class="line">pInt = &amp;i2;                     <span class="comment">//正确，可以改变pInt指针本身的值,此时pInt指向的是i2的地址</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>* p2 = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">8</span>);     <span class="comment">//正确，指向一个new出来的对象的地址</span></span><br><span class="line"><span class="keyword">delete</span> p2;                      <span class="comment">//正确</span></span><br><span class="line"><span class="comment">//int* pInt = &amp;i;               //错误，i是const int类型，类型不匹配，不能将const int * 初始化为int *</span></span><br><span class="line"><span class="keyword">int</span> nValue = <span class="number">15</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * pConstInt = &amp;nValue;    <span class="comment">//正确，可以把int *赋给const int *，但是pConstInt不能改变其所指向对象的值，即nValue</span></span><br><span class="line">*pConstInt = <span class="number">40</span>;                    <span class="comment">//错误，不能改变其所指向对象的值</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="const-int-与int-const的区别"><a href="#const-int-与int-const的区别" class="headerlink" title="const int 与int const的区别"></a>const int<em> 与int</em> const的区别</h4><p>指针本身就是一种对象，把指针定义为常量就是常量指针，也就是int<em> const的类型，也可以写成int </em>const，声明时必须初始化。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> nValue = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span>* <span class="keyword">const</span> p = &amp;nValue;</span><br><span class="line"><span class="keyword">int</span> *<span class="keyword">const</span> p2 = &amp;nValue;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>* 指针指向的对象不可以改变，但指针本身的值可以改变；<span class="keyword">int</span>* <span class="keyword">const</span> 指针本身的值不可改变，但其指向的对象可以改变。</span><br><span class="line"><span class="keyword">int</span> nValue1 = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> nValue2 = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span>* <span class="keyword">const</span> constPoint = &amp;nValue1;</span><br><span class="line"><span class="comment">//constPoint = &amp; nValue2;           //错误，不能改变constPoint本身的值</span></span><br><span class="line">*constPoint = <span class="number">40</span>;                   <span class="comment">//正确，可以改变constPoint所指向的对象，此时nValue1 = 40</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> nConstValue1 = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> nConstValue2 = <span class="number">15</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>* pPoint = &amp;nConstValue1;</span><br><span class="line"><span class="comment">//*pPoint  = 55;                    //错误，不能改变pPoint所指向对象的值</span></span><br><span class="line">pPoint = &amp;nConstValue2;             <span class="comment">//正确，可以改变pPoint指针本身的值，此时pPoint邦定的是nConstValue2对象，即pPoint为nConstValue2的地址</span></span><br></pre></td></tr></table></figure></p>
+<p>const int* const 是一个指向常量对象的常量指针，即不可以改变指针本身的值，也不可以改变指针指向的对象。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> nConstValue1 = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> nConstValue2 = <span class="number">15</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>* <span class="keyword">const</span> pPoint = &amp;nConstValue1;</span><br><span class="line"><span class="comment">//*pPoint  = 55;                    //错误，不能改变pPoint所指向对象的值</span></span><br><span class="line"><span class="comment">//pPoint = &amp;nConstValue2;           //错误，不能改变pPoint本身的值</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="const助记方法"><a href="#const助记方法" class="headerlink" title="const助记方法"></a>const助记方法</h4><h5 id="把一个声明从右向左读。-读成-pointer-to"><a href="#把一个声明从右向左读。-读成-pointer-to" class="headerlink" title="把一个声明从右向左读。( * 读成 pointer to )"></a>把一个声明从右向左读。( * 读成 pointer to )</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> * <span class="keyword">const</span> cp;  <span class="comment">// cp is a const pointer to char</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> * p;   <span class="comment">// p is a pointer to const char;</span></span><br><span class="line"><span class="keyword">char</span> <span class="keyword">const</span> * p;   <span class="comment">// 同上,因为C++里面没有const*的运算符，所以const只能属于前面的类型。</span></span><br></pre></td></tr></table></figure>
+<h5 id="C-标准规定，const关键字放在类型或变量名之前等价的。"><a href="#C-标准规定，const关键字放在类型或变量名之前等价的。" class="headerlink" title="C++标准规定，const关键字放在类型或变量名之前等价的。"></a>C++标准规定，const关键字放在类型或变量名之前等价的。</h5><p>结论：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> * <span class="keyword">const</span> cp     <span class="comment">// 定义一个指向字符的指针常数，即const指针</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* p       <span class="comment">// 定义一个指向字符常数的指针</span></span><br><span class="line"><span class="keyword">char</span> <span class="keyword">const</span>* p       <span class="comment">// 等同于const char* p</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> **       <span class="comment">// 是一个指向指针的指针，那个指针又指向一个字符串常量。   </span></span><br><span class="line"><span class="keyword">char</span> **             <span class="comment">// 也是一个指向指针的指针，那个指针又指向一个字符串变量。</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="浮点数存储方式"><a href="#浮点数存储方式" class="headerlink" title="浮点数存储方式"></a>浮点数存储方式</h3><ol>
+<li>float 占用4个字节，32bits</li>
+</ol>
+<table style="text-align:center"><br>   <tr><br>      <td>符号位</td><br>      <td width="150">指数位</td><br>      <td width="300">尾数部分</td><br>   </tr><br>   <tr><br>      <td>1 bits</td><br>      <td>8 bits</td><br>      <td>23 bits</td><br>   </tr><br></table>
+
+<ol>
+<li>double 占用8字节，64bits</li>
+</ol>
+<table style="text-align:center"><br>   <tr><br>      <td>符号位</td><br>      <td width="150">指数位</td><br>      <td width="300">尾数部分</td><br>   </tr><br>   <tr><br>      <td>1 bits</td><br>      <td>11 bits</td><br>      <td>52 bits</td><br>   </tr><br></table>
+
+<h2 id="c题目"><a href="#c题目" class="headerlink" title="c题目"></a>c题目</h2><ul>
+<li><a href="#printf返回值">printf返回值</a></li>
+<li><a href="#enum枚举类型">enum枚举类型</a></li>
+<li><a href="#可变参数函数">可变参数函数</a></li>
+</ul>
+<h3 id="printf返回值"><a href="#printf返回值" class="headerlink" title="printf返回值"></a>printf返回值</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">43</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="built_in">printf</span>(<span class="string">"%d"</span>, <span class="built_in">printf</span>(<span class="string">"%d"</span>, i)));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：4321<br>printf返回值是输出字符的个数（不包括字符串结尾\x00）</p>
+<h3 id="enum枚举类型"><a href="#enum枚举类型" class="headerlink" title="enum枚举类型"></a>enum枚举类型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">enum</span> color&#123;</span><br><span class="line">    RED,</span><br><span class="line">    BLUE,</span><br><span class="line">    GREEN = <span class="number">-2</span>,</span><br><span class="line">    YELLOW,</span><br><span class="line">    PINK</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, BLUE, PINK);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：1 0<br>enum默认是从0开始的，所以RED = 0， BLUE = 1， GREEN = -2， YELLOW = -1， PINK = 0；</p>
+<h3 id="可变参数函数"><a href="#可变参数函数" class="headerlink" title="可变参数函数"></a>可变参数函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdarg.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> buf[<span class="number">512</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  va_list args;</span><br><span class="line">  va_start(args, fmt);</span><br><span class="line">  <span class="built_in">vsprintf</span>(buf, fmt, args);</span><br><span class="line">  va_end(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="大小端区分"><a href="#大小端区分" class="headerlink" title="大小端区分"></a>大小端区分</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> data &#123;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">def</span> &#123;</span></span><br><span class="line">    <span class="keyword">union</span> data mine;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">def</span> <span class="title">endian</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    endian.mine.a = <span class="number">0x12345678</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%02X\n"</span>, endian.mine.b);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*打印 78 说明是小端， 12 说明是大端 */</span></span><br></pre></td></tr></table></figure>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">//单链表的初始化，建立，插入，查找，删除。//</span></span><br><span class="line"><span class="comment">//Author:Wang Yong                        //</span></span><br><span class="line"><span class="comment">//Date: 2010.8.19                         //</span></span><br><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">//定义结点类型</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ElemType data;              <span class="comment">//单链表中的数据域</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span>          <span class="comment">//单链表的指针域</span></span><br><span class="line">&#125;Node,*LinkedList;</span><br><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">//单链表的初始化</span></span><br><span class="line"><span class="function">LinkedList <span class="title">LinkedListInit</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Node *L;</span><br><span class="line">    L = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));   <span class="comment">//申请结点空间</span></span><br><span class="line">    <span class="keyword">if</span>(L == <span class="literal">NULL</span>)                       <span class="comment">//判断是否有足够的内存空间</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"申请内存空间失败/n"</span>);</span><br><span class="line">    L-&gt;next = <span class="literal">NULL</span>;                  <span class="comment">//将next设置为NULL,初始长度为0的单链表</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">//单链表的建立1，头插法建立单链表</span></span><br><span class="line"><span class="function">LinkedList <span class="title">LinkedListCreatH</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Node *L;</span><br><span class="line">    L = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));   <span class="comment">//申请头结点空间</span></span><br><span class="line">    L-&gt;next = <span class="literal">NULL</span>;                      <span class="comment">//初始化一个空链表</span></span><br><span class="line">    </span><br><span class="line">    ElemType x;                         <span class="comment">//x为链表数据域中的数据</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x) != EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        Node *p;</span><br><span class="line">        p = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));   <span class="comment">//申请新的结点</span></span><br><span class="line">        p-&gt;data = x;                     <span class="comment">//结点数据域赋值</span></span><br><span class="line">        p-&gt;next = L-&gt;next;                    <span class="comment">//将结点插入到表头L--&gt;|2|--&gt;|1|--&gt;NULL</span></span><br><span class="line">        L-&gt;next = p; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">//单链表的建立2，尾插法建立单链表</span></span><br><span class="line"><span class="function">LinkedList <span class="title">LinkedListCreatT</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Node *L;</span><br><span class="line">    L = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));   <span class="comment">//申请头结点空间</span></span><br><span class="line">    L-&gt;next = <span class="literal">NULL</span>;                  <span class="comment">//初始化一个空链表</span></span><br><span class="line">    Node *r;</span><br><span class="line">    r = L;                          <span class="comment">//r始终指向终端结点，开始时指向头结点</span></span><br><span class="line">    ElemType x;                         <span class="comment">//x为链表数据域中的数据</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x) != EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        Node *p;</span><br><span class="line">        p = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));   <span class="comment">//申请新的结点</span></span><br><span class="line">        p-&gt;data = x;                     <span class="comment">//结点数据域赋值</span></span><br><span class="line">        r-&gt;next = p;                 <span class="comment">//将结点插入到表头L--&gt;|1|--&gt;|2|--&gt;NULL</span></span><br><span class="line">        r = p;</span><br><span class="line">    &#125;</span><br><span class="line">    r-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">//单链表的插入，在链表的第i个位置插入x的元素</span></span><br><span class="line"><span class="function">LinkedList <span class="title">LinkedListInsert</span><span class="params">(LinkedList L,<span class="keyword">int</span> i,ElemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    Node *pre;                      <span class="comment">//pre为前驱结点</span></span><br><span class="line">    pre = L;</span><br><span class="line">    <span class="keyword">int</span> tempi = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (tempi = <span class="number">1</span>; tempi &lt; i; tempi++)</span><br><span class="line">        pre = pre-&gt;next;                 <span class="comment">//查找第i个位置的前驱结点</span></span><br><span class="line">    Node *p;                                <span class="comment">//插入的结点为p</span></span><br><span class="line">    p = (Node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">    p-&gt;data = x;</span><br><span class="line">    p-&gt;next = pre-&gt;next;</span><br><span class="line">    pre-&gt;next = p;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">//单链表的删除，在链表中删除值为x的元素</span></span><br><span class="line"><span class="function">LinkedList <span class="title">LinkedListDelete</span><span class="params">(LinkedList L,ElemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Node *p,*pre;                   <span class="comment">//pre为前驱结点，p为查找的结点。</span></span><br><span class="line">    p = L-&gt;next;</span><br><span class="line">    <span class="keyword">while</span>(p-&gt;data != x)              <span class="comment">//查找值为x的元素</span></span><br><span class="line">    &#123;</span><br><span class="line">        pre = p;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    pre-&gt;next = p-&gt;next;          <span class="comment">//删除操作，将其前驱next指向其后继。</span></span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    <span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/////////////////////////////////////////////</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LinkedList <span class="built_in">list</span>,start;</span><br><span class="line"><span class="comment">/*  printf("请输入单链表的数据：");</span></span><br><span class="line"><span class="comment">    list = LinkedListCreatH();</span></span><br><span class="line"><span class="comment">    for(start = list-&gt;next; start != NULL; start = start-&gt;next)</span></span><br><span class="line"><span class="comment">        printf("%d ",start-&gt;data);</span></span><br><span class="line"><span class="comment">    printf("/n");</span></span><br><span class="line"><span class="comment">*/</span>  <span class="built_in">printf</span>(<span class="string">"请输入单链表的数据："</span>);</span><br><span class="line">    <span class="built_in">list</span> = LinkedListCreatT();</span><br><span class="line">    <span class="keyword">for</span>(start = <span class="built_in">list</span>-&gt;next; start != <span class="literal">NULL</span>; start = start-&gt;next)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>,start-&gt;data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"/n"</span>);</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    ElemType x;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入插入数据的位置："</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入插入数据的值："</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">    LinkedListInsert(<span class="built_in">list</span>,i,x);</span><br><span class="line">    <span class="keyword">for</span>(start = <span class="built_in">list</span>-&gt;next; start != <span class="literal">NULL</span>; start = start-&gt;next)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>,start-&gt;data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"/n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入要删除的元素的值："</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">    LinkedListDelete(<span class="built_in">list</span>,x); </span><br><span class="line">    <span class="keyword">for</span>(start = <span class="built_in">list</span>-&gt;next; start != <span class="literal">NULL</span>; start = start-&gt;next)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>,start-&gt;data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"/n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><ul>
+<li><a href="#选择排序">选择排序</a></li>
+<li><a href="#插入排序">插入排序</a></li>
+<li><a href="#希尔排序">希尔排序</a></li>
+<li><a href="#冒泡排序">冒泡排序</a></li>
+<li><a href="#快速排序">快速排序</a></li>
+</ul>
+<p>排序算法有：</p>
+<p><table><br>    <tr><br>      <td>选择排序</td><br>      <td>快速排序</td><br>      <td>希尔排序</td><br>      <td>冒泡排序</td><br>      <td>插入排序</td><br>      <td>堆排序</td><br>      <td>归并排序</td><br>    </tr><br></table><br>排序算法比较：</p>
+<p><img src="../res/sort/sort.png" alt="排序算法比较"></p>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>选择排序是一种简单直观的排序算法，无论什么数据进去都是 O(n²) 的时间复杂度。所以用到它的时候，数据规模越小越好。唯一的好处可能就是不占用额外的内存空间了吧。</p>
+<h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><pre><code>平均: O(n2) 最好: O(n2) 最坏:O(n2)
+</code></pre><h4 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><pre><code>O(1)
+</code></pre><h4 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h4><ol>
+<li>首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置</li>
+<li>再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。</li>
+<li>重复第二步，直到所有元素均排序完毕。<h4 id="动图演示"><a href="#动图演示" class="headerlink" title="动图演示"></a>动图演示</h4><img src="../res/sort/selectionSort.gif" alt="动图演示"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 直接选择排序 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">selection_sort</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> min = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (x[j] &lt; x[min])</span><br><span class="line">            &#123;</span><br><span class="line">                min = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (min != i)</span><br><span class="line">        &#123;</span><br><span class="line">            swap(x,i,min);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>插入排序的代码实现虽然没有冒泡排序和选择排序那么简单粗暴，但它的原理应该是最容易理解的了，因为只要打过扑克牌的人都应该能够秒懂。插入排序是一种最简单直观的排序算法，它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。<br>插入排序和冒泡排序一样，也有一种优化算法，叫做拆半插入。</p>
+<h4 id="时间复杂度-1"><a href="#时间复杂度-1" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><pre><code>平均：O(n2) 最好：O(n) 最坏：O(n2)
+</code></pre><h4 id="空间复杂度-1"><a href="#空间复杂度-1" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><pre><code>O(1)
+</code></pre><h4 id="算法步骤-1"><a href="#算法步骤-1" class="headerlink" title="算法步骤"></a>算法步骤</h4><ol>
+<li>将第一待排序序列第一个元素看做一个有序序列，把第二个元素到最后一个元素当成是未排序序列。</li>
+<li>从头到尾依次扫描未排序序列，将扫描到的每个元素插入有序序列的适当位置。（如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面。）<h4 id="动图演示-1"><a href="#动图演示-1" class="headerlink" title="动图演示"></a>动图演示</h4><img src="res/sort/insertionSort.gif" alt="动图演示"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 直接插入排序 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertion_sort</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> t = x[i];</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span> (j = i; j &gt; <span class="number">0</span> &amp;&amp; x[j<span class="number">-1</span>] &gt; t ; j--)</span><br><span class="line">        &#123;</span><br><span class="line">            x[j] = x[j - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        x[j] = t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><p>希尔排序，也称递减增量排序算法，是插入排序的一种更高效的改进版本。但希尔排序是非稳定排序算法。<br>希尔排序是基于插入排序的以下两点性质而提出改进方法的：</p>
+<ul>
+<li>插入排序在对几乎已经排好序的数据操作时，效率高，即可以达到线性排序的效率；</li>
+<li>但插入排序一般来说是低效的，因为插入排序每次只能将数据移动一位；<br>希尔排序的基本思想是：先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。<h4 id="时间复杂度-2"><a href="#时间复杂度-2" class="headerlink" title="时间复杂度"></a>时间复杂度</h4> 平均：O(n1.5) 最好：O(n) 最坏O(n2)<h4 id="空间复杂度-2"><a href="#空间复杂度-2" class="headerlink" title="空间复杂度"></a>空间复杂度</h4> O(1) <h4 id="算法步骤-2"><a href="#算法步骤-2" class="headerlink" title="算法步骤"></a>算法步骤</h4><ol>
+<li>选择一个增量序列 t1，t2，……，tk，其中 ti &gt; tj, tk = 1；</li>
+<li>按增量序列个数 k，对序列进行 k 趟排序；</li>
+<li>每趟排序，根据对应的增量 ti，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 希尔排序 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell_sort</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> inc = n/<span class="number">3</span>; inc &gt;= <span class="number">1</span>; inc /= <span class="number">3</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = inc; i &lt; n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> t = x[i];</span><br><span class="line">            <span class="keyword">int</span> j;</span><br><span class="line">            <span class="keyword">for</span> (j = i; j &gt;= inc &amp;&amp; x[j - inc] &gt; t ; j -= inc)</span><br><span class="line">            &#123;</span><br><span class="line">                x[j] = x[j - inc];</span><br><span class="line">            &#125;</span><br><span class="line">            x[j] = t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><h4 id="时间复杂度-3"><a href="#时间复杂度-3" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><pre><code>平均: O(n2) 最好: O(n) 最坏：O(n2)
+</code></pre><h4 id="空间复杂度-3"><a href="#空间复杂度-3" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><pre><code>O(1)
+</code></pre><h4 id="算法步骤-3"><a href="#算法步骤-3" class="headerlink" title="算法步骤"></a>算法步骤</h4><ol>
+<li>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。<br>动图演示<br><img src="res/sort/bubbleSort.gif" alt="动图演示"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 冒泡排序 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble_sort</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> change = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n<span class="number">-1</span>; i &gt;= <span class="number">1</span> &amp;&amp; change; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        change = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x[j] &gt; x[j + <span class="number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                swap(x, j, j + <span class="number">1</span>);</span><br><span class="line">                change = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要 Ο(nlogn) 次比较。在最坏状况下则需要 Ο(n2) 次比较，但这种状况并不常见。事实上，快速排序通常明显比其他 Ο(nlogn) 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。<br>快速排序使用分治法（Divide and conquer）策略来把一个串行（list）分为两个子串行（sub-lists）。</p>
+<p>快速排序又是一种分而治之思想在排序算法上的典型应用。本质上来看，快速排序应该算是在冒泡排序基础上的递归分治法。</p>
+<p>快速排序的名字起的是简单粗暴，因为一听到这个名字你就知道它存在的意义，就是快，而且效率高！它是处理大数据最快的排序算法之一了。虽然 Worst Case 的时间复杂度达到了 O(n²)，但是人家就是优秀，在大多数情况下都比平均时间复杂度为 O(n logn) 的排序算法表现要更好，可是这是为什么呢，我也不知道。好在我的强迫症又犯了，查了 N 多资料终于在《算法艺术与信息学竞赛》上找到了满意的答案：</p>
+<blockquote>
+<p>快速排序的最坏运行情况是 O(n²)，比如说顺序数列的快排。但它的平摊期望时间是 O(nlogn)，且 O(nlogn) 记号中隐含的常数因子很小，比复杂度稳定等于 O(nlogn) 的归并排序要小很多。所以，对绝大多数顺序性较弱的随机数列而言，快速排序总是优于归并排序。</p>
+</blockquote>
+<h4 id="时间复杂度-4"><a href="#时间复杂度-4" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><pre><code>平均: O(nlogn) 最好: O(nlogn) 最坏:O(n2)
+</code></pre><h4 id="空间复杂度-4"><a href="#空间复杂度-4" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><pre><code>O(nlogn)   用于方法栈
+</code></pre><h4 id="算法步骤-4"><a href="#算法步骤-4" class="headerlink" title="算法步骤"></a>算法步骤</h4><ol>
+<li>从数列中挑出一个元素，称为 “基准”（pivot）;</li>
+<li>重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；</li>
+<li>递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序；<br>递归的最底部情形，是数列的大小是零或一，也就是永远都已经被排序好了。虽然一直递归下去，但是这个算法总会退出，因为在每次的迭代（iteration）中，它至少会把一个元素摆到它最后的位置去。</li>
+</ol>
+<h4 id="动图演示-2"><a href="#动图演示-2" class="headerlink" title="动图演示"></a>动图演示</h4><p><img src="res/sort/quickSort.gif" alt="动图演示"><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 快速排序 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= u)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> m = l;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = l+<span class="number">1</span>; i&lt;= u; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(x[i] &lt; x[l])</span><br><span class="line">            swap(x, ++m, i);</span><br><span class="line">    &#125;</span><br><span class="line">    swap(x, l, m);</span><br><span class="line">    quick_sort(l, m<span class="number">-1</span>);</span><br><span class="line">    quick_sort(m+<span class="number">1</span>, u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="hash算法"><a href="#hash算法" class="headerlink" title="hash算法"></a>hash算法</h2><h3 id="hash构造方法"><a href="#hash构造方法" class="headerlink" title="hash构造方法"></a>hash构造方法</h3><ol>
+<li>直接寻址法：取关键字或关键字的某个线性函数值为散列地址。即H(key)=key或H(key) = a?key + b，其中a和b为常数（这种散列函数叫做自身函数） </li>
+<li>数字分析法：分析一组数据，比如一组员工的出生年月日，这时我们发现出生年月日的前几位数字大体相同，这样的话，出现冲突的几率就会很大，但是我们发现年月日的后几位表示月份和具体日期的数字差别很大，如果用后面的数字来构成散列地址，则冲突的几率会明显降低。因此数字分析法就是找出数字的规律，尽可能利用这些数据来构造冲突几率较低的散列地址。 </li>
+<li>平方取中法：取关键字平方后的中间几位作为散列地址。 </li>
+<li>折叠法：将关键字分割成位数相同的几部分，最后一部分位数可以不同，然后取这几部分的叠加和（去除进位）作为散列地址。 </li>
+<li>随机数法：选择一随机函数，取关键字的随机值作为散列地址，通常用于关键字长度不同的场合。 </li>
+<li>除留余数法：取关键字被某个不大于散列表表长m的数p除后所得的余数为散列地址。即 H(key) = key MOD p, p&lt;=m。不仅可以对关键字直接取模，也可在折叠、平方取中等运算之后取模。对p的选择很重要，一般取素数或m，若p选的不好，容易产生同义词。<h3 id="hash冲突及解决"><a href="#hash冲突及解决" class="headerlink" title="hash冲突及解决"></a>hash冲突及解决</h3><h4 id="冲突原因："><a href="#冲突原因：" class="headerlink" title="冲突原因："></a>冲突原因：</h4></li>
+<li>与散列函数有关，一个好的散列函数的值应尽可能平均分布。 </li>
+<li>与解决冲突的哈希冲突函数有关。 </li>
+<li>与负载因子的大小。太大不一定就好，而且浪费空间严重，负载因子和散列函数是联动的。 <h4 id="解决冲突的办法"><a href="#解决冲突的办法" class="headerlink" title="解决冲突的办法"></a>解决冲突的办法</h4></li>
+</ol>
+<ul>
+<li>开放定址法：线性探查法、平方探查法、伪随机序列法、双哈希函数法。 </li>
+<li>拉链法：把所有同义词，即hash值相同的记录，用单链表连接起来。<h4 id="常用的hash函数"><a href="#常用的hash函数" class="headerlink" title="常用的hash函数"></a>常用的hash函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">RSHash</span><span class="params">(<span class="keyword">char</span>* str, <span class="keyword">unsigned</span> <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> b   = <span class="number">378551</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> a   = <span class="number">63689</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> hash = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i   = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; str++, i++)</span><br><span class="line">    &#123;</span><br><span class="line">        hash = hash * a + (*str);</span><br><span class="line">        a    = a * b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* End Of RS Hash Function */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">JSHash</span><span class="params">(<span class="keyword">char</span>* str, <span class="keyword">unsigned</span> <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> hash = <span class="number">1315423911</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i	 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; str++, i++)</span><br><span class="line">    &#123;</span><br><span class="line">        hash ^= ((hash &lt;&lt; <span class="number">5</span>) + (*str) + (hash &gt;&gt; <span class="number">2</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* End Of JS Hash Function */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">ELFHash</span><span class="params">(<span class="keyword">char</span>* str, <span class="keyword">unsigned</span> <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> hash = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> x	 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i	 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; str++, i++)</span><br><span class="line">    &#123;</span><br><span class="line">        hash = (hash &lt;&lt; <span class="number">4</span>) + (*str);</span><br><span class="line">        <span class="keyword">if</span>((x = hash &amp; <span class="number">0xF0000000</span>L) != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            hash ^= (x &gt;&gt; <span class="number">24</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        hash &amp;= ~x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* End Of ELF Hash Function */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">DJBHash</span><span class="params">(<span class="keyword">char</span>* str, <span class="keyword">unsigned</span> <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> hash = <span class="number">5381</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> i	 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; str++, i++)</span><br><span class="line">    &#123;</span><br><span class="line">        hash = ((hash &lt;&lt; <span class="number">5</span>) + hash) + (*str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* End Of DJB Hash Function */</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="javascript数据类型"><a href="#javascript数据类型" class="headerlink" title="javascript数据类型"></a>javascript数据类型</h2><p>字符串 数字 布尔 对象 数组 undefined null</p>
+<blockquote>
+<p>js只有一种数字类型<br>undefined：当声明的变量没有初始化的话，那这个变量的值就是undefined<br>null表示尚未存在的对象。</p>
+</blockquote>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/driver/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/cortex/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/embedded-notes/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/embedded-notes/img/avatar.png" alt="xiaxiaowen's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/embedded-notes/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/embedded-notes/archives/2018/02/">二月 2018<span class="sidebar_archives-count">11</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>xiaxiaowen的个人博客
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/embedded-notes/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/embedded-notes/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/embedded-notes/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/embedded-notes/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

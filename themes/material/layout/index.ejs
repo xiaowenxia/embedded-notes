@@ -1,0 +1,54 @@
+<!-- Index Module -->
+<div class="material-index mdl-grid">
+    <% if( (theme.scheme === 'Paradox') && (page.current === 1) && (is_home()) ) { %>
+        <!-- Paradox Header -->
+        <%- partial('_partial/daily_pic') %>
+        <%- partial('_partial/blog_info') %>
+    <% } %>
+    <div class="locate-thumbnail-symbol"></div>
+
+    <!-- Pin on top -->
+    <% if(typeof hasposttop === 'function') { %>
+        <% if(hasposttop(site.posts)) { %>
+            <% getposttop(site.posts).each(function(toppost){ %>
+                <% if(theme.scheme === 'Paradox'){ %>
+                    <!-- Paradox Thumbnail -->
+                    <%- partial('_partial/Paradox-post_entry', { post: toppost, index: true, pin: true }) %>
+                <% } %>
+                <% if(theme.scheme === 'Isolation'){ %>
+                    <!-- Isolation Thumbnail -->
+                    <%- partial('_partial/Isolation-post_entry', { post: toppost, index: true, pin: true }) %>
+                <% } %>
+            <% }); %>
+        <% } %>
+    <% } %>
+
+    <!-- Normal Post -->
+    <% page.posts.each(function(post) { %>
+        <% if(!((typeof hasposttop === 'function') && post.top)) { %>
+            <% if(theme.scheme === 'Paradox') { %>
+                <!-- Paradox Thumbnail -->
+                <%- partial('_partial/Paradox-post_entry', { post: post, index: true, pin: false }) %>
+            <% } %>
+            <% if(theme.scheme === 'Isolation') { %>
+                <!-- Isolation Thumbnail -->
+                <%- partial('_partial/Isolation-post_entry', { post: post, index: true, pin: false }) %>
+            <% } %>
+        <% } %>
+    <% }); %>
+
+    <% if (page.total > 1) { %>
+    <!-- Index nav -->
+        <nav class="material-nav mdl-cell mdl-cell--12-col">
+            <%- paginator({
+                prev_text: __('<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button>'),
+                next_text: __('<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button>'),
+                space: ''
+            }) %>
+        </nav>
+    <% } %>
+
+    <% if(theme.scheme === 'Paradox') { %>
+        <%- partial('_partial/Paradox-post_entry-thumbnail') %>
+    <% } %>
+</div>

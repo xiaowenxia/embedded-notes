@@ -1,0 +1,121 @@
+<!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: <%- theme.fonts.family %>;
+  }
+
+  a {
+    color: <%= theme.uiux.hyperlink_color %>;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: <%= theme.uiux.theme_color %> !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: <%= theme.uiux.theme_color %> !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: <%= theme.uiux.theme_color %> !important;
+  }
+
+  .toTop {
+    background: <%= theme.uiux.button_color %> !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: <%= theme.uiux.button_color %>;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: <%= theme.uiux.button_color %>;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: <%= theme.uiux.button_color %>;
+  }
+
+  .post-toc a:hover {
+    color: <%= theme.uiux.hyperlink_color %>;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+<% if(theme.background.bing.enable === true) { %>
+    <style>
+      body {
+        background-color: <%= theme.background.purecolor %>;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text {
+        background-color: #fff;
+      }
+    </style>
+<% } else if(!theme.background.bgimg) { %>
+    <style>
+      body{
+        background-color: <%= theme.background.purecolor %>;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+<% } else { %>
+    <style>
+      body{
+        background-image: url(<%= theme.background.bgimg %>);
+      }
+    </style>
+<% } %>
+
+
+
+<!-- Fade Effect -->
+<% if(theme.js_effect.fade === true) { %>
+    <style>
+      .fade {
+        transition: all <%= theme.uiux.nprogress_buffer %>ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+<% } %>
+
+<!-- Import Font -->
+<%- partial('_partial/config_font') %>

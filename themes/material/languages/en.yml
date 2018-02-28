@@ -1,0 +1,28 @@
+sidebar:
+    homepage: "Home"
+    archive: "Archives"
+    article_num: "Number of articles"
+post:
+    visitor: "Visitors"
+    views: "Views"
+    continue: "Read more"
+    older: "Older"
+    newer: "Newer"
+    qrcode: "Read this article on other devices"
+    comments_load_button: "Read Comments (Make sure disq.us, disquscdn.com and disqus.com can load properly)"    
+share:
+    article_rss: "Article RSS"
+    comment_rss: "Comment RSS"
+    toTwitter: "Share to Twitter"
+    toFacebook: "Share to Facebook"
+    toLinkedIn: "Share to LinkedIn"
+    toTelegram: "Share to Telegram"
+    toGplus: "Share to Google+"
+    toWeibo: "Share to Weibo"
+    toQQ: "Share to QQ"
+title:
+    category: "Categories"
+    tag: "Tag"
+misc:
+    home: "Home"
+    theme: "Theme"

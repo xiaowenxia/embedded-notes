@@ -1,0 +1,105 @@
+<!-- Import File -->
+
+<% if(theme.materialcdn.use === true) { %>
+    <%- jsLsload({path:(theme.materialcdn.base + '/js/lazyload.min.js'),key:'js/lazyload.min.js'}) %>
+    <%- jsLsload({path:(theme.materialcdn.base + '/js/js.min.js'),key:'js/js.min.js'}) %>
+<%}else{%>
+    <%- jsLsload('js/lazyload.min.js') %>
+    <%- jsLsload('js/js.min.js') %>
+<%}%>
+
+<%- partial('_widget/nprogress') %>
+
+<% if( theme.js_effect.smoothscroll === true ) { %>
+    <% if(theme.materialcdn.use === true) { %>
+        <%- jsLsload({path:(theme.materialcdn.base + '/js/smoothscroll.js'),key:'js/smoothscroll.js'}) %>
+    <%}else{%>
+        <%- jsLsload('js/smoothscroll.js') %>
+    <%}%>
+<% } %>
+
+<%- partial('_partial/footer-option') %>
+
+<% if( (page.current === 1) && (is_home()) ) { %>
+    <!-- Swiftye -->
+    <% if( theme.search.use === 'swiftype' ) { %>
+        <%- partial('_widget/search-swiftype-js') %>
+    <% } %>
+
+    <!-- Local Search-->
+    <% if( theme.search.use === 'local' ) { %>
+        <%- partial('_widget/search-local-js') %>
+
+        <script type="text/ls-javascript" id="search-input-script">
+            var inputArea = document.querySelector('#search');
+            var getSearchFile = function() {
+                var path = '<%= config.search.path %>';
+                searchFunc(path, 'search', 'local-search-result');
+            }
+
+            if(inputArea) {
+                inputArea.onfocus = function() {
+                    getSearchFile();
+                }
+            }
+        </script>
+    <% } %>
+<% } %>
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<%- css("css/uc") %>');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+<% if (page.mathjax) { %>
+    <%- partial('_widget/mathjax') %>
+<% } %>
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+<% if(theme.background.bing.enable) { %>
+<script type="text/ls-javascript" id="Bing-Background-script">
+    queue.offer(function(){
+        $('body').attr('data-original', 'https://api.i-meto.com/bing?<%= theme.background.bing.parameter %>');
+    });
+</script>
+<% } %>
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>

@@ -1,0 +1,27 @@
+sidebar:
+    homepage: "Home"
+    archive: "Arquivos"
+    article_num: "Número de Artigos"
+post:
+    visitor: "Visitantes"
+    views: "Visualizações"
+    continue: "Continue lendo"
+    older: "Anteriores"
+    newer: "Recentes"
+    qrcode: "Veja este artigo em outro dispositivo"
+share:
+    article_rss: "Artigos RSS"
+    comment_rss: "Comentários RSS"
+    toTwitter: "Compartilhar no Twitter"
+    toFacebook: "Compartilhar no Facebook"
+    toLinkedIn: "Compartilhar no LinkedIn"
+    toTelegram: "Compartilhar no Telegram"
+    toGplus: "Compartilhar no Google+"
+    toWeibo: "Compartilhar no Weibo"
+    toQQ: "Compartilhar no QQ"
+title:
+    category: "Categorias"
+    tag: "Marcadores"
+misc:
+    home: "Home"
+    theme: "Tema"

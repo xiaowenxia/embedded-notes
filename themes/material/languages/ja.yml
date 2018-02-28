@@ -1,0 +1,28 @@
+sidebar:
+    homepage: "ホーム"
+    archive: "過去の投稿"
+    article_num: "記事番号"
+post:
+    visitor: "訪問者"
+    views: "ビュー"
+    continue: "読み続けて"
+    older: "古い"
+    newer: "新しい"
+    qrcode: "他のデバイスでこの記事を読む"
+    comments_load_button: "論評を読む「 あなたは disqus & disquscdn.com & disqus.com をロードできることを確認します」"    
+share:
+    article_rss: "記事 RSS"
+    comment_rss: "論評 RSS"
+    toTwitter: "Twitter での共有"
+    toFacebook: "Share to Facebook"
+    toLinkedIn: "LinkedIn での共有"
+    toTelegram: "Telegram での共有"
+    toGplus: "Google+ での共有"
+    toWeibo: "Weibo での共有"
+    toQQ: "Share to QQ"
+title:
+    category: "カテゴリー"
+    tag: "ラベル"
+misc:
+    home: "ホーム"
+    theme: "テーマ"

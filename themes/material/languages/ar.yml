@@ -1,0 +1,28 @@
+sidebar:
+    homepage: "الرئيسية"
+    archive: "أرشيف"
+    article_num: "رقم المقالة"
+post:
+    visitor: "زوار"
+    views: "مشاهدات"
+    continue: "واصل القراءة"
+    older: "أقدم"
+    newer: "أحدث"
+    qrcode: "اقرأ هذا المقال على جهاز آخر"
+    comments_load_button: "قراءة تعليقات 「تأكد !disq.us & disquscdn.com & disqus.com يمكن تحميل」"
+share:
+    article_rss: "مقالات RSS"
+    comment_rss: "تعليقات RSS"
+    toTwitter: "شارك على Twitter"
+    toFacebook: "شارك على Facebook"
+    toLinkedIn: "شارك على LinkedIn"
+    toTelegram: "شارك على Telegram"
+    toGplus: "شارك على Google+"
+    toWeibo: "شارك على Weibo"
+    toQQ: "شارك على QQ"
+title:
+    category: "فئة"
+    tag: "وسم"
+misc:
+    home: "رئيسية"
+    theme: "سمة"

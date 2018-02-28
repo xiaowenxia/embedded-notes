@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            嵌入式笔记：linux软件开发 | 
+        
+        xiaxiaowen的个人博客
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="xiaxiaowen">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/embedded-notes/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/embedded-notes/img/favicon.png">
+    <link rel="apple-touch-icon" href="/embedded-notes/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="xiaxiaowen的个人博客">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="嵌入式笔记：linux软件开发 | xiaxiaowen的个人博客">
+    <meta property="og:image" content="/embedded-notes/img/favicon.png" />
+    <meta property="og:description" content="">
+    
+
+    
+        <meta property="article:published_time" content="2月 28, 2018" />
+        <meta property="article:modified_time" content="2月 28, 2018" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="嵌入式笔记：linux软件开发 | xiaxiaowen的个人博客">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://xiaowenxia.github.io/embedded-notes" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/linux/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "xiaxiaowen的个人博客",
+        "logo": "/embedded-notes/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xiaxiaowen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/embedded-notes/img/favicon.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "headline": "嵌入式笔记：linux软件开发",
+    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/linux/index.html",
+    "datePublished": "2月 28, 2018",
+    "dateModified": "2月 28, 2018",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://xiaowenxia.github.io/embedded-notes"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/embedded-notes/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/embedded-notes/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    .footer-sns-facebook {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNjU3LjYgODcuOGw0LjggMy44djU1LjJjMCA1NC42IDAgNTUuMi00LjYgNTkuNi00LjQgNC40LTYgNC42LTUwLjIgNS42bC00NS42IDEtNy4yIDUuNmMtMTAuNCA4LTE2LjggMTcuMi0xOS4yIDI3LjQtMSA1LTEuOCAyNC44LTEuOCA0NCAuMiAzOCAxLjYgNDQuNiAxMC44IDQ4IDIuOCAxLjIgMjguNCAyIDU2LjggMiA0Ny44IDAgNTIgLjIgNTYuMiAzLjhsNC44IDMuOHY1NS4yYzAgNTQuNiAwIDU1LjItNC42IDU5LjYtNC40IDQuNi01LjQgNC42LTU3IDUuMi0yOC44LjItNTQuNC44LTU2LjggMS40LTIuNC42LTUuNiAzLTYuOCA1LjQtMS44IDMuMi0yLjQgNDEuNC0yLjYgMTQzLjJsLS4yIDEzOC44LTUuNiA0LjgtNS42IDQuOEg2MDljLTUyLjQgMC01Mi44IDAtNTguMi00LjZsLTUuNC00LjYtLjItMTQwLjYtLjItMTQwLjYtNC44LTMuOGMtNC4yLTMuNC04LTMuOC0zNS42LTMuOC0zMi44IDAtNDEtMS44LTQzLjYtMTAtLjYtMi4yLTEuMi0yNS40LTEuMi01MS40IDAtNjAuOC0uMi01NyAzLjQtNjEuNiAyLjgtMy42IDYtNCAzNy44LTUgMzMtMSAzNS4yLTEuMiAzOS40LTUuNiA0LjYtNC40IDQuNi01LjIgNS44LTcxIDEuMi03My40LjItNjcuMiAxNi42LTk5LjQgOC0xNS44IDEyLjgtMjIgMjgtMzcgMTUuMi0xNS4yIDIxLjQtMTkuNiAzOC4yLTI4IDExLTUuNCAyNC0xMSAyOS0xMi4yIDYuMi0xLjggMjguNi0yLjYgNzEuMi0yLjYgNTguNi0uMiA2Mi42IDAgNjcgMy42eiIvPjwvc3ZnPg==);
+    }
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    .footer-sns-gplus {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHpNNDMwIDI5NS40YzQwLjYgMTUuNCA1Ni42IDIzLjggNzIuNiAzOC40IDYuOCA2LjIgNy4yIDE1LjIgMSAyMy40LTYuMiA4LTMzLjYgMzMuOC0zOSAzNi42LTUuNiAyLjgtMTcuNiAyLjgtMjMuMi0uMi0yLjQtMS4yLTguMi01LjItMTMtOC44LTExLjItOC42LTI0LjYtMTEuMi01NS4yLTExLjItMjcuNCAwLTQwLjYgMi42LTUyLjIgMTAuNC00LjQgMi44LTEyLjIgNy42LTE3LjIgMTAuNi0yMyAxMy4yLTUxLjQgNTUtNTUuOCA4Mi40LTIuNiAxNS42LTIuNCAzNC44LjIgNTEgMi44IDE3LjQgMTkuOCA0OC44IDM1LjIgNjUuMiAxNiAxNi42IDQ1IDMzLjYgNjIuOCAzNi42IDI2LjggNC40IDY1LjggMS42IDc5LjQtNS44IDIwLjYtMTEuNCAzMS0xOSA0MS0zMC40IDE4LjgtMjEuNiAyMy40LTM0LjIgMTUuNi00My44LTMuOC00LjgtNC40LTQuOC01MS01LjgtNjAuOC0xLjItNTYuMiAyLjItNTYuMi00My4yIDAtMzIuNC4yLTMzLjIgNC44LTM3IDQuNC0zLjYgOS0zLjggOTItMy44IDc5IDAgODcuOC40IDk0LjIgMy42IDExLjIgNS42IDEzIDExLjQgMTIuOCA0My40IDAgMjUuNC0uOCAzMC44LTcuNiA1OC00IDE2LjYtOS44IDM0LTEyLjYgMzktMi44IDUtOC4yIDE0LjItMTEuNiAyMC42LTguNCAxNS40LTI3LjIgMzYuOC00MC44IDQ2LjYtNS44IDQuNC0xMy44IDEwLjItMTcuNiAxMy4yLTMuOCAzLTExIDctMTYuMiA4LjgtNS4yIDEuOC0xNi4yIDYuNC0yNC40IDEwLTIyLjQgOS42LTM0LjggMTEuNi03MyAxMS42LTM3LjYuMi00Ny0xLjQtNzEtMTItOC4yLTMuNi0xNy42LTcuMi0yMC44LTgtMTUuOC0zLjgtNjctNDUuMi03Ny44LTYyLjgtMi4yLTMuOC03LjYtMTEuNi0xMS44LTE3LjItNC4yLTUuNC05LTE0LTEwLjYtMTktMS44LTQuOC02LjItMTYtMTAtMjQuOC0zLjYtOC44LTcuOC0yMi4yLTkuMi0yOS42LTMuMi0xOC44LTEuNC03OS40IDIuOC05MS40IDEzLjgtNDAuNiAzNS42LTc4IDU4LjgtMTAwLjIgMTQtMTMuNiA0Ny4yLTM2LjQgNTgtMzkuOCA0LjItMS40IDEzLjQtNS4yIDIwLjYtOC40IDIyLTEwIDMyLjgtMTEuNiA3Ni0xMSAzMy44LjYgNDAuNCAxLjIgNTAgNC44em0zNDAuOCA4MC44YzggMy42IDkuNiAxMS4yIDkuMiAzOS4yLS42IDM0LjQtLjYgMzQgNSAzOS42IDQuOCA1IDUuNCA1IDM3LjYgNSA0My40IDAgNDQuNC44IDQzLjIgMzYuMi0uOCAxNy0xLjIgMTguNC02LjQgMjMtNS40IDQuNi02LjYgNC44LTM3LjYgNC44LTMxLjIgMC0zMiAuMi0zNi44IDUtNS42IDUuNC01LjYgNC40LTUgNDEuMi40IDI2LjQuMiAyNy40LTQuNiAzMy00LjggNS42LTYgNS44LTI0LjQgNi40LTIwLjguOC0yOS42LTEuNC0zMy40LTguNC0xLjQtMi42LTItMTUuNi0xLjgtMzUuNi40LTMxLjIuNC0zMS42LTQuNi0zNi42cy01LjYtNS0zNi01Yy0xOC44IDAtMzMtLjgtMzYtMi4yLTcuNi0zLjYtOS42LTExLjItOC44LTMzLjguOC0yOC4yLjQtMjggNDEtMjggNDUuNCAwIDQ1LjQgMCA0NC42LTQyLjYtLjYtMzMtLjYtMzMgNS0zOC40IDQuNC00LjYgNi4yLTUgMjQuOC01IDExIDAgMjIuMiAxIDI1IDIuMnoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/embedded-notes/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关键命令说明"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">关键命令说明</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#系统关机命令"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">系统关机命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#linux查看文本的指令"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">linux查看文本的指令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mount"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">mount</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#dmesg"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">dmesg</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#grep"><span class="post-toc-number">1.1.5.</span> <span class="post-toc-text">grep</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#find"><span class="post-toc-number">1.1.6.</span> <span class="post-toc-text">find</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#lsusb"><span class="post-toc-number">1.1.7.</span> <span class="post-toc-text">lsusb</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#lsof"><span class="post-toc-number">1.1.8.</span> <span class="post-toc-text">lsof</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#linux软件开发知识点"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">linux软件开发知识点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#linux进程间通讯方式"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">linux进程间通讯方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内存申请函数"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">内存申请函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#linux内存分配说明"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">linux内存分配说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#gcc编译过程"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">gcc编译过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文件系统"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">文件系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#硬链接和软连接"><span class="post-toc-number">1.2.6.</span> <span class="post-toc-text">硬链接和软连接</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#硬链接"><span class="post-toc-number">1.2.6.1.</span> <span class="post-toc-text">硬链接</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#软链接-符号链接"><span class="post-toc-number">1.2.6.2.</span> <span class="post-toc-text">软链接(符号链接)</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#linux内核子系统"><span class="post-toc-number">1.2.7.</span> <span class="post-toc-text">linux内核子系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#进程几种状态"><span class="post-toc-number">1.2.8.</span> <span class="post-toc-text">进程几种状态</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文件系统组成"><span class="post-toc-number">1.2.9.</span> <span class="post-toc-text">文件系统组成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#i-节点"><span class="post-toc-number">1.2.10.</span> <span class="post-toc-text">i 节点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#linux文件类型"><span class="post-toc-number">1.2.11.</span> <span class="post-toc-text">linux文件类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#linux常用的系统调用函数"><span class="post-toc-number">1.2.12.</span> <span class="post-toc-text">linux常用的系统调用函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#进程控制函数"><span class="post-toc-number">1.2.12.1.</span> <span class="post-toc-text">进程控制函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#文件操作函数"><span class="post-toc-number">1.2.12.2.</span> <span class="post-toc-text">文件操作函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#文件系统操作函数"><span class="post-toc-number">1.2.12.3.</span> <span class="post-toc-text">文件系统操作函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#系统控制函数"><span class="post-toc-number">1.2.12.4.</span> <span class="post-toc-text">系统控制函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内存管理函数"><span class="post-toc-number">1.2.12.5.</span> <span class="post-toc-text">内存管理函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#网络管理函数"><span class="post-toc-number">1.2.12.6.</span> <span class="post-toc-text">网络管理函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#socket函数"><span class="post-toc-number">1.2.12.7.</span> <span class="post-toc-text">socket函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#用户管理函数"><span class="post-toc-number">1.2.12.8.</span> <span class="post-toc-text">用户管理函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#进程间通信函数"><span class="post-toc-number">1.2.12.9.</span> <span class="post-toc-text">进程间通信函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#信号相关函数"><span class="post-toc-number">1.2.12.10.</span> <span class="post-toc-text">信号相关函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#消息相关函数"><span class="post-toc-number">1.2.12.11.</span> <span class="post-toc-text">消息相关函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#管道相关函数"><span class="post-toc-number">1.2.12.12.</span> <span class="post-toc-text">管道相关函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#信号量相关函数"><span class="post-toc-number">1.2.12.13.</span> <span class="post-toc-text">信号量相关函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#共享内存相关函数"><span class="post-toc-number">1.2.12.14.</span> <span class="post-toc-text">共享内存相关函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#fork函数"><span class="post-toc-number">1.2.13.</span> <span class="post-toc-text">fork函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#僵尸进程"><span class="post-toc-number">1.2.14.</span> <span class="post-toc-text">僵尸进程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#僵尸进程产生原因"><span class="post-toc-number">1.2.14.1.</span> <span class="post-toc-text">僵尸进程产生原因</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#僵尸进程解决办法"><span class="post-toc-number">1.2.14.2.</span> <span class="post-toc-text">僵尸进程解决办法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ps指令查看僵尸进程"><span class="post-toc-number">1.2.14.3.</span> <span class="post-toc-text">ps指令查看僵尸进程</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常见文件说明"><span class="post-toc-number">1.2.15.</span> <span class="post-toc-text">常见文件说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#proc目录说明"><span class="post-toc-number">1.2.16.</span> <span class="post-toc-text">proc目录说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#fopen参数说明"><span class="post-toc-number">1.2.17.</span> <span class="post-toc-text">fopen参数说明</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#linux驱动开发知识点"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">linux驱动开发知识点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#insmod-rmmod-加载-卸载模块"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">insmod rmmod 加载 卸载模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#i-max6UL"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">i.max6UL</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#系统框图"><span class="post-toc-number">1.3.2.1.</span> <span class="post-toc-text">系统框图</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#linux启动过程"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">linux启动过程</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#makefile"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">makefile</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#makefile的规则"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">makefile的规则</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#gcc工具链"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">gcc工具链</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nm命令"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">nm命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ldd命令"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">ldd命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交叉编译工具链说明"><span class="post-toc-number">1.4.5.</span> <span class="post-toc-text">交叉编译工具链说明</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#gcc-交叉编译器"><span class="post-toc-number">1.4.5.1.</span> <span class="post-toc-text">gcc 交叉编译器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ld-交叉链接器"><span class="post-toc-number">1.4.5.2.</span> <span class="post-toc-text">ld 交叉链接器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#readelf-交叉ELF文件查看器"><span class="post-toc-number">1.4.5.3.</span> <span class="post-toc-text">readelf 交叉ELF文件查看器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#objdump-交叉反汇编器"><span class="post-toc-number">1.4.5.4.</span> <span class="post-toc-text">objdump 交叉反汇编器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#objcopy-交叉转换器"><span class="post-toc-number">1.4.5.5.</span> <span class="post-toc-text">objcopy 交叉转换器</span></a></li></ol></li></ol></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                嵌入式笔记：linux软件开发
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xiaxiaowen</strong>
+        <span>2月 28, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：linux软件开发&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/linux/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：linux软件开发&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/linux/index.html&via=xiaxiaowen" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/linux/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/linux/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：linux软件开发&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/linux/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>嵌入式笔记：linux软件开发</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li><a href="#关键命令说明">关键命令说明</a><ul>
+<li><a href="#系统关机命令">系统关机命令</a></li>
+<li><a href="#linux查看文本的指令">linux查看文本的指令</a></li>
+<li><a href="#mount指令">mount</a></li>
+<li><a href="#dmesg">dmesg</a></li>
+<li><a href="#grep">grep</a></li>
+<li><a href="#find">find</a></li>
+<li><a href="#lsusb">lsusb</a></li>
+<li><a href="#lsof">lsof</a></li>
+</ul>
+</li>
+<li><a href="#linux软件开发知识点">linux软件开发知识点</a><ul>
+<li><a href="#linux进程间通讯方式">linux进程间通讯方式</a></li>
+<li><a href="#内存申请函数">内存申请函数</a></li>
+<li><a href="#gcc编译过程">gcc编译过程</a></li>
+<li><a href="#文件系统">文件系统</a></li>
+<li><a href="#硬链接和软连接">硬链接和软连接</a></li>
+<li><a href="#linux内核子系统">linux内核子系统</a></li>
+<li><a href="#进程几种状态">进程几种状态</a></li>
+<li><a href="#文件系统组成">文件系统组成</a></li>
+<li><a href="#linux文件类型">linux文件类型</a></li>
+<li><a href="#linux常用的系统调用函数">linux常用的系统调用函数</a></li>
+<li><a href="#fork函数">fork函数</a></li>
+<li><a href="#僵尸进程">僵尸进程</a></li>
+<li><a href="#常见文件说明">常见文件说明</a></li>
+<li><a href="#/proc目录说明">/proc目录说明</a></li>
+<li><a href="#fopen参数说明">fopen参数说明</a></li>
+</ul>
+</li>
+<li><a href="#linux驱动开发知识点">linux驱动开发知识点</a></li>
+<li><a href="#makefile">makefile</a></li>
+<li><a href="#shell">shell</a></li>
+</ul>
+<h2 id="关键命令说明"><a href="#关键命令说明" class="headerlink" title="关键命令说明"></a>关键命令说明</h2><ul>
+<li><a href="#系统关机命令">系统关机命令</a></li>
+<li><a href="#linux查看文本的指令">linux查看文本的指令</a></li>
+<li><a href="#mount指令">mount</a></li>
+<li><a href="#dmesg">dmesg</a></li>
+<li><a href="#grep">grep</a></li>
+<li><a href="#find">find</a></li>
+<li><a href="#lsusb">lsusb</a></li>
+<li><a href="#lsof">lsof</a></li>
+</ul>
+<h3 id="系统关机命令"><a href="#系统关机命令" class="headerlink" title="系统关机命令"></a>系统关机命令</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">指令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">shutdown</td>
+<td>命令安全地将系统关机。</td>
+</tr>
+<tr>
+<td style="text-align:center">halt</td>
+<td>就是调用shutdown -h。</td>
+</tr>
+<tr>
+<td style="text-align:center">reboot</td>
+<td>工作过程差不多跟halt一样﹐不过它是引发主机重启</td>
+</tr>
+<tr>
+<td style="text-align:center">poweroff</td>
+<td>就是halt的软链接而已</td>
+</tr>
+<tr>
+<td style="text-align:center">init</td>
+<td>所有进程的祖先﹐它的进程号始终为1﹐init 0为关机﹐init1为重启。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="linux查看文本的指令"><a href="#linux查看文本的指令" class="headerlink" title="linux查看文本的指令"></a>linux查看文本的指令</h3><table style="text-align:center"><br>   <tr><br>      <td>cat</td><br>      <td>tac</td><br>      <td>sed</td><br>      <td>head</td><br>      <td>tail</td><br>      <td>more</td><br>      <td>less</td><br>      <td>nl</td><br>   </tr><br></table>
+
+<blockquote>
+<p><strong>tac</strong>： cat的反向指令，从最后一行倒序显示全部内容<br><strong>head</strong>： 只显示头几行<br><strong>tail</strong>： 只显示最后几行 tail -f 可以实时显示log文件的更新<br><strong>nl</strong>： 类似于cat -n，显示时输出行号</p>
+</blockquote>
+<h3 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h3><p>命令格式：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount [-t vfstype] [-o options] device dir</span><br></pre></td></tr></table></figure></p>
+<p>挂载nfs<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t nfs 192.168.0.1:/tmp /mnt/nfs</span><br></pre></td></tr></table></figure></p>
+<h3 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/<span class="built_in">log</span>/messages</span><br></pre></td></tr></table></figure>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>选项<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-c：只输出匹配行的计数。</span><br><span class="line">-C：匹配的上下文分别显示[number]行。</span><br><span class="line">-I：不区分大小写(只适用于单字符)。</span><br><span class="line">-i：不区分大小写。</span><br><span class="line">-h：查询多文件时不显示文件名。</span><br><span class="line">-l：查询多文件时只输出包含匹配字符的文件名。</span><br><span class="line">-L：列出不匹配的文件名。</span><br><span class="line">-n：显示匹配行及 行号。</span><br><span class="line">-s：不显示不存在或无匹配文本的错误信息。</span><br><span class="line">-v：显示不包含匹配文本的所有行。</span><br><span class="line">-w：只匹配整个单词。</span><br><span class="line">-E：扩展的正则表达式</span><br><span class="line">-R：递归搜寻</span><br><span class="line">--exclude=FILE：跳过FILE</span><br></pre></td></tr></table></figure></p>
+<p>正则表达式主要参数：<br>    \：忽略正则表达式中特殊字符的原有含义。<br>    ^：匹配正则表达式的开始行。<br>    $：匹配正则表达式的结束行。<br>    \&lt;：从匹配正则表达式的行开始。<br>    >：到匹配正则表达式的行结束。<br>    []：单个字符，如[A]即A符合要求 。<br>    [-]：范围，如[A-Z]，即A、B、C一直到Z都符合要求 。<br>    .：所有的单个字符。<br>    *：有字符，长度可以为0。</p>
+<p>经典使用方法<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#所有以d开头的文件，包含test的匹配行</span></span><br><span class="line">grep <span class="string">"test"</span> d*</span><br><span class="line"><span class="comment">#包含test或者zephyr 不区分大小写 显示行号 扩展正则表达式</span></span><br><span class="line">grep -inE <span class="string">"test|zephyr"</span> d*</span><br><span class="line"><span class="comment">#包含test和zephyr 不区分大小写 显示行号 扩展正则表达式</span></span><br><span class="line">grep -<span class="keyword">in</span> <span class="string">"test"</span> d* | grep <span class="string">'zephyr'</span></span><br></pre></td></tr></table></figure></p>
+<p>主要参数：<br>    －c：只输出匹配行的计数。<br>    －I：不区分大小写(只适用于单字符)。<br>    －h：查询多文件时不显示文件名。<br>    －l：查询多文件时只输出包含匹配字符的文件名。<br>    －L：列出不匹配的文件名<br>    －n：显示匹配行及行号。<br>    －s：不显示不存在或无匹配文本的错误信息。<br>    －v：显示不包含匹配文本的所有行。<br>    －R：递归搜寻<br>    －d skip：不递归搜寻<br>    －w：匹配整个单词<br>正则表达式主要参数：<br>    \：忽略正则表达式中特殊字符的原有含义。<br>    ^：匹配正则表达式的开始行。<br>    $：匹配正则表达式的结束行。<br>    \&lt;：从匹配正则表达式的行开始。<br>    >：到匹配正则表达式的行结束。<br>    []：单个字符，如[A]即A符合要求 。<br>    [-]：范围，如[A-Z]，即A、B、C一直到Z都符合要求 。<br>    .：所有的单个字符。<br>    *：有字符，长度可以为0。</p>
+<p>grep ‘test’ d*        显示以d开头的文件中包含的test行<br>grep ‘test’ aa bb cc     查找文件aa bb cc 中匹配的test行<br>grep ‘test’|’hello’ files 匹配test或者hello<br>grep ‘\&lt;man’ files    匹配manic 和man 不匹配batman<br>grep ‘\&lt;man>‘        只匹配man 不匹配batman和manic<br>grep ‘^man’ files    匹配的字符行首<br>grep ‘$man’ files    匹配的字符串仔行尾</p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>用法<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find [-path ..] [expression]</span><br></pre></td></tr></table></figure></p>
+<p>选项<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-name     按照文件名</span><br><span class="line">-iname     按照文件名 忽略大小写</span><br><span class="line">-perm     按照文件权限</span><br><span class="line">-user     按照文件拥有者</span><br><span class="line">-group    按照文件所属的组</span><br><span class="line">-mtime -n +n 按照文件的更改时间来查找文件， -n：n天以内，+n：n天以前</span><br><span class="line">-<span class="built_in">type</span>     查找某一类型：文件类型有：普通文件(f)，目录(d)，字符设备文件(c)，块设备文件(b)，符号链接文件(l)，套接字文件(s)，管道文件(p)</span><br><span class="line">-size n   查找文件长度为n块（一块等于512字节）的文件，带有c时表示文件长度以字节计。 </span><br><span class="line">-mount    不跨越文件系统</span><br><span class="line">-follow   遇到符号链接文件，就跟踪至链接所指向的文件</span><br><span class="line">-path     匹配文件路径或者文件</span><br><span class="line">-<span class="built_in">exec</span>     执行后续命令操作</span><br><span class="line">-a        and 与操作</span><br><span class="line">-o        or  或操作</span><br><span class="line">-not      not 非操作</span><br></pre></td></tr></table></figure></p>
+<p>经典使用方法<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查找/run中所有的socket文件</span></span><br><span class="line">find /run -<span class="built_in">type</span> s</span><br><span class="line"><span class="comment">#搜索/dev中所有包含tty的文件</span></span><br><span class="line">find /dev -name <span class="string">"*tty*"</span></span><br><span class="line"><span class="comment">#搜索/dev中大小大于10字节，名称包含bus的文件</span></span><br><span class="line">find /dev -size +10c -name <span class="string">"*bus*"</span></span><br><span class="line"><span class="comment">#或操作，搜索debug开头的文件或者.rst的文件</span></span><br><span class="line">find -name <span class="string">'debug*'</span> -o -name <span class="string">'*.rst'</span></span><br><span class="line"><span class="comment">#与操作，搜索debug开头的文件同时是.rst的文件</span></span><br><span class="line">find -name <span class="string">'debug*'</span> -a -name <span class="string">'*.rst'</span></span><br><span class="line"><span class="comment">#找出文件大小大于10000块的文件，并复制到当前目录</span></span><br><span class="line">find -size +100000 -<span class="built_in">exec</span> cp &#123;&#125; . \;</span><br></pre></td></tr></table></figure></p>
+<h3 id="lsusb"><a href="#lsusb" class="headerlink" title="lsusb"></a>lsusb</h3><p>显示系统中以及连接到系统的USB总线信息的工具。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb</span><br><span class="line"></span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 006 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 007 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 008 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 002 Device 003: ID 17ef:4811 Lenovo Integrated Webcam [R5U877]</span><br><span class="line">Bus 008 Device 002: ID 0a5c:217f Broadcom Corp. Bluetooth Controller</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Bus 008 : 指明设备连接到哪（哪条总线）<br>Device 002 : 表明这是连接到总线上的第二台设备<br>ID : 设备的ID<br>Broadcom Corp. Bluetooth Controller :生产商名字和设备名</p>
+</blockquote>
+<p>列出USB详细信息<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb -v</span><br></pre></td></tr></table></figure></p>
+<p>列出有多少USB设备<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /dev/bus</span><br></pre></td></tr></table></figure></p>
+<p>打印特定设备的详细信息<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb -D /dev/bus/usb/008/002</span><br></pre></td></tr></table></figure></p>
+<h3 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h3><p>列出当前系统打开文件的工具<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo lsof</span><br><span class="line">COMMAND    PID      USER   FD      TYPE     DEVICE     SIZE       NODE      NAME</span><br><span class="line">init       1         root  cwd      DIR       3,3       1024       2         /</span><br><span class="line">init       1         root  rtd      DIR       3,3       1024       2         /</span><br><span class="line">init       1         root  txt      REG       3,3       38432      1763452  /sbin/init</span><br><span class="line">init       1         root  mem      REG       3,3       106114     1091620  /lib/libdl-2.6.so</span><br><span class="line">init       1         root  mem      REG       3,3       7560696    1091614  /lib/libc-2.6.so</span><br><span class="line">init       1         root  mem      REG       3,3       79460      1091669  /lib/libselinux.so.1</span><br><span class="line">init       1         root  mem      REG       3,3       223280     1091668  /lib/libsepol.so.1</span><br><span class="line">init       1         root  mem      REG       3,3       564136     1091607  /lib/ld-2.6.so</span><br><span class="line">init       1         root  10u      FIFO      0,15                  1309     /dev/initctl</span><br></pre></td></tr></table></figure></p>
+<table style="text-align:center"><br>   <tr><br>      <td>COMMAND</td><br>      <td>进程的名称</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>PID</td><br>      <td>进程标识符</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>USER</td><br>      <td>进程所有者</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>FD</td><br>      <td>文件描述符</td><br>      <td>应用程序通过文件描述符识别该文件。如cwd、txt、mem等</td><br>   </tr><br>   <tr><br>      <td>TYPE</td><br>      <td>文件类型</td><br>      <td>REG(文件) DIR(目录) CHR(字符) BLK(块设备) FIFO(管道) UNIX(UNIX 域套接字) IPv4(IP套接字)</td><br>   </tr><br>   <tr><br>      <td>DEVICE</td><br>      <td>指定磁盘的名称</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>SIZE</td><br>      <td>文件大小</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>NODE</td><br>      <td>文件inode</td><br>      <td>每个文件都有一个唯一的inode</td><br>   </tr><br>   <tr><br>      <td>NAME</td><br>      <td>文件名称</td><br>      <td></td><br>   </tr><br></table>
+
+<p>参数列表<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lsof  filename      显示打开指定文件的所有进程</span><br><span class="line">lsof -a             表示两个参数都必须满足时才显示结果</span><br><span class="line">lsof -c string      显示COMMAND列中包含指定字符的进程所有打开的文件</span><br><span class="line">lsof -u username    显示所属user进程打开的文件</span><br><span class="line">lsof -g gid         显示归属gid的进程情况</span><br><span class="line">lsof +d /DIR/       显示目录下被进程打开的文件</span><br><span class="line">lsof +D /DIR/       同上，但是会搜索目录下的所有目录，时间相对较长</span><br><span class="line">lsof -d FD          显示指定文件描述符的进程</span><br><span class="line">lsof -n             不将IP转换为hostname，缺省是不加上-n参数</span><br><span class="line">lsof -i             用以显示符合条件的进程情况</span><br><span class="line">lsof -i[46] [protocol][@hostname|hostaddr][:service|port]</span><br><span class="line">                    46 --&gt; IPv4 or IPv6</span><br><span class="line">                    protocol --&gt; TCP or UDP</span><br><span class="line">                    hostname --&gt; Internet host name</span><br><span class="line">                    hostaddr --&gt; IPv4地址</span><br><span class="line">                    service --&gt; /etc/service中的 service name (可以不只一个)</span><br><span class="line">                    port --&gt; 端口号 (可以不只一个)</span><br></pre></td></tr></table></figure></p>
+<p>查找应用程序打开的文件的名称和数目<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示打开指定文件的所有进程</span></span><br><span class="line">$ lsof  filename</span><br><span class="line"><span class="comment">#例如:打开所有使用/dev/urandom的进程</span></span><br><span class="line">$ lsof /dev/urandom</span><br><span class="line"><span class="comment">#查看22端口现在运行的情况 </span></span><br><span class="line">$ lsof -i :22</span><br><span class="line"><span class="comment">#查看所属xiaxiaowen用户进程所打开的文件类型为txt的文件</span></span><br><span class="line">$ lsof -a -u xiaxiaowen -d txt</span><br><span class="line"><span class="comment">#查找谁在使用文件系统</span></span><br><span class="line">$ lsof /media/xiaxiaowen/机械硬盘</span><br><span class="line">COMMAND  PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">zsh     8465 xiaxiaowen  cwd    DIR   8,17     8192    5 /media/xiaxiaowen/机械硬盘</span><br></pre></td></tr></table></figure></p>
+<h2 id="linux软件开发知识点"><a href="#linux软件开发知识点" class="headerlink" title="linux软件开发知识点"></a>linux软件开发知识点</h2><ul>
+<li><a href="#linux进程间通讯方式">linux进程间通讯方式</a></li>
+<li><a href="#内存申请函数">内存申请函数</a></li>
+<li><a href="#linux内存分配说明">linux内存分配说明</a></li>
+<li><a href="#gcc编译过程">gcc编译过程</a></li>
+<li><a href="#文件系统">文件系统</a></li>
+<li><a href="#硬链接和软连接">硬链接和软连接</a></li>
+<li><a href="#linux内核子系统">linux内核子系统</a></li>
+<li><a href="#进程几种状态">进程几种状态</a></li>
+<li><a href="#文件系统组成">文件系统组成</a></li>
+<li><a href="#linux文件类型">linux文件类型</a></li>
+<li><a href="#linux常用的系统调用函数">linux常用的系统调用函数</a></li>
+<li><a href="#fork函数">fork函数</a></li>
+<li><a href="#僵尸进程">僵尸进程</a></li>
+<li><a href="#常见文件说明">常见文件说明</a></li>
+<li><a href="#proc目录说明">proc目录说明</a></li>
+<li><a href="#fopen参数说明">fopen参数说明</a></li>
+</ul>
+<h3 id="linux进程间通讯方式"><a href="#linux进程间通讯方式" class="headerlink" title="linux进程间通讯方式"></a>linux进程间通讯方式</h3><ol>
+<li>管道（Pipe）及有名管道（named pipe）</li>
+<li>信号（Signal）</li>
+<li>报文（Message）队列（消息队列）：</li>
+<li>共享内存</li>
+<li>信号量（semaphore）</li>
+<li>套接口（Socket）</li>
+</ol>
+<h3 id="内存申请函数"><a href="#内存申请函数" class="headerlink" title="内存申请函数"></a>内存申请函数</h3><ol>
+<li>calloc</li>
+<li>malloc</li>
+<li>realloc<h3 id="linux内存分配说明"><a href="#linux内存分配说明" class="headerlink" title="linux内存分配说明"></a>linux内存分配说明</h3>|内存|存放数据|说明<br>|:—:|—|—|<br>|静态存储区|静态数据、全局数据、常量|在程序编译的时候就已经分配好|<br>|栈区     |局部变量、函数参数|栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限|<br>|堆区     |malloc申请的内存|动态内存分配,需要手动释放|<br>|代码区    |代码|存放函数体的二进制代码|<br>|文字常量区|常量字符串|程序结束后由系统释放|<h3 id="gcc编译过程"><a href="#gcc编译过程" class="headerlink" title="gcc编译过程"></a>gcc编译过程</h3></li>
+</ol>
+<table style="text-align:center"><br>   <tr><br>      <td><strong>过程</strong></td><br>      <td><strong>生成文件</strong></td><br>   </tr><br>   <tr><br>      <td>预编译</td><br>      <td><em>.i</em></td><br>   </tr><br>   <tr><br>      <td>编译</td><br>      <td>.s</td><br>   </tr><br>   <tr><br>      <td>汇编</td><br>      <td>*.o</td><br>   </tr><br>   <tr><br>      <td>链接</td><br>      <td>可执行文件</td><br>   </tr><br></table>
+
+<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><table style="text-align:center"><br>   <tr><br>      <td>fat</td><br>      <td>fat32</td><br>      <td>ntfs</td><br>      <td>ext2</td><br>      <td>ext3</td><br>      <td>ext4</td><br>      <td>nfs</td><br>   </tr><br></table>
+
+<h3 id="硬链接和软连接"><a href="#硬链接和软连接" class="headerlink" title="硬链接和软连接"></a>硬链接和软连接</h3><h4 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h4><ul>
+<li>硬链接直接指向文件的i节点</li>
+<li>硬链接和原文件的i节点是一样的</li>
+<li>硬链接文件显示的大小是跟原文件是一样的</li>
+<li>硬链接不能链接目录文件。<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln file2 /home/xiaxiaowen/file2hard</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="软链接-符号链接"><a href="#软链接-符号链接" class="headerlink" title="软链接(符号链接)"></a>软链接(符号链接)</h4><ul>
+<li>软链接则是建立了一个新文件</li>
+<li>这个文件指向链接的文件，i节点不一样</li>
+<li>可以链接目录<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s file2 /home/xiaxiaowen/file2soft</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="linux内核子系统"><a href="#linux内核子系统" class="headerlink" title="linux内核子系统"></a>linux内核子系统</h3><ol>
+<li>进程管理</li>
+<li>内存管理</li>
+<li>I/O管理</li>
+<li>文件系统管理</li>
+</ol>
+<h3 id="进程几种状态"><a href="#进程几种状态" class="headerlink" title="进程几种状态"></a>进程几种状态</h3><ol>
+<li>运行态</li>
+<li>就绪态</li>
+<li>阻塞态</li>
+</ol>
+<h3 id="文件系统组成"><a href="#文件系统组成" class="headerlink" title="文件系统组成"></a>文件系统组成</h3><ol>
+<li><strong>超级块</strong>：存放文件系统本身的信息，比如记录了每个区域的大小，或未被使用的磁盘块的信息。（不同版本稍有差别）</li>
+<li><strong>i-节点表</strong>：每个文件都有其属性，大小，最近修改时间等等，这些被存储在ino_t 的结构体中，所有的i-节点都有一样的大小，i-节点表就是这样一些节点的列表。（表中的每个i-节点都通过位置来标志，例如标志为2的i-节点位于文件系统i-节点表中的第3个位置 ）</li>
+<li><strong>数据块</strong>：存放文件内容，因为块的大小一定，所以有时一个文件会分布在多个磁盘上。<h3 id="i-节点"><a href="#i-节点" class="headerlink" title="i 节点"></a>i 节点</h3>i 节点是一个64字节长的表,表中包含了文件的相关信息,其中有文件的大小、文件所有者、文件的存取许可方式以及文件的类型等重要信息.</li>
+</ol>
+<h3 id="linux文件类型"><a href="#linux文件类型" class="headerlink" title="linux文件类型"></a>linux文件类型</h3><table style="text-align:center"><br>   <tr><br>      <td><strong>文件类型</strong></td><br>      <td>普通文件</td><br>      <td>目录</td><br>      <td>字符设备文件</td><br>      <td>块设备文件</td><br>      <td>符号链接文件</td><br>      <td>套接字文件</td><br>      <td>管道文件</td><br>   </tr><br>   <tr><br>      <td><strong>属性</strong></td><br>      <td>-</td><br>      <td>d</td><br>      <td>c</td><br>      <td>b</td><br>      <td>l</td><br>      <td>s</td><br>      <td>p</td><br>   </tr><br></table>
+
+<h3 id="linux常用的系统调用函数"><a href="#linux常用的系统调用函数" class="headerlink" title="linux常用的系统调用函数"></a>linux常用的系统调用函数</h3><ul>
+<li><a href="#进程控制函数">进程控制函数</a></li>
+<li><a href="#文件操作函数">文件操作函数</a></li>
+<li><a href="#文件系统操作函数">文件系统操作函数</a></li>
+<li><a href="#系统控制函数">系统控制函数</a></li>
+<li><a href="#内存管理函数">内存管理函数</a></li>
+<li><a href="#网络管理函数">网络管理函数</a></li>
+<li><a href="#socket函数">socket函数</a></li>
+<li><a href="#用户管理函数">用户管理函数</a></li>
+<li><a href="#进程间通信函数">进程间通信函数</a></li>
+<li><a href="#信号相关函数">信号相关函数</a></li>
+<li><a href="#消息相关函数">消息相关函数</a></li>
+<li><a href="#管道相关函数">管道相关函数</a></li>
+<li><a href="#信号量相关函数">信号量相关函数</a></li>
+<li><a href="#共享内存相关函数">共享内存相关函数</a></li>
+</ul>
+<h4 id="进程控制函数"><a href="#进程控制函数" class="headerlink" title="进程控制函数"></a>进程控制函数</h4><table><br>   <tr style="color:red"><br>      <td>fork</td><br>      <td>创建一个新进程</td><br>   </tr><br>   <tr style="color:red"><br>      <td>clone</td><br>      <td>按指定条件创建子进程</td><br>   </tr><br>   <tr style="color:red"><br>      <td>execve</td><br>      <td>运行可执行文件</td><br>   </tr><br>   <tr style="color:red"><br>      <td>exit</td><br>      <td>中止进程</td><br>   </tr><br>   <tr><br>      <td>_exit</td><br>      <td>立即中止当前进程</td><br>   </tr><br>   <tr><br>      <td>getdtablesize</td><br>      <td>进程所能打开的最大文件数</td><br>   </tr><br>   <tr><br>      <td>getpgid</td><br>      <td>获取指定进程组标识号</td><br>   </tr><br>   <tr><br>      <td>setpgid</td><br>      <td>设置指定进程组标志号</td><br>   </tr><br>   <tr><br>      <td>getpgrp</td><br>      <td>获取当前进程组标识号</td><br>   </tr><br>   <tr><br>      <td>setpgrp</td><br>      <td>设置当前进程组标志号</td><br>    </tr><br>      <tr style="color:red"><br>          <td>getpid</td><br>          <td>获取进程标识号</td><br>    </tr><br>      <tr><br>          <td>getppid</td><br>          <td>获取父进程标识号</td><br>    </tr><br>      <tr style="color:red"><br>          <td>getpriority</td><br>          <td>获取调度优先级</td><br>    </tr><br>      <tr style="color:red"><br>          <td>setpriority</td><br>          <td>设置调度优先级</td><br>    </tr><br>      <tr><br>          <td>modify_ldt</td><br>          <td>读写进程的本地描述表</td><br>    </tr><br>      <tr><br>          <td>nanosleep</td><br>          <td>使进程睡眠指定的时间</td><br>    </tr><br>      <tr><br>          <td>nice</td><br>          <td>改变分时进程的优先级</td><br>    </tr><br>      <tr style="color:red"><br>          <td>pause</td><br>          <td>挂起进程，等待信号</td><br>    </tr><br>      <tr><br>          <td>personality</td><br>          <td>设置进程运行域</td><br>    </tr><br>      <tr style="color:red"><br>          <td>prctl</td><br>          <td>对进程进行特定操作</td><br>    </tr><br>      <tr><br>          <td>ptrace</td><br>          <td>进程跟踪</td><br>    </tr><br>      <tr><br>          <td>sched_get_priority_max</td><br>          <td>取得静态优先级的上限</td><br>    </tr><br>      <tr><br>          <td>sched_get_priority_min</td><br>          <td>取得静态优先级的下限</td><br>    </tr><br>      <tr><br>          <td>sched_getparam</td><br>          <td>取得进程的调度参数</td><br>    </tr><br>      <tr><br>          <td>sched_getscheduler</td><br>          <td>取得指定进程的调度策略</td><br>    </tr><br>      <tr><br>          <td>sched_rr_get_interval</td><br>          <td>取得按RR算法调度的实时进程的时间片长度</td><br>    </tr><br>      <tr><br>          <td>sched_setparam</td><br>          <td>设置进程的调度参数</td><br>    </tr><br>      <tr><br>          <td>sched_setscheduler</td><br>          <td>设置指定进程的调度策略和参数</td><br>    </tr><br>      <tr><br>          <td>sched_yield</td><br>          <td>进程主动让出处理器,并将自己等候调度队列队尾</td><br>    </tr><br>      <tr><br>          <td>vfork</td><br>          <td>创建一个子进程，以供执行新程序，常与execve等同时使用</td><br>    </tr><br>      <tr style="color:red"><br>          <td>wait</td><br>          <td>等待子进程终止</td><br>    </tr><br>      <tr><br>          <td>wait3</td><br>          <td>参见wait</td><br>    </tr><br>      <tr><br>          <td>waitpid</td><br>          <td>等待指定子进程终止</td><br>    </tr><br>      <tr><br>          <td>wait4</td><br>          <td>参见waitpid</td><br>    </tr><br>      <tr><br>          <td>capget</td><br>          <td>获取进程权限</td><br>    </tr><br>      <tr><br>          <td>capset</td><br>          <td>设置进程权限</td><br>    </tr><br>      <tr><br>          <td>getsid</td><br>          <td>获取会晤标识号</td><br>    </tr><br>      <tr><br>          <td>setsid</td><br>          <td>设置会晤标识号</td><br>      </tr><br></table>
+
+<h4 id="文件操作函数"><a href="#文件操作函数" class="headerlink" title="文件操作函数"></a>文件操作函数</h4><table><br>  <tr style="color:red"><br>      <td>fcntl</td><br>      <td>文件控制</td><br>  </tr><br>  <tr style="color:red"><br>      <td>open</td><br>      <td>打开文件</td><br>  </tr><br>  <tr style="color:red"><br>      <td>creat</td><br>      <td>创建新文件</td><br>  </tr><br>  <tr style="color:red"><br>      <td>close</td><br>      <td>关闭文件描述字</td><br>  </tr><br>  <tr style="color:red"><br>      <td>read</td><br>      <td>读文件</td><br>  </tr><br>  <tr style="color:red"><br>      <td>write</td><br>      <td>写文件</td><br>  </tr><br>  <tr><br>      <td>readv</td><br>      <td>从文件读入数据到缓冲数组中</td><br>  </tr><br>  <tr><br>      <td>writev</td><br>      <td>将缓冲数组里的数据写入文件</td><br>  </tr><br>  <tr><br>      <td>pread</td><br>      <td>对文件随机读</td><br>  </tr><br>  <tr><br>      <td>pwrite</td><br>      <td>对文件随机写</td><br>  </tr><br>  <tr style="color:red"><br>      <td>lseek</td><br>      <td>移动文件指针</td><br>  </tr><br>  <tr><br>      <td>_llseek</td><br>      <td>在64位地址空间里移动文件指针</td><br>  </tr><br>  <tr><br>      <td>dup</td><br>      <td>复制已打开的文件描述字</td><br>  </tr><br>  <tr><br>      <td>dup2</td><br>      <td>按指定条件复制文件描述字</td><br>  </tr><br>  <tr style="color:red"><br>      <td>flock</td><br>      <td>文件加/解锁</td><br>  </tr><br>  <tr style="color:red"><br>      <td>poll</td><br>      <td>I/O多路转换</td><br>  </tr><br>  <tr><br>      <td>truncate</td><br>      <td>截断文件</td><br>  </tr><br>  <tr><br>      <td>ftruncate</td><br>      <td>参见truncate</td><br>  </tr><br>  <tr><br>      <td>umask</td><br>      <td>设置文件权限掩码</td><br>  </tr><br>  <tr style="color:red"><br>      <td>fsync</td><br>      <td>把文件在内存中的部分写回磁盘</td><br>  </tr><br></table>
+
+<h4 id="文件系统操作函数"><a href="#文件系统操作函数" class="headerlink" title="文件系统操作函数"></a>文件系统操作函数</h4><table><br>  <tr style="color:red"><br>      <td>access</td><br>      <td>确定文件的可存取性</td><br>  </tr><br>  <tr style="color:red"><br>      <td>chdir</td><br>      <td>改变当前工作目录</td><br>  </tr><br>  <tr><br>      <td>fchdir</td><br>      <td>参见chdir</td><br>  </tr><br>  <tr style="color:red"><br>      <td>chmod</td><br>      <td>改变文件方式</td><br>  </tr><br>  <tr><br>      <td>fchmod</td><br>      <td>参见chmod</td><br>  </tr><br>  <tr><br>      <td>chown</td><br>      <td>改变文件的属主或用户组</td><br>  </tr><br>  <tr><br>      <td>fchown</td><br>      <td>参见chown</td><br>  </tr><br>  <tr><br>      <td>lchown</td><br>      <td>参见chown</td><br>  </tr><br>  <tr style="color:red"><br>      <td>chroot</td><br>      <td>改变根目录</td><br>  </tr><br>  <tr style="color:red"><br>      <td>stat</td><br>      <td>取文件状态信息</td><br>  </tr><br>  <tr><br>      <td>lstat</td><br>      <td>参见stat</td><br>  </tr><br>  <tr><br>      <td>fstat</td><br>      <td>参见stat</td><br>  </tr><br>  <tr style="color:red"><br>      <td>statfs</td><br>      <td>取文件系统信息</td><br>  </tr><br>  <tr><br>      <td>fstatfs</td><br>      <td>参见statfs</td><br>  </tr><br>  <tr style="color:red"><br>      <td>readdir</td><br>      <td>读取目录项</td><br>  </tr><br>  <tr><br>      <td>getdents</td><br>      <td>读取目录项</td><br>  </tr><br>  <tr style="color:red"><br>      <td>mkdir</td><br>      <td>创建目录</td><br>  </tr><br>  <tr style="color:red"><br>      <td>mknod</td><br>      <td>创建索引节点</td><br>  </tr><br>  <tr style="color:red"><br>      <td>rmdir</td><br>      <td>删除目录</td><br>  </tr><br>  <tr style="color:red"><br>      <td>rename</td><br>      <td>文件改名</td><br>  </tr><br>  <tr style="color:red"><br>      <td>link</td><br>      <td>创建链接</td><br>  </tr><br>  <tr style="color:red"><br>      <td>symlink</td><br>      <td>创建符号链接</td><br>  </tr><br>  <tr style="color:red"><br>      <td>unlink</td><br>      <td>删除链接</td><br>  </tr><br>  <tr><br>      <td>readlink</td><br>      <td>读符号链接的值</td><br>  </tr><br>  <tr><br>      <td>mount</td><br>      <td>安装文件系统</td><br>  </tr><br>  <tr><br>      <td>umount</td><br>      <td>卸下文件系统</td><br>  </tr><br>  <tr style="color:red"><br>      <td>ustat</td><br>      <td>取文件系统信息</td><br>  </tr><br>  <tr><br>      <td>utime</td><br>      <td>改变文件的访问修改时间</td><br>  </tr><br>  <tr><br>      <td>utimes</td><br>      <td>参见utime</td><br>  </tr><br>  <tr><br>      <td>quotactl</td><br>      <td>控制磁盘配额</td><br>  </tr><br></table>
+
+<h4 id="系统控制函数"><a href="#系统控制函数" class="headerlink" title="系统控制函数"></a>系统控制函数</h4><table><br>  <tr style="color:red"><br>      <td>ioctl</td><br>      <td>I/O总控制函数</td><br>  </tr><br>  <tr><br>      <td>_sysctl</td><br>      <td>读/写系统参数</td><br>  </tr><br>  <tr><br>      <td>acct</td><br>      <td>启用或禁止进程记账</td><br>  </tr><br>  <tr><br>      <td>getrlimit</td><br>      <td>获取系统资源上限</td><br>  </tr><br>  <tr><br>      <td>setrlimit</td><br>      <td>设置系统资源上限</td><br>  </tr><br>  <tr><br>      <td>getrusage</td><br>      <td>获取系统资源使用情况</td><br>  </tr><br>  <tr><br>      <td>uselib</td><br>      <td>选择要使用的二进制函数库</td><br>  </tr><br>  <tr><br>      <td>ioperm</td><br>      <td>设置端口I/O权限</td><br>  </tr><br>  <tr><br>      <td>iopl</td><br>      <td>改变进程I/O权限级别</td><br>  </tr><br>  <tr><br>      <td>outb</td><br>      <td>低级端口操作</td><br>  </tr><br>  <tr style="color:red"><br>      <td>reboot</td><br>      <td>重新启动</td><br>  </tr><br>  <tr><br>      <td>swapon</td><br>      <td>打开交换文件和设备</td><br>  </tr><br>  <tr><br>      <td>swapoff</td><br>      <td>关闭交换文件和设备</td><br>  </tr><br>  <tr><br>      <td>bdflush</td><br>      <td>控制bdflush守护进程</td><br>  </tr><br>  <tr><br>      <td>sysfs</td><br>      <td>取核心支持的文件系统类型</td><br>  </tr><br>  <tr><br>      <td>sysinfo</td><br>      <td>取得系统信息</td><br>  </tr><br>  <tr><br>      <td>adjtimex</td><br>      <td>调整系统时钟</td><br>  </tr><br>  <tr><br>      <td>alarm</td><br>      <td>设置进程的闹钟</td><br>  </tr><br>  <tr><br>      <td>getitimer</td><br>      <td>获取计时器值</td><br>  </tr><br>  <tr><br>      <td>setitimer</td><br>      <td>设置计时器值</td><br>  </tr><br>  <tr><br>      <td>gettimeofday</td><br>      <td>取时间和时区</td><br>  </tr><br>  <tr><br>      <td>settimeofday</td><br>      <td>设置时间和时区</td><br>  </tr><br>  <tr style="color:red"><br>      <td>stime</td><br>      <td>设置系统日期和时间</td><br>  </tr><br>  <tr style="color:red"><br>      <td>time</td><br>      <td>取得系统时间</td><br>  </tr><br>  <tr><br>      <td>times</td><br>      <td>取进程运行时间</td><br>  </tr><br>  <tr style="color:red"><br>      <td>uname</td><br>      <td>获取当前UNIX系统的名称、版本和主机等信息</td><br>  </tr><br>  <tr><br>      <td>vhangup</td><br>      <td>挂起当前终端</td><br>  </tr><br>  <tr><br>      <td>nfsservctl</td><br>      <td>对NFS守护进程进行控制</td><br>  </tr><br>  <tr><br>      <td>vm86</td><br>      <td>进入模拟8086模式</td><br>  </tr><br>  <tr><br>      <td>create_module</td><br>      <td>创建可装载的模块项</td><br>  </tr><br>  <tr><br>      <td>delete_module</td><br>      <td>删除可装载的模块项</td><br>  </tr><br>  <tr><br>      <td>init_module</td><br>      <td>初始化模块</td><br>  </tr><br>  <tr><br>      <td>query_module</td><br>      <td>查询模块信息</td><br>  </tr><br>  <tr><br>      <td>*get_kernel_syms</td><br>      <td>取得核心符号,已被query_module代替</td><br>  </tr><br></table>
+
+<h4 id="内存管理函数"><a href="#内存管理函数" class="headerlink" title="内存管理函数"></a>内存管理函数</h4><table><br>  <tr><br>      <td>brk</td><br>      <td>改变数据段空间的分配</td><br>  </tr><br>  <tr><br>      <td>sbrk</td><br>      <td>参见brk</td><br>  </tr><br>  <tr><br>      <td>mlock</td><br>      <td>内存页面加锁</td><br>  </tr><br>  <tr><br>      <td>munlock</td><br>      <td>内存页面解锁</td><br>  </tr><br>  <tr><br>      <td>mlockall</td><br>      <td>调用进程所有内存页面加锁</td><br>  </tr><br>    <tr><br>      <td>munlockall</td><br>      <td>调用进程所有内存页面解锁</td><br>  </tr><br>  <tr><br>      <td>mmap</td><br>      <td>映射虚拟内存页</td><br>  </tr><br>  <tr><br>      <td>munmap</td><br>      <td>去除内存页映射</td><br>  </tr><br>  <tr><br>      <td>mremap</td><br>      <td>重新映射虚拟内存地址</td><br>  </tr><br>  <tr><br>      <td>msync</td><br>      <td>将映射内存中的数据写回磁盘</td><br>  </tr><br>  <tr><br>      <td>mprotect</td><br>      <td>设置内存映像保护</td><br>  </tr><br>  <tr><br>      <td>getpagesize</td><br>      <td>获取页面大小</td><br>  </tr><br>  <tr style="color:red"><br>      <td>sync</td><br>      <td>将内存缓冲区数据写回硬盘</td><br>  </tr><br>  <tr><br>      <td>cacheflush</td><br>      <td>dddd将指定缓冲区中的内容写回磁盘dd</td><br>  </tr><br></table>
+
+<h4 id="网络管理函数"><a href="#网络管理函数" class="headerlink" title="网络管理函数"></a>网络管理函数</h4><table><br>  <tr style="color:red"><br>      <td>getdomainname</td><br>      <td>取域名</td><br>  </tr><br>  <tr style="color:red"><br>      <td>setdomainname</td><br>      <td>设置域名</td><br>  </tr><br>  <tr><br>      <td>gethostid</td><br>      <td>获取主机标识号</td><br>  </tr><br>  <tr><br>      <td>sethostid</td><br>      <td>设置主机标识号</td><br>  </tr><br>  <tr style="color:red"><br>      <td>gethostname</td><br>      <td>获取本主机名称</td><br>  </tr><br>  <tr style="color:red"><br>      <td>sethostname</td><br>      <td>设置主机名称</td><br>  </tr><br></table>
+
+<h4 id="socket函数"><a href="#socket函数" class="headerlink" title="socket函数"></a>socket函数</h4><table><br>  <tr><br>      <td>socketcall</td><br>      <td>socket系统调用</td><br>  </tr><br>  <tr style="color:red"><br>      <td>socket</td><br>      <td>建立socket</td><br>  </tr><br>  <tr style="color:red"><br>      <td>bind</td><br>      <td>绑定socket到端口</td><br>  </tr><br>  <tr style="color:red"><br>      <td>connect</td><br>      <td>连接远程主机</td><br>  </tr><br>  <tr style="color:red"><br>      <td>accept</td><br>      <td>响应socket连接请求</td><br>  </tr><br>    <tr><br>      <td>send</td><br>      <td>通过socket发送信息</td><br>  </tr><br>  <tr style="color:red"><br>      <td>sendto</td><br>      <td>发送UDP信息</td><br>  </tr><br>  <tr><br>      <td>sendmsg</td><br>      <td>参见send</td><br>  </tr><br>  <tr style="color:red"><br>      <td>recv</td><br>      <td>通过socket接收信息</td><br>  </tr><br>    <tr style="color:red"><br>      <td>recvfrom</td><br>      <td>接收UDP信息</td><br>  </tr><br>  <tr><br>      <td>recvmsg</td><br>      <td>参见recv</td><br>  </tr><br>  <tr style="color:red"><br>      <td>listen</td><br>      <td>监听socket端口</td><br>  </tr><br>  <tr style="color:red"><br>      <td>select</td><br>      <td>对多路同步I/O进行轮询</td><br>  </tr><br>  <tr style="color:red"><br>      <td>close</td><br>      <td>关闭socket上的连接</td><br>  </tr><br>  <tr><br>      <td>getsockname</td><br>      <td>取得本地socket名字</td><br>  </tr><br>  <tr><br>      <td>getpeername</td><br>      <td>获取通信对方的socket名字</td><br>  </tr><br>  <tr style="color:red"><br>      <td>getsockopt</td><br>      <td>取端口设置</td><br>  </tr><br>  <tr style="color:red"><br>      <td>setsockopt</td><br>      <td>设置端口参数</td><br>  </tr><br>  <tr><br>      <td>sendfile</td><br>      <td>在文件或端口间传输数据</td><br>  </tr><br>  <tr><br>      <td>socketpair</td><br>      <td>创建一对已联接的无名socket</td><br>  </tr><br></table>
+
+<h4 id="用户管理函数"><a href="#用户管理函数" class="headerlink" title="用户管理函数"></a>用户管理函数</h4><table><br>  <tr><br>      <td>getuid</td><br>      <td>获取用户标识号</td><br>  </tr><br>  <tr><br>      <td>setuid</td><br>      <td>设置用户标志号</td><br>  </tr><br>  <tr><br>      <td>getgid</td><br>      <td>获取组标识号</td><br>  </tr><br>  <tr><br>      <td>setgid</td><br>      <td>设置组标志号</td><br>  </tr><br>  <tr><br>      <td>getegid</td><br>      <td>获取有效组标识号</td><br>  </tr><br>  <tr><br>      <td>setegid</td><br>      <td>设置有效组标识号</td><br>  </tr><br>  <tr><br>      <td>geteuid</td><br>      <td>获取有效用户标识号</td><br>  </tr><br>  <tr><br>      <td>seteuid</td><br>      <td>设置有效用户标识号</td><br>  </tr><br>  <tr><br>      <td>setregid</td><br>      <td>分别设置真实和有效的的组标识号</td><br>  </tr><br>  <tr><br>      <td>setreuid</td><br>      <td>分别设置真实和有效的用户标识号</td><br>  </tr><br>  <tr><br>      <td>getresgid</td><br>      <td>分别获取真实的,有效的和保存过的组标识号</td><br>  </tr><br>  <tr><br>      <td>setresgid</td><br>      <td>分别设置真实的,有效的和保存过的组标识号</td><br>  </tr><br>  <tr><br>      <td>getresuid</td><br>      <td>分别获取真实的,有效的和保存过的用户标识号</td><br>  </tr><br>  <tr><br>      <td>setresuid</td><br>      <td>分别设置真实的,有效的和保存过的用户标识号</td><br>  </tr><br>  <tr><br>      <td>setfsgid</td><br>      <td>设置文件系统检查时使用的组标识号</td><br>  </tr><br>  <tr><br>      <td>setfsuid</td><br>      <td>设置文件系统检查时使用的用户标识号</td><br>  </tr><br>  <tr><br>      <td>getgroups</td><br>      <td>获取后补组标志清单</td><br>  </tr><br>  <tr><br>      <td>setgroups</td><br>      <td>设置后补组标志清单</td><br>  </tr><br></table>
+
+<h4 id="进程间通信函数"><a href="#进程间通信函数" class="headerlink" title="进程间通信函数"></a>进程间通信函数</h4><table><br>  <tr style="color:red"><br>      <td>ipc</td><br>      <td>进程间通信总控制调用</td><br>  </tr><br></table>
+
+<h4 id="信号相关函数"><a href="#信号相关函数" class="headerlink" title="信号相关函数"></a>信号相关函数</h4><table><br>  <tr><br>      <td>sigaction</td><br>      <td>设置对指定信号的处理方法</td><br>  </tr><br>  <tr><br>      <td>sigprocmask</td><br>      <td>根据参数对信号集中的信号执行阻塞/解除阻塞等操作</td><br>  </tr><br>  <tr><br>      <td>sigpending</td><br>      <td>为指定的被阻塞信号设置队列</td><br>  </tr><br>  <tr><br>      <td>sigsuspend</td><br>      <td>挂起进程等待特定信号</td><br>  </tr><br>  <tr style="color:red"><br>      <td>signal</td><br>      <td>参见signal</td><br>  </tr><br>  <tr style="color:red"><br>      <td>kill</td><br>      <td>向进程或进程组发信号</td><br>  </tr><br>  <tr><br>      <td><em>sigblock</em></td><br>      <td>向被阻塞信号掩码中添加信号,已被sigprocmask代替</td><br>  </tr><br>  <tr><br>      <td>siggetmask</td><br>      <td>取得现有阻塞信号掩码,已被sigprocmask代替</td><br>  </tr><br>  <tr><br>      <td><em>sigsetmask</em></td><br>      <td>用给定信号掩码替换现有阻塞信号掩码,已被sigprocmask代替</td><br>  </tr><br>  <tr><br>      <td>sigmask</td><br>      <td>将给定的信号转化为掩码,已被sigprocmask代替</td><br>  </tr><br>  <tr><br>      <td>*sigpause</td><br>      <td>作用同sigsuspend,已被sigsuspend代替</td><br>  </tr><br>  <tr><br>      <td>sigvec</td><br>      <td>为兼容BSD而设的信号处理函数,作用类似sigaction</td><br>  </tr><br>  <tr><br>      <td>ssetmask</td><br>      <td>ANSI C的信号处理函数,作用类似sigaction</td><br>  </tr><br></table>
+
+<h4 id="消息相关函数"><a href="#消息相关函数" class="headerlink" title="消息相关函数"></a>消息相关函数</h4><table style="color:red"><br>  <tr><br>      <td>msgctl</td><br>      <td>消息控制操作</td><br>  </tr><br>  <tr><br>      <td>msgget</td><br>      <td>获取消息队列</td><br>  </tr><br>  <tr><br>      <td>msgsnd</td><br>      <td>发消息</td><br>  </tr><br>  <tr><br>      <td>msgrcv</td><br>      <td>取消息</td><br>  </tr><br></table>
+
+<h4 id="管道相关函数"><a href="#管道相关函数" class="headerlink" title="管道相关函数"></a>管道相关函数</h4><table style="color:red"><br>  <tr><br>      <td>pipe</td><br>      <td>创建管道</td><br>  </tr><br></table>
+
+<h4 id="信号量相关函数"><a href="#信号量相关函数" class="headerlink" title="信号量相关函数"></a>信号量相关函数</h4><table style="color:red"><br>  <tr><br>      <td>semctl</td><br>      <td>信号量控制</td><br>  </tr><br>  <tr><br>      <td>semget</td><br>      <td>获取一组信号量</td><br>  </tr><br>  <tr><br>      <td>semop</td><br>      <td>信号量操作</td><br>  </tr><br></table>
+
+<h4 id="共享内存相关函数"><a href="#共享内存相关函数" class="headerlink" title="共享内存相关函数"></a>共享内存相关函数</h4><table style="color:red"><br>  <tr><br>      <td>shmctl</td><br>      <td>控制共享内存</td><br>  </tr><br>  <tr><br>      <td>shmget</td><br>      <td>获取共享内存</td><br>  </tr><br>  <tr><br>      <td>shmat</td><br>      <td>连接共享内存</td><br>  </tr><br>  <tr><br>      <td>shmdt</td><br>      <td>拆卸共享内存</td><br>  </tr><br></table>
+
+<h3 id="fork函数"><a href="#fork函数" class="headerlink" title="fork函数"></a>fork函数</h3><p>fork是用来创建子进程的，这个函数的特别之处在于一次调用，两次返回，一次返回到父进程中，一次返回到子进程中，我们可以通过返回值来判断其返回点：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pid_t</span> child = fork();</span><br><span class="line"><span class="keyword">if</span>( child &lt; <span class="number">0</span>  ) &#123;     <span class="comment">//fork error.</span></span><br><span class="line">    perror(<span class="string">"fork process fail.\n"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>( child ==<span class="number">0</span>  ) &#123;   <span class="comment">// in child process</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" fork succ, this run in child process\n "</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;                        <span class="comment">// in parent process</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" this run in parent process\n "</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h3><ul>
+<li><a href="#僵尸进程产生原因">僵尸进程产生原因</a></li>
+<li><a href="#僵尸进程解决办法">僵尸进程解决办法</a></li>
+<li><a href="#ps指令查看僵尸进程">ps指令查看僵尸进程</a></li>
+</ul>
+<h4 id="僵尸进程产生原因"><a href="#僵尸进程产生原因" class="headerlink" title="僵尸进程产生原因"></a>僵尸进程产生原因</h4><p>  一个进程使用fork创建子进程，如果子进程退出，而父进程并没有调用wait或waitpid获取子进程的状态信息，那么子进程的进程描述符仍然保存在系统中。</p>
+<h4 id="僵尸进程解决办法"><a href="#僵尸进程解决办法" class="headerlink" title="僵尸进程解决办法"></a>僵尸进程解决办法</h4><ol>
+<li>通过信号机制<br>子进程退出时向父进程发送SIGCHILD信号，父进程处理SIGCHILD信号。在信号处理函数中调用wait进行处理僵尸进程。</li>
+<li>fork两次<br>父进程创建子进程A，子进程A再创建子进程B，然后子进程A退出，z这样子进程B就交给init进程处理了。init进程可以处理僵尸进程.</li>
+</ol>
+<h4 id="ps指令查看僵尸进程"><a href="#ps指令查看僵尸进程" class="headerlink" title="ps指令查看僵尸进程"></a>ps指令查看僵尸进程</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -A -ostat,pid,cmd |grep -iE <span class="string">'^z'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-A 显示所有任务<br>  -o 按照指定格式输出<br>  grep -iE 显示z开头的行，不区分大小写</p>
+</blockquote>
+<h3 id="常见文件说明"><a href="#常见文件说明" class="headerlink" title="常见文件说明"></a>常见文件说明</h3><p>/var/log/boot.log 系统引导日志<br>/var/log/dmesg    系统核心启动日志<br>/var/log/messages 核心系统日志<br>/var/log/maillog  邮件系统日志<br>/var/log/xferlog  FTP系统日志<br>/var/log/syslog   系统出问题的日志<br>/var/log/secure   安全信息和系统登录与网络连接的信息<br>/var/log/wtmp     登录记录<br>/var/spool/clientmqueue<br>/proc/interrupts<br>/etc/fstab        Linux内核引导时,从文件/etc/fstab 中读取要加载的文件系统.</p>
+<h3 id="proc目录说明"><a href="#proc目录说明" class="headerlink" title="proc目录说明"></a>proc目录说明</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">proc文件系统是一个伪文件系统，它只存在内存当中。</span><br><span class="line">/proc/buddyinfo   每个内存区中的每个order有多少块可用，和内存碎片问题有关</span><br><span class="line">/proc/cmdline     启动时传递给kernel的参数信息</span><br><span class="line">/proc/cpuinfo     cpu的信息</span><br><span class="line">/proc/crypto      内核使用的所有已安装的加密密码及细节</span><br><span class="line">/proc/devices     已经加载的设备并分类</span><br><span class="line">/proc/dma         已注册使用的ISA DMA频道列表</span><br><span class="line">/proc/execdomains Linux内核当前支持的execution domains</span><br><span class="line">/proc/fb          帧缓冲设备列表，包括数量和控制它的驱动</span><br><span class="line">/proc/filesystems 内核当前支持的文件系统类型</span><br><span class="line">/proc/interrupts  x86架构中的每个IRQ中断数</span><br><span class="line">/proc/iomem       每个物理设备当前在系统内存中的映射</span><br><span class="line">/proc/ioports     一个设备的输入输出所使用的注册端口范围</span><br><span class="line">/proc/kcore       代表系统的物理内存，存储为核心文件格式，里边显示的是字节数，等于RAM大小加上4kb</span><br><span class="line">/proc/kmsg        记录内核生成的信息，可以通过/sbin/klogd或/bin/dmesg来处理</span><br><span class="line">/proc/loadavg     根据过去一段时间内CPU和IO的状态得出的负载状态，与uptime命令有关</span><br><span class="line">/proc/locks       内核锁住的文件列表</span><br><span class="line">/proc/mdstat      多硬盘，RAID配置信息(md=multiple disks)</span><br><span class="line">/proc/meminfo     RAM使用的相关信息</span><br><span class="line">/proc/misc        其他的主要设备(设备号为10)上注册的驱动</span><br><span class="line">/proc/modules     所有加载到内核的模块列表</span><br><span class="line">/proc/mounts      系统中使用的所有挂载</span><br><span class="line">/proc/mtrr        系统使用的Memory Type Range Registers (MTRRs)</span><br><span class="line">/proc/partitions  分区中的块分配信息</span><br><span class="line">/proc/pci         系统中的PCI设备列表</span><br><span class="line">/proc/slabinfo    系统中所有活动的 slab 缓存信息</span><br><span class="line">/proc/<span class="built_in">stat</span>        所有的CPU活动信息</span><br><span class="line">/proc/sysrq-trigger 使用<span class="built_in">echo</span>命令来写这个文件的时候，远程root用户可以执行大多数的系统请求关键命令，就好像在本地终端执行一样。要写入这个文件，需要把/proc/sys/kernel/sysrq不能设置为0。这个文件对root也是不可读的</span><br><span class="line">/proc/uptime      系统已经运行了多久</span><br><span class="line">/proc/swaps       交换空间的使用情况</span><br><span class="line">/proc/version     Linux内核版本和gcc版本</span><br><span class="line">/proc/bus         系统总线(Bus)信息，例如pci/usb等</span><br><span class="line">/proc/driver      驱动信息</span><br><span class="line">/proc/fs          文件系统信息</span><br><span class="line">/proc/ide         ide设备信息</span><br><span class="line">/proc/irq         中断请求设备信息</span><br><span class="line">/proc/net         网卡设备信息</span><br><span class="line">/proc/scsi        scsi设备信息</span><br><span class="line">/proc/tty         tty设备信息</span><br><span class="line">/proc/net/dev     显示网络适配器及统计信息</span><br><span class="line">/proc/vmstat      虚拟内存统计信息</span><br><span class="line">/proc/vmcore      内核panic时的内存映像</span><br><span class="line">/proc/diskstats   取得磁盘信息</span><br><span class="line">/proc/schedstat   kernel调度器的统计信息</span><br><span class="line">/proc/zoneinfo    显示内存空间的统计信息，对分析虚拟内存行为很有用</span><br><span class="line"><span class="comment">#### 以下是/proc目录中进程N的信息</span></span><br><span class="line">/proc/N           pid为N的进程信息</span><br><span class="line">/proc/N/cmdline   进程启动命令</span><br><span class="line">/proc/N/cwd       链接到进程当前工作目录</span><br><span class="line">/proc/N/environ   进程环境变量列表</span><br><span class="line">/proc/N/exe       链接到进程的执行命令文件</span><br><span class="line">/proc/N/fd        包含进程相关的所有的文件描述符</span><br><span class="line">/proc/N/maps      与进程相关的内存映射信息</span><br><span class="line">/proc/N/mem       指代进程持有的内存，不可读</span><br><span class="line">/proc/N/root      链接到进程的根目录</span><br><span class="line">/proc/N/<span class="built_in">stat</span>      进程的状态</span><br><span class="line">/proc/N/statm     进程使用的内存的状态</span><br><span class="line">/proc/N/status    进程状态信息，比<span class="built_in">stat</span>/statm更具可读性</span><br><span class="line">/proc/self        链接到当前正在运行的进程</span><br></pre></td></tr></table></figure>
+<h3 id="fopen参数说明"><a href="#fopen参数说明" class="headerlink" title="fopen参数说明"></a>fopen参数说明</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">r</td>
+<td>以只读方式打开文件，该文件必须存在。</td>
+</tr>
+<tr>
+<td style="text-align:center">r+</td>
+<td>以可读写方式打开文件，该文件必须存在。</td>
+</tr>
+<tr>
+<td style="text-align:center">rb+</td>
+<td>读写打开一个二进制文件，允许读写数据，文件必须存在。</td>
+</tr>
+<tr>
+<td style="text-align:center">w</td>
+<td>打开只写文件，若文件存在则文件长度清为0，即该文件内容会消失。若文件不存在则建立该文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">w+</td>
+<td>打开可读写文件，若文件存在则文件长度清为零，即该文件内容会消失。若文件不存在则建立该文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td>以附加的方式打开只写文件。若文件不存在，则会建立该文件，如果文件存在，写入的数据会被加到文件尾，即文件原先的内容会被保留。（EOF符保留）</td>
+</tr>
+<tr>
+<td style="text-align:center">a+</td>
+<td>以附加方式打开可读写的文件。若文件不存在，则会建立该文件，如果文件存在，写入的数据会被加到文件尾后，即文件原先的内容会被保留。 （原来的EOF符不保留）</td>
+</tr>
+<tr>
+<td style="text-align:center">wb</td>
+<td>只写打开或新建一个二进制文件；只允许写数据。</td>
+</tr>
+<tr>
+<td style="text-align:center">wb+</td>
+<td>读写打开或建立一个二进制文件，允许读和写。</td>
+</tr>
+<tr>
+<td style="text-align:center">ab+</td>
+<td>读写打开一个二进制文件，允许读或在文件末追加数据。</td>
+</tr>
+<tr>
+<td style="text-align:center">wx</td>
+<td>创建文本文件,只允许写入数据.[C11]</td>
+</tr>
+<tr>
+<td style="text-align:center">wbx</td>
+<td>创建一个二进制文件,只允许写入数据.[C11]</td>
+</tr>
+<tr>
+<td style="text-align:center">w+x</td>
+<td>创建一个文本文件,允许读写.[C11]</td>
+</tr>
+<tr>
+<td style="text-align:center">wb+x</td>
+<td>创建一个二进制文件,允许读写.[C11]</td>
+</tr>
+<tr>
+<td style="text-align:center">w+bx</td>
+<td>和”wb+x”相同[C11]</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>以x结尾的模式为独占模式,文件已存在或者无法创建(一般是路径不正确)都会导致fopen失败.文件以操作系统支持的独占模式打开.[C11]</p>
+</blockquote>
+<h2 id="linux驱动开发知识点"><a href="#linux驱动开发知识点" class="headerlink" title="linux驱动开发知识点"></a>linux驱动开发知识点</h2><h3 id="insmod-rmmod-加载-卸载模块"><a href="#insmod-rmmod-加载-卸载模块" class="headerlink" title="insmod rmmod 加载 卸载模块"></a>insmod rmmod 加载 卸载模块</h3><h3 id="i-max6UL"><a href="#i-max6UL" class="headerlink" title="i.max6UL"></a>i.max6UL</h3><h4 id="系统框图"><a href="#系统框图" class="headerlink" title="系统框图"></a>系统框图</h4><p><img src="./res/IMX6UL-BD.png" alt="i.max6ul系统框图"></p>
+<h3 id="linux启动过程"><a href="#linux启动过程" class="headerlink" title="linux启动过程"></a>linux启动过程</h3><p>系统上电—&gt;bootrom—&gt;uboot—&gt;kernel加载—&gt;init—&gt;应用程序</p>
+<h2 id="makefile"><a href="#makefile" class="headerlink" title="makefile"></a>makefile</h2><h3 id="makefile的规则"><a href="#makefile的规则" class="headerlink" title="makefile的规则"></a>makefile的规则</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target xxx : prerequisites aaa</span><br><span class="line">	[command]</span><br><span class="line">	...</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>prerequisites中如果有一个以上的文件比target文件要新的话，command所定义的命令就会被执行</p>
+</blockquote>
+<h3 id="gcc工具链"><a href="#gcc工具链" class="headerlink" title="gcc工具链"></a>gcc工具链</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Binutils</td>
+<td>由汇编器（as）产生的目标代码（*.o）是不能直接在computer上运行的，它必须经过链接器（ld）的处理才能生成可执行代码。</td>
+</tr>
+<tr>
+<td>add2line</td>
+<td>将地址转换成文件名或行号对，以便调试程序</td>
+</tr>
+<tr>
+<td>ar</td>
+<td>从文件中创建、修改、扩展文件</td>
+</tr>
+<tr>
+<td>gasp</td>
+<td>汇编宏处理器</td>
+</tr>
+<tr>
+<td>nm</td>
+<td>从目标文件列举所有变量</td>
+</tr>
+<tr>
+<td>objcopy</td>
+<td>使用GNU BSD库把目标文件的内容从一种文件格式复制到另一种格式的目标文件中。</td>
+</tr>
+<tr>
+<td>objdump</td>
+<td>显示目标文件信息可发编译二进制文件，也可以对对象文件进行反汇编，并查看机器代码。</td>
+</tr>
+<tr>
+<td>readelf</td>
+<td>显示elf文件信息</td>
+</tr>
+<tr>
+<td>ranlib</td>
+<td>生成索引以加快对归档文件的访问，并将其保存到这个归档文件中。</td>
+</tr>
+<tr>
+<td>size</td>
+<td>列出目标模块或文件的代码尺寸。</td>
+</tr>
+<tr>
+<td>strings</td>
+<td>打印可打印的目标代码符号（至少4个字符）</td>
+</tr>
+<tr>
+<td>strip</td>
+<td>放弃所有符号连接，一般应用程序最终都要strip处理</td>
+</tr>
+<tr>
+<td>C++filt</td>
+<td>链接器ld通过该命令可过滤C++符号和JAVA符号，防止重载函数冲突。</td>
+</tr>
+<tr>
+<td>gprof</td>
+<td>显示程序调用段的各种数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nm命令"><a href="#nm命令" class="headerlink" title="nm命令"></a>nm命令</h3><p>显示二进制目标文件的符号表<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-A：每个符号前显示文件名；</span><br><span class="line">-D：显示动态符号；</span><br><span class="line">-g：仅显示外部符号；</span><br><span class="line">-r：反序显示符号表。</span><br></pre></td></tr></table></figure></p>
+<h3 id="ldd命令"><a href="#ldd命令" class="headerlink" title="ldd命令"></a>ldd命令</h3><p>用于打印程序或者库文件所依赖的共享库列表。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-v：详细信息模式，打印所有相关信息；</span><br><span class="line">-u：打印未使用的直接依赖；</span><br><span class="line">-d：执行重定位和报告任何丢失的对象；</span><br><span class="line">-r：执行数据对象和函数的重定位，并且报告任何丢失的对象和函数；</span><br></pre></td></tr></table></figure></p>
+<h3 id="交叉编译工具链说明"><a href="#交叉编译工具链说明" class="headerlink" title="交叉编译工具链说明"></a>交叉编译工具链说明</h3><h4 id="gcc-交叉编译器"><a href="#gcc-交叉编译器" class="headerlink" title="gcc 交叉编译器"></a>gcc 交叉编译器</h4><blockquote>
+<p>将写好的C程序代码编译为ARM架构下的可执行文件.</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc hello.c -o hello</span><br></pre></td></tr></table></figure>
+<h4 id="ld-交叉链接器"><a href="#ld-交叉链接器" class="headerlink" title="ld 交叉链接器"></a>ld 交叉链接器</h4><blockquote>
+<p>将多个编译后产生的过程文件连接为一个最终的可执行文件。</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld [options] 链接器脚本 -o 文件名.elf</span><br></pre></td></tr></table></figure>
+<h4 id="readelf-交叉ELF文件查看器"><a href="#readelf-交叉ELF文件查看器" class="headerlink" title="readelf 交叉ELF文件查看器"></a>readelf 交叉ELF文件查看器</h4><blockquote>
+<p>用来查看一个可执行文件的相关信息</p>
+</blockquote>
+<p>可以查看elf文件的运行架构，大小端等信息:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -a 文件名.elf</span><br></pre></td></tr></table></figure></p>
+<p>显示程序需要的动态链接库:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -d 文件名.elf</span><br></pre></td></tr></table></figure></p>
+<h4 id="objdump-交叉反汇编器"><a href="#objdump-交叉反汇编器" class="headerlink" title="objdump 交叉反汇编器"></a>objdump 交叉反汇编器</h4><blockquote>
+<p>将一个可执行文件转换为汇编下的程序</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-objdump -D -S elf文件名 &gt;目标文件</span><br></pre></td></tr></table></figure>
+<h4 id="objcopy-交叉转换器"><a href="#objcopy-交叉转换器" class="headerlink" title="objcopy 交叉转换器"></a>objcopy 交叉转换器</h4><blockquote>
+<p>将elf格式文件转换成其他的格式</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objcopy -O 目标文件格式 原ELF文件 目标文件</span><br></pre></td></tr></table></figure>
+<p>例子:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objcopy -O binary a.elf a.bin</span><br></pre></td></tr></table></figure></p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/tcpip协议栈/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/gpu/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/embedded-notes/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/embedded-notes/img/avatar.png" alt="xiaxiaowen's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/embedded-notes/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/embedded-notes/archives/2018/02/">二月 2018<span class="sidebar_archives-count">11</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>xiaxiaowen的个人博客
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/embedded-notes/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/embedded-notes/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/embedded-notes/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/embedded-notes/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

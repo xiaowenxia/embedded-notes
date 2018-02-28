@@ -1,0 +1,28 @@
+sidebar:
+    homepage: "Home"
+    archive: "Archive"
+    article_num: "Artikel Nummer"
+post:
+    visitor: "Besucher"
+    views: "Aufrufe"
+    continue: "Weiterlesen"
+    older: "Älteren"
+    newer: "Neuren"
+    qrcode: "Lesen Sie diesen Artikel auf anderem Gerät"
+    comments_load_button: "Lesen Sie Kommentare 「Stellen Sie sicher, dass 'disq.us & disquscdn.com & disqus.com' geladen werden kann 」"    
+share:
+    article_rss: "Artikel als RSS"
+    comment_rss: "Kommentare als RSS"
+    toTwitter: "Auf Twitter teilen"
+    toFacebook: "Auf Facebook teilen"
+    toLinkedIn: "Auf LinkedIn teilen"
+    toTelegram: "Auf Telegram teilen"
+    toGplus: "Auf Google+ teilen"
+    toWeibo: "Auf Weibo teilen"
+    toQQ: "Auf QQ teilen"
+title:
+    category: "Kategorie"
+    tag: "Tag"
+misc:
+    home: "Home"
+    theme: "Theme"

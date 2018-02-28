@@ -1,0 +1,77 @@
+<div class="post_entry-module mdl-card <% if(theme.card_elevation) { %><%= 'mdl-shadow--' + theme.card_elevation + 'dp' %><% } %> mdl-cell mdl-cell--12-col fade out">
+    <!-- Post_entry Header -->
+    <% if(!post.thumbnail) { %>
+        <!-- Post Header Info -->
+        <div class="post_entry-header_info without-thumbnail">
+            <!-- Author Avatar & Name -->
+            <img src="<%= theme.img.avatar %>" class="avatar-img" width="44px" height="44px" alt="<%= config.author %>'s avatar">
+            <span class="name-span"><%= config.author %></span>
+        </div>
+
+        <!-- Null Thumbnail -->
+        <div class="post_thumbnail-null">
+    <% } else { %>
+        <!-- Post Header Info -->
+        <div class="post_entry-header_info with-thumbnail">
+            <!-- Author Avatar & Name -->
+            <img src="<%= theme.img.avatar %>" class="avatar-img" width="44px" height="44px" alt="<%= config.author %>'s avatar">
+            <span class="name-span"><%= config.author %></span>
+        </div>
+
+        <!-- Custom thumbnail -->
+        <div class="post_thumbnail-custom">
+            <img src="<%= post.thumbnail %>">
+    <% } %>
+        </div>
+
+    <!-- Post_entry Content -->
+    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
+        <!-- Post Title -->
+        <p class="post_entry-title">
+            <a href="<%= url_for(post.path) %>"><% if(pin) { %><span>[Top]</span><% } %><%= post.title %></a>
+        </p>
+
+        <!-- Post Excerpt -->
+        <p class="post_entry-excerpt">
+            <%if(post.excerpt) {%>
+                <%- strip_html(post.excerpt) %>
+            <%}else{%>
+                <%- strip_html(truncate(post.content,{length: theme.reading.entry_excerpt })) %>
+            <%}%>
+            &nbsp;&nbsp;&nbsp;
+            <span>
+                <a href="<%= url_for(post.path) %>" target="_self"><%= __('post.continue') %></a>
+            </span>
+        </p>
+
+        <!-- Post Tags -->
+        <%- list_tags(post.tags, {
+              show_count: false,
+              class: 'post_entry-tags',
+              style: 'list',
+              separator: ''
+        }) %>
+    </div>
+
+    <!-- Post_entry Footer -->
+    <div class="post_entry-footer">
+        <div class="post_entry-footer-border"></div>
+        <div class="post_entry-footer-info">
+            <div class="post_entry-footer-date">
+                <%= date(post.date, 'MMM DD, YYYY') %>
+            </div>
+            <div class="post_entry-footer-comment">
+                <% if(theme.comment.use === 'duoshuo') { %>
+                    <!-- Comment Number -->
+                    <span class="ds-thread-count" data-thread-key="<% theme.comment.duoshuo_thread_key_type === 'id' ? page.id : page.path %>" data-count-type="comments"></span>
+                <% } %>
+                <% if(theme.comment.use === 'changyan') { %>
+                    <!-- Comment Number -->
+                    <span class="post_entry-comment" >
+                            <span id = "sourceId::<%= theme.comment.changyan_thread_key_type === 'id' ? page.id : page.path  %>" class = "cy_cmt_count" ></span>条评论
+                    </span>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<% if(theme.leancloud.enable === true) { %>
+    <!-- Leancloud -->
+    <script src="<%= theme.leancloud.av_core_mini %>"></script>
+    <script>
+        AV.initialize('<%= theme.leancloud.app_id %>', '<%= theme.leancloud.app_key %>');
+    </script>
+    <%- partial('_widget/leancloud-views') %>
+<% } %>
+
+<% if(theme.busuanzi.enable === true) { %>
+    <!-- Busuanzi -->
+    <script src="<%= theme.busuanzi.busuanzi_pure_mini_js %>"></script>
+<% } %>
+
+<% if(theme.comment.use){ %>
+   <%- partial('_widget/comment/' + theme.comment.use + '/common') %>
+<% } %>

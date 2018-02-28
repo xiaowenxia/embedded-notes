@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            嵌入式笔记：cortex内核 | 
+        
+        xiaxiaowen的个人博客
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="xiaxiaowen">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/embedded-notes/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/embedded-notes/img/favicon.png">
+    <link rel="apple-touch-icon" href="/embedded-notes/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="xiaxiaowen的个人博客">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="嵌入式笔记：cortex内核 | xiaxiaowen的个人博客">
+    <meta property="og:image" content="/embedded-notes/img/favicon.png" />
+    <meta property="og:description" content="">
+    
+
+    
+        <meta property="article:published_time" content="2月 28, 2018" />
+        <meta property="article:modified_time" content="2月 28, 2018" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="嵌入式笔记：cortex内核 | xiaxiaowen的个人博客">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://xiaowenxia.github.io/embedded-notes" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/cortex/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "xiaxiaowen的个人博客",
+        "logo": "/embedded-notes/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xiaxiaowen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/embedded-notes/img/favicon.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "headline": "嵌入式笔记：cortex内核",
+    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/cortex/index.html",
+    "datePublished": "2月 28, 2018",
+    "dateModified": "2月 28, 2018",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://xiaowenxia.github.io/embedded-notes"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/embedded-notes/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/embedded-notes/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    .footer-sns-facebook {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNjU3LjYgODcuOGw0LjggMy44djU1LjJjMCA1NC42IDAgNTUuMi00LjYgNTkuNi00LjQgNC40LTYgNC42LTUwLjIgNS42bC00NS42IDEtNy4yIDUuNmMtMTAuNCA4LTE2LjggMTcuMi0xOS4yIDI3LjQtMSA1LTEuOCAyNC44LTEuOCA0NCAuMiAzOCAxLjYgNDQuNiAxMC44IDQ4IDIuOCAxLjIgMjguNCAyIDU2LjggMiA0Ny44IDAgNTIgLjIgNTYuMiAzLjhsNC44IDMuOHY1NS4yYzAgNTQuNiAwIDU1LjItNC42IDU5LjYtNC40IDQuNi01LjQgNC42LTU3IDUuMi0yOC44LjItNTQuNC44LTU2LjggMS40LTIuNC42LTUuNiAzLTYuOCA1LjQtMS44IDMuMi0yLjQgNDEuNC0yLjYgMTQzLjJsLS4yIDEzOC44LTUuNiA0LjgtNS42IDQuOEg2MDljLTUyLjQgMC01Mi44IDAtNTguMi00LjZsLTUuNC00LjYtLjItMTQwLjYtLjItMTQwLjYtNC44LTMuOGMtNC4yLTMuNC04LTMuOC0zNS42LTMuOC0zMi44IDAtNDEtMS44LTQzLjYtMTAtLjYtMi4yLTEuMi0yNS40LTEuMi01MS40IDAtNjAuOC0uMi01NyAzLjQtNjEuNiAyLjgtMy42IDYtNCAzNy44LTUgMzMtMSAzNS4yLTEuMiAzOS40LTUuNiA0LjYtNC40IDQuNi01LjIgNS44LTcxIDEuMi03My40LjItNjcuMiAxNi42LTk5LjQgOC0xNS44IDEyLjgtMjIgMjgtMzcgMTUuMi0xNS4yIDIxLjQtMTkuNiAzOC4yLTI4IDExLTUuNCAyNC0xMSAyOS0xMi4yIDYuMi0xLjggMjguNi0yLjYgNzEuMi0yLjYgNTguNi0uMiA2Mi42IDAgNjcgMy42eiIvPjwvc3ZnPg==);
+    }
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    .footer-sns-gplus {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHpNNDMwIDI5NS40YzQwLjYgMTUuNCA1Ni42IDIzLjggNzIuNiAzOC40IDYuOCA2LjIgNy4yIDE1LjIgMSAyMy40LTYuMiA4LTMzLjYgMzMuOC0zOSAzNi42LTUuNiAyLjgtMTcuNiAyLjgtMjMuMi0uMi0yLjQtMS4yLTguMi01LjItMTMtOC44LTExLjItOC42LTI0LjYtMTEuMi01NS4yLTExLjItMjcuNCAwLTQwLjYgMi42LTUyLjIgMTAuNC00LjQgMi44LTEyLjIgNy42LTE3LjIgMTAuNi0yMyAxMy4yLTUxLjQgNTUtNTUuOCA4Mi40LTIuNiAxNS42LTIuNCAzNC44LjIgNTEgMi44IDE3LjQgMTkuOCA0OC44IDM1LjIgNjUuMiAxNiAxNi42IDQ1IDMzLjYgNjIuOCAzNi42IDI2LjggNC40IDY1LjggMS42IDc5LjQtNS44IDIwLjYtMTEuNCAzMS0xOSA0MS0zMC40IDE4LjgtMjEuNiAyMy40LTM0LjIgMTUuNi00My44LTMuOC00LjgtNC40LTQuOC01MS01LjgtNjAuOC0xLjItNTYuMiAyLjItNTYuMi00My4yIDAtMzIuNC4yLTMzLjIgNC44LTM3IDQuNC0zLjYgOS0zLjggOTItMy44IDc5IDAgODcuOC40IDk0LjIgMy42IDExLjIgNS42IDEzIDExLjQgMTIuOCA0My40IDAgMjUuNC0uOCAzMC44LTcuNiA1OC00IDE2LjYtOS44IDM0LTEyLjYgMzktMi44IDUtOC4yIDE0LjItMTEuNiAyMC42LTguNCAxNS40LTI3LjIgMzYuOC00MC44IDQ2LjYtNS44IDQuNC0xMy44IDEwLjItMTcuNiAxMy4yLTMuOCAzLTExIDctMTYuMiA4LjgtNS4yIDEuOC0xNi4yIDYuNC0yNC40IDEwLTIyLjQgOS42LTM0LjggMTEuNi03MyAxMS42LTM3LjYuMi00Ny0xLjQtNzEtMTItOC4yLTMuNi0xNy42LTcuMi0yMC44LTgtMTUuOC0zLjgtNjctNDUuMi03Ny44LTYyLjgtMi4yLTMuOC03LjYtMTEuNi0xMS44LTE3LjItNC4yLTUuNC05LTE0LTEwLjYtMTktMS44LTQuOC02LjItMTYtMTAtMjQuOC0zLjYtOC44LTcuOC0yMi4yLTkuMi0yOS42LTMuMi0xOC44LTEuNC03OS40IDIuOC05MS40IDEzLjgtNDAuNiAzNS42LTc4IDU4LjgtMTAwLjIgMTQtMTMuNiA0Ny4yLTM2LjQgNTgtMzkuOCA0LjItMS40IDEzLjQtNS4yIDIwLjYtOC40IDIyLTEwIDMyLjgtMTEuNiA3Ni0xMSAzMy44LjYgNDAuNCAxLjIgNTAgNC44em0zNDAuOCA4MC44YzggMy42IDkuNiAxMS4yIDkuMiAzOS4yLS42IDM0LjQtLjYgMzQgNSAzOS42IDQuOCA1IDUuNCA1IDM3LjYgNSA0My40IDAgNDQuNC44IDQzLjIgMzYuMi0uOCAxNy0xLjIgMTguNC02LjQgMjMtNS40IDQuNi02LjYgNC44LTM3LjYgNC44LTMxLjIgMC0zMiAuMi0zNi44IDUtNS42IDUuNC01LjYgNC40LTUgNDEuMi40IDI2LjQuMiAyNy40LTQuNiAzMy00LjggNS42LTYgNS44LTI0LjQgNi40LTIwLjguOC0yOS42LTEuNC0zMy40LTguNC0xLjQtMi42LTItMTUuNi0xLjgtMzUuNi40LTMxLjIuNC0zMS42LTQuNi0zNi42cy01LjYtNS0zNi01Yy0xOC44IDAtMzMtLjgtMzYtMi4yLTcuNi0zLjYtOS42LTExLjItOC44LTMzLjguOC0yOC4yLjQtMjggNDEtMjggNDUuNCAwIDQ1LjQgMCA0NC42LTQyLjYtLjYtMzMtLjYtMzMgNS0zOC40IDQuNC00LjYgNi4yLTUgMjQuOC01IDExIDAgMjIuMiAxIDI1IDIuMnoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/embedded-notes/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#arm内核发展历史"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">arm内核发展历史</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#cortexM0系列芯片系统框图"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">cortexM0系列芯片系统框图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#通用寄存器"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">通用寄存器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#m0特殊寄存器"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">m0特殊寄存器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#m3-m4-m7特殊寄存器"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">m3/m4/m7特殊寄存器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MSP和PSP"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">MSP和PSP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#xPSR"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">xPSR</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#PRIMASK"><span class="post-toc-number">1.5.3.</span> <span class="post-toc-text">PRIMASK</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CONTROL"><span class="post-toc-number">1.5.4.</span> <span class="post-toc-text">CONTROL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FAULTMASK"><span class="post-toc-number">1.5.5.</span> <span class="post-toc-text">FAULTMASK</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#BASEPRI"><span class="post-toc-number">1.5.6.</span> <span class="post-toc-text">BASEPRI</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#栈空间操作"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">栈空间操作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#异常和中断"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">异常和中断</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#系统异常"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">系统异常</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NVIC可嵌套向量中断控制器"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">NVIC可嵌套向量中断控制器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#系统操作寄存器"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">系统操作寄存器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#NVIC寄存器"><span class="post-toc-number">1.9.1.</span> <span class="post-toc-text">NVIC寄存器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#系统控制块SCB寄存器"><span class="post-toc-number">1.9.2.</span> <span class="post-toc-text">系统控制块SCB寄存器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SysTick寄存器"><span class="post-toc-number">1.9.3.</span> <span class="post-toc-text">SysTick寄存器</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#cortex-m0启动流程"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">cortex-m0启动流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#中断向量表"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">中断向量表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#大小端"><span class="post-toc-number">1.12.</span> <span class="post-toc-text">大小端</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#堆栈"><span class="post-toc-number">1.13.</span> <span class="post-toc-text">堆栈</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#压栈的寄存器"><span class="post-toc-number">1.13.1.</span> <span class="post-toc-text">压栈的寄存器</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#杂项指令集"><span class="post-toc-number">1.14.</span> <span class="post-toc-text">杂项指令集</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#M0-M3-M4-M7区别"><span class="post-toc-number">1.15.</span> <span class="post-toc-text">M0/M3/M4/M7区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#M3系统框图"><span class="post-toc-number">1.16.</span> <span class="post-toc-text">M3系统框图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#M3快速开关中断汇编指令"><span class="post-toc-number">1.17.</span> <span class="post-toc-text">M3快速开关中断汇编指令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#M3内核CONTROL寄存器"><span class="post-toc-number">1.18.</span> <span class="post-toc-text">M3内核CONTROL寄存器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#异常和中断-1"><span class="post-toc-number">1.19.</span> <span class="post-toc-text">异常和中断</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MPU存储器保护单元"><span class="post-toc-number">1.20.</span> <span class="post-toc-text">MPU存储器保护单元</span></a></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                嵌入式笔记：cortex内核
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xiaxiaowen</strong>
+        <span>2月 28, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：cortex内核&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/cortex/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：cortex内核&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/cortex/index.html&via=xiaxiaowen" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/cortex/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/cortex/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：cortex内核&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/cortex/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>嵌入式笔记：cortex内核</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li><a href="#arm内核发展历史">arm内核发展历史</a></li>
+<li><a href="#cortexM0系列芯片系统框图">cortexM0系列芯片系统框图</a></li>
+<li><a href="#通用寄存器">通用寄存器</a></li>
+<li><a href="#m0特殊寄存器">m0特殊寄存器</a></li>
+<li><a href="#m3/m4/m7特殊寄存器">m3/m4/m7特殊寄存器</a><ul>
+<li><a href="#MSP和PSP">MSP和PSP</a></li>
+<li><a href="#xPSR">xPSR</a></li>
+<li><a href="#PRIMASK">PRIMASK</a></li>
+<li><a href="#CONTROL">CONTROL</a></li>
+<li><a href="#FAULTMASK">FAULTMASK</a></li>
+<li><a href="#BASEPRI">BASEPRI</a></li>
+</ul>
+</li>
+<li><a href="#栈空间操作">栈空间操作</a></li>
+<li><a href="#异常和中断">异常和中断</a><ul>
+<li><a href="#系统异常">系统异常</a></li>
+</ul>
+</li>
+<li><a href="#NVIC可嵌套向量中断控制器">NVIC可嵌套向量中断控制器</a></li>
+<li><a href="#系统操作寄存器">系统操作寄存器</a><ul>
+<li><a href="#NVIC寄存器">NVIC寄存器</a></li>
+<li><a href="#系统控制块SCB寄存器">系统控制块SCB寄存器</a></li>
+<li><a href="#SysTick寄存器">SysTick寄存器</a></li>
+</ul>
+</li>
+<li><a href="#cortex-m0启动流程">cortex-m0启动流程</a></li>
+<li><a href="#中断向量表">中断向量表</a></li>
+<li><a href="#大小端">大小端</a></li>
+<li><a href="#堆栈">堆栈</a><ul>
+<li><a href="#压栈的寄存器">压栈的寄存器</a></li>
+</ul>
+</li>
+<li><a href="#杂项指令集">杂项指令集</a></li>
+<li><a href="#M0/M3/M4/M7区别">M0/M3/M4/M7区别</a></li>
+<li><a href="#M3系统框图">M3系统框图</a></li>
+<li><a href="#M3快速开关中断汇编指令">M3快速开关中断汇编指令</a></li>
+<li><a href="#M3内核CONTROL寄存器">M3内核CONTROL寄存器</a></li>
+<li><a href="#异常和中断">异常和中断</a></li>
+<li><a href="#MPU存储器保护单元">MPU存储器保护单元</a></li>
+</ul>
+<h2 id="arm内核发展历史"><a href="#arm内核发展历史" class="headerlink" title="arm内核发展历史"></a>arm内核发展历史</h2><table>
+<thead>
+<tr>
+<th>arm内核</th>
+<th>架构</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arm7</td>
+<td>armv6</td>
+</tr>
+<tr>
+<td>cortex-m0</td>
+<td>armv6-m</td>
+</tr>
+<tr>
+<td>cortex-m0+</td>
+<td>armv6-m</td>
+</tr>
+<tr>
+<td>cortex-m3</td>
+<td>armv7-m</td>
+</tr>
+<tr>
+<td>cortex-m4</td>
+<td>armv7-m</td>
+</tr>
+<tr>
+<td>cortex-m7</td>
+<td>armv7-m</td>
+</tr>
+<tr>
+<td>arm9</td>
+<td>ARMv6</td>
+</tr>
+<tr>
+<td>arm11</td>
+<td>ARMv6</td>
+</tr>
+<tr>
+<td>arm12</td>
+<td>ARMv6</td>
+</tr>
+<tr>
+<td>cortex-a7</td>
+<td>armv7-a</td>
+</tr>
+<tr>
+<td>cortex-a8</td>
+<td>armv7-a</td>
+</tr>
+<tr>
+<td>cortex-a9</td>
+<td>armv7-a</td>
+</tr>
+<tr>
+<td>cortex-a15</td>
+<td>armv7-a</td>
+</tr>
+<tr>
+<td>cortex-A17</td>
+<td>armv7-a</td>
+</tr>
+<tr>
+<td>cortex-A53</td>
+<td>armv8</td>
+</tr>
+<tr>
+<td>cortex-A57</td>
+<td>armv8</td>
+</tr>
+<tr>
+<td>cortex-A72</td>
+<td>armv8</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cortexM0系列芯片系统框图"><a href="#cortexM0系列芯片系统框图" class="headerlink" title="cortexM0系列芯片系统框图"></a>cortexM0系列芯片系统框图</h2><p><img src="../res/cortex-m0系统框图.png" alt="M0系统框图"><br>系统中包括：</p>
+<ul>
+<li>中断控制器</li>
+<li>M0内核</li>
+<li>AHB总线</li>
+<li>存储器和外设</li>
+<li>电源管理</li>
+<li>时钟树</li>
+<li>调试系统</li>
+</ul>
+<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><table><br>    <tr><br>        <td>R0</td><br>        <td>R1</td><br>        <td>R2</td><br>        <td>R3</td><br>        <td>R4</td><br>        <td>R5</td><br>        <td>R6</td><br>        <td>R7</td><br>        <td>R8</td><br>        <td>R9</td><br>        <td>R10</td><br>        <td>R11</td><br>        <td>R12</td><br>    </tr><br></table>
+
+<h2 id="m0特殊寄存器"><a href="#m0特殊寄存器" class="headerlink" title="m0特殊寄存器"></a>m0特殊寄存器</h2><table><br>    <tr><br>        <td>SP(R13)</td><br>        <td>LR(R14)</td><br>        <td>PC(R15)</td><br>        <td>CONTROL</td><br>        <td>xPSR</td><br>        <td>PRIMASK</td><br>    </tr><br></table>
+
+<h2 id="m3-m4-m7特殊寄存器"><a href="#m3-m4-m7特殊寄存器" class="headerlink" title="m3/m4/m7特殊寄存器"></a>m3/m4/m7特殊寄存器</h2><table><br>    <tr><br>        <td>SP(R13)</td><br>        <td>LR(R14)</td><br>        <td>PC(R15)</td><br>        <td>CONTROL</td><br>        <td>xPSR</td><br>        <td>PRIMASK</td><br>        <td>FAULTMASK</td><br>        <td>BASEPRI</td><br>    </tr><br></table>
+
+<h3 id="MSP和PSP"><a href="#MSP和PSP" class="headerlink" title="MSP和PSP"></a>MSP和PSP</h3><pre><code>msp中断中会使用，psp用于线程栈使用，通过配置CONTROL寄存器切换。
+系统复位后默认使用msp，中断中也使用msp。
+</code></pre><h3 id="xPSR"><a href="#xPSR" class="headerlink" title="xPSR"></a>xPSR</h3><pre><code>IPSR可以用来判断当前处于什么中断。
+</code></pre><h3 id="PRIMASK"><a href="#PRIMASK" class="headerlink" title="PRIMASK"></a>PRIMASK</h3><pre><code>中断屏蔽寄存器，写1屏蔽所有中断(除了不可屏蔽中断和hardfault)
+</code></pre><h3 id="CONTROL"><a href="#CONTROL" class="headerlink" title="CONTROL"></a>CONTROL</h3><pre><code>第1bit写1表示切换成PSP
+</code></pre><h3 id="FAULTMASK"><a href="#FAULTMASK" class="headerlink" title="FAULTMASK"></a>FAULTMASK</h3><p>屏蔽所有的fault (NMI不受影响)</p>
+<h3 id="BASEPRI"><a href="#BASEPRI" class="headerlink" title="BASEPRI"></a>BASEPRI</h3><p>屏蔽所有优先级不高于某个具体数值的中断</p>
+<h2 id="栈空间操作"><a href="#栈空间操作" class="headerlink" title="栈空间操作"></a>栈空间操作</h2><pre><code>栈向下递减
+栈指针始终指向栈的最后一个数据，每次执行数据存储前(push)，SP会首先减小
+</code></pre><h2 id="异常和中断"><a href="#异常和中断" class="headerlink" title="异常和中断"></a>异常和中断</h2><blockquote>
+<p>m0最多支持32个外部中断</p>
+</blockquote>
+<h3 id="系统异常"><a href="#系统异常" class="headerlink" title="系统异常"></a>系统异常</h3><blockquote>
+<p>主要用于操作系统和错误处理</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>异常类型</th>
+<th style="text-align:center">异常编号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reset</td>
+<td style="text-align:center">1</td>
+<td>上电复位、系统复位</td>
+</tr>
+<tr>
+<td>NMI</td>
+<td style="text-align:center">2</td>
+<td>不可屏蔽中断</td>
+</tr>
+<tr>
+<td>hardfault</td>
+<td style="text-align:center">3</td>
+<td>硬件错误</td>
+</tr>
+<tr>
+<td>SVCall</td>
+<td style="text-align:center">11</td>
+<td>系统调用</td>
+</tr>
+<tr>
+<td>PendSV</td>
+<td style="text-align:center">13</td>
+<td>挂起系统调用</td>
+</tr>
+<tr>
+<td>systick</td>
+<td style="text-align:center">15</td>
+<td>系统滴答</td>
+</tr>
+</tbody>
+</table>
+<h2 id="NVIC可嵌套向量中断控制器"><a href="#NVIC可嵌套向量中断控制器" class="headerlink" title="NVIC可嵌套向量中断控制器"></a>NVIC可嵌套向量中断控制器</h2><ul>
+<li>中断可嵌套</li>
+<li>相同优先级的中断不可嵌套</li>
+<li>相同中断不可嵌套</li>
+</ul>
+<h2 id="系统操作寄存器"><a href="#系统操作寄存器" class="headerlink" title="系统操作寄存器"></a>系统操作寄存器</h2><p>实际上是许多的系统管理的寄存器<br>|地址范围|寄存器说明|<br>|—|—-|<br>|0xE000E008 - 0xE000E00F|System Control Block Table|<br>|0xE000E010 - 0xE000E01F|预留|<br>|0xE000E010 - 0xE000E01F|SysTick操作寄存器|<br>|0xE000E100 - 0xE000E4EF|NVIC操作寄存器|<br>|0xE000ED00 - 0xE000ED3F|系统控制块|<br>|0xE000EF00 - 0xE000EF03|NVIC|</p>
+<h3 id="NVIC寄存器"><a href="#NVIC寄存器" class="headerlink" title="NVIC寄存器"></a>NVIC寄存器</h3><table>
+<thead>
+<tr>
+<th>地址</th>
+<th style="text-align:center">寄存器名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0xE000E100</td>
+<td style="text-align:center">ISER</td>
+<td>中断使能寄存器</td>
+</tr>
+<tr>
+<td>0xE000E180</td>
+<td style="text-align:center">ICER</td>
+<td>中断失能寄存器</td>
+</tr>
+<tr>
+<td>0xE000E200</td>
+<td style="text-align:center">ISPR</td>
+<td>中断挂起寄存器</td>
+</tr>
+<tr>
+<td>0xE000E280</td>
+<td style="text-align:center">ICPR</td>
+<td>清除挂起中断的寄存器</td>
+</tr>
+<tr>
+<td>0xE000E400 - 0xE000E41C</td>
+<td style="text-align:center">IPR0-7</td>
+<td>中断优先级配置寄存器</td>
+</tr>
+</tbody>
+</table>
+<h3 id="系统控制块SCB寄存器"><a href="#系统控制块SCB寄存器" class="headerlink" title="系统控制块SCB寄存器"></a>系统控制块SCB寄存器</h3><table>
+<thead>
+<tr>
+<th>地址</th>
+<th style="text-align:center">寄存器名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0xE000ED00</td>
+<td style="text-align:center">CPUID</td>
+<td>CPUID</td>
+</tr>
+<tr>
+<td>0xE000ED04</td>
+<td style="text-align:center">ICSR</td>
+<td>中断控制和状态寄存器</td>
+</tr>
+<tr>
+<td>0xE000ED0C</td>
+<td style="text-align:center">AIRCR</td>
+<td>应用中断和复位的寄存器</td>
+</tr>
+<tr>
+<td>0xE000ED10</td>
+<td style="text-align:center">SCR</td>
+<td>系统控制寄存器</td>
+</tr>
+<tr>
+<td>0xE000ED14</td>
+<td style="text-align:center">CCR</td>
+<td>配置控制寄存器</td>
+</tr>
+<tr>
+<td>0xE000ED1C</td>
+<td style="text-align:center">SHPR2</td>
+<td>System Handler Priority Register 2</td>
+</tr>
+<tr>
+<td>0xE000ED20</td>
+<td style="text-align:center">SHPR3</td>
+<td>System Handler Priority Register 3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="SysTick寄存器"><a href="#SysTick寄存器" class="headerlink" title="SysTick寄存器"></a>SysTick寄存器</h3><table>
+<thead>
+<tr>
+<th>地址</th>
+<th style="text-align:center">寄存器名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0xE000E010</td>
+<td style="text-align:center">SYST_CSR</td>
+<td>SysTick控制和状态寄存器</td>
+</tr>
+<tr>
+<td>0xE000E014</td>
+<td style="text-align:center">SYST_RVR</td>
+<td>SysTick重载寄存器</td>
+</tr>
+<tr>
+<td>0xE000E018</td>
+<td style="text-align:center">SYST_CVR</td>
+<td>SysTick当前值寄存器</td>
+</tr>
+<tr>
+<td>0xE000E01C</td>
+<td style="text-align:center">SYST_CALIB</td>
+<td>SysTick校准寄存器</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cortex-m0启动流程"><a href="#cortex-m0启动流程" class="headerlink" title="cortex-m0启动流程"></a>cortex-m0启动流程</h2><ol>
+<li>程序从0x00000000地址开始执行</li>
+<li>m0从程序bin文件的开始处第2个word运行reset_handler</li>
+<li>reset_handler函数开始执行一些必要的初始化（ramfunc函数复制，堆初始化，全局、静态变量初始化等）</li>
+<li>跳转到main函数中</li>
+</ol>
+<h2 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h2><table><br>    <tr><td>sp指针</td></tr><br>    <tr><td>resetHandler地址</td></tr><br>    <tr><td>NMIHandler地址</td></tr><br>    <tr><td>hardfault地址</td></tr><br>    <tr><td>reserved</td></tr><br>    <tr><td>systickHandler地址</td></tr><br>    <tr><td>……</td></tr><br></table>
+
+<h2 id="大小端"><a href="#大小端" class="headerlink" title="大小端"></a>大小端</h2><pre><code>m0支持大端模式和小端模式，不过一般芯片公司选择小端模式。
+</code></pre><h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h2><pre><code>堆向上增长
+栈向下增长
+</code></pre><h3 id="压栈的寄存器"><a href="#压栈的寄存器" class="headerlink" title="压栈的寄存器"></a>压栈的寄存器</h3><table><br>    <tr><td>xPSR</td></tr><br>    <tr><td>PC</td></tr><br>    <tr><td>LR</td></tr><br>    <tr><td>R12</td></tr><br>    <tr><td>R3</td></tr><br>    <tr><td>R2</td></tr><br>    <tr><td>R1</td></tr><br>    <tr><td>R0</td></tr><br></table>
+
+<h2 id="杂项指令集"><a href="#杂项指令集" class="headerlink" title="杂项指令集"></a>杂项指令集</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">指令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">BKPT</td>
+<td>断点</td>
+</tr>
+<tr>
+<td style="text-align:center">CPSID</td>
+<td>关闭总中断</td>
+</tr>
+<tr>
+<td style="text-align:center">CPSIE</td>
+<td>打开总中断</td>
+</tr>
+<tr>
+<td style="text-align:center">DMB</td>
+<td>数据存储器隔离 仅当所有在它前面的存储器访问操作都执行完毕后，才开始后面的存储器访问操作</td>
+</tr>
+<tr>
+<td style="text-align:center">DSB</td>
+<td>数据同步隔离，比DMB更严格:仅当所有在它前面的存储器访问操作都执行完毕后，才开始后面的指令</td>
+</tr>
+<tr>
+<td style="text-align:center">ISB</td>
+<td>指令同步隔离，最严格: 会清洗流水线，保证所有它前面的指令都执行完毕之后，才执行后面的指令。</td>
+</tr>
+<tr>
+<td style="text-align:center">MRS</td>
+<td>从特殊寄存器读取数据到通用寄存器</td>
+</tr>
+<tr>
+<td style="text-align:center">MSR</td>
+<td>从通用寄存器读取数据到特殊寄存器</td>
+</tr>
+<tr>
+<td style="text-align:center">NOP</td>
+<td>空转指令</td>
+</tr>
+<tr>
+<td style="text-align:center">SEV</td>
+<td>产生event</td>
+</tr>
+<tr>
+<td style="text-align:center">SVC</td>
+<td>产生SVC系统调用中断</td>
+</tr>
+<tr>
+<td style="text-align:center">WFE</td>
+<td>等待event</td>
+</tr>
+<tr>
+<td style="text-align:center">WFI</td>
+<td>等待中断</td>
+</tr>
+</tbody>
+</table>
+<h2 id="M0-M3-M4-M7区别"><a href="#M0-M3-M4-M7区别" class="headerlink" title="M0/M3/M4/M7区别"></a>M0/M3/M4/M7区别</h2><p>M0 armv6-M架构</p>
+<p>M3 armv7-M架构<br>多了basepri寄存器可以阻止某优先级或更低的优先级的中断。<br>faultmask寄存器提供了更多的错误管理特性。<br>CONTROL寄存器的bit0用于决定是特权模式还是用户线程模式<br>32为thumb指令<br>位段特性<br>位域处理<br>多处理器支持<br>最多240个中断<br>硬件除法<br>存储器保护单元<br>更多的调试和跟踪特性</p>
+<p>M4 armv7-M架构<br>浮点特性<br>SIMD指令(单周期多指令)<br>饱和算法<br>单周期MAC(MAC乘法累加)</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>M0</th>
+<th>M3</th>
+<th>M4</th>
+<th>M7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>basepr</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="M3系统框图"><a href="#M3系统框图" class="headerlink" title="M3系统框图"></a>M3系统框图</h2><p><img src="../res/cortex-m3系统框图.png" alt="M3系统框图"></p>
+<h2 id="M3快速开关中断汇编指令"><a href="#M3快速开关中断汇编指令" class="headerlink" title="M3快速开关中断汇编指令"></a>M3快速开关中断汇编指令</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>效果</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPSID I</td>
+<td>PRIMASK=1</td>
+<td>关中断</td>
+</tr>
+<tr>
+<td>CPSIE I</td>
+<td>PRIMASK=0</td>
+<td>开中断</td>
+</tr>
+<tr>
+<td>CPSID F</td>
+<td>FAULTMASK=1</td>
+<td>关异常</td>
+</tr>
+<tr>
+<td>CPSIE F</td>
+<td>FAULTMASK=0</td>
+<td>开异常</td>
+</tr>
+</tbody>
+</table>
+<h2 id="M3内核CONTROL寄存器"><a href="#M3内核CONTROL寄存器" class="headerlink" title="M3内核CONTROL寄存器"></a>M3内核CONTROL寄存器</h2><ul>
+<li>CONTROL[1]<br>  堆栈指针选择<br>  0=选择主堆栈指针 MSP(复位后缺省值)<br>  1=选择进程堆栈指针 PSP<br>  在线程或基础级(没有在响应异常——译注),可以使用 PSP。在 handler 模式下,只允许使用 MSP,所以此时不得往该位写 1。 </li>
+<li>CONTROL[0]<br>  0=特权级的线程模式<br>  1=用户级的线程模式<br>  Handler 模式永远都是特权级的。 </li>
+</ul>
+<h2 id="异常和中断-1"><a href="#异常和中断-1" class="headerlink" title="异常和中断"></a>异常和中断</h2><blockquote>
+<p>Cortex‐M3 支持大量异常,包括 16‐4‐1=11 个系统异常,和最多 240 个外部中断——简称 IRQ。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>类型</th>
+<th>优先级</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>没有异常在运行</td>
+</tr>
+<tr>
+<td>1</td>
+<td>复位</td>
+<td>-3(最高)</td>
+<td>复位</td>
+</tr>
+<tr>
+<td>2</td>
+<td>NMI</td>
+<td>-2</td>
+<td>不可屏蔽中断(来自外部 NMI 输入脚)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>硬(hard) fault</td>
+<td>-1</td>
+<td>所有被除能的 fault,都将“上访”成硬 fault。除能的原因包括当前被禁用,或者 FAULTMASK 被置位。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>MemManage</td>
+<td>可编程</td>
+<td>fault</td>
+</tr>
+<tr>
+<td>5</td>
+<td>存储器管理fault</td>
+<td>可编程</td>
+<td>MPU 访问犯规以及访问非法位置均可引发。企图在“非执行区”取指也会引发此 fault总线 fault从总线系统收到了错误响应,原因可以是预取流产(Abort)或数据流产,或者企图访问协处理器</td>
+</tr>
+<tr>
+<td>6</td>
+<td>用法(usage)</td>
+<td>可编程</td>
+<td>Fault</td>
+<td>由于程序错误导致的异常。通常是使用了一条无效指令,或者是非法的状态转换,例如尝试切换到 ARM 状态</td>
+</tr>
+<tr>
+<td>7-10</td>
+<td>保留</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>11</td>
+<td>SVCall</td>
+<td>可编程</td>
+<td>执行系统服务调用指令(SVC)引发的异常</td>
+</tr>
+<tr>
+<td>12</td>
+<td>调试监视器</td>
+<td>可编程</td>
+<td>调试监视器(断点,数据观察点,或者是外部调试请求</td>
+</tr>
+<tr>
+<td>13</td>
+<td>保留</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>14</td>
+<td>PendSV</td>
+<td>可编程</td>
+<td>为系统设备而设的“可悬挂请求”(pendable request)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>SysTick</td>
+<td>可编程</td>
+<td>系统滴答定时器(也就是周期性溢出的时基定时器——译注)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>IRQ</td>
+<td>#0</td>
+<td>可编程</td>
+<td>外中断#0</td>
+</tr>
+<tr>
+<td>17</td>
+<td>IRQ</td>
+<td>#1</td>
+<td>可编程</td>
+<td>外中断#1</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>255</td>
+<td>IRQ</td>
+<td>#239</td>
+<td>可编程</td>
+<td>外中断#239</td>
+</tr>
+</tbody>
+</table>
+<h2 id="MPU存储器保护单元"><a href="#MPU存储器保护单元" class="headerlink" title="MPU存储器保护单元"></a>MPU存储器保护单元</h2><p>Cortex‐M3 有一个可选的存储器保护单元。配上它之后,就可以对特权级访问和用户级访问分别施加不同的访问限制。当检测到犯规(violated)时,MPU 就会产生一个 fault 异常,可以由 fault异常的服务例程来分析该错误,并且在可能时改正它。MPU 有很多玩法。最常见的就是由操作系统使用 MPU,以使特权级代码的数据,包括操作系统本身的数据不被其它用户程序弄坏。MPU 在保护内存时是按区管理的(“区”的原文是 region,以后不再中译此名词——译注)。它可以把某些内存 region 设置成只读,从而避免了那里的内容意外被更改;还可以在多任务系统中把不同任务之间的数据区隔离。一句话,它会使嵌入式系统变得更加健壮,更加可靠(很多行业标准,尤其是航空的,就规定了必须使用 MPU 来行使保护职能——译注)。</p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/c基础/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/embedded-notes/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/embedded-notes/img/avatar.png" alt="xiaxiaowen's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/embedded-notes/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/embedded-notes/archives/2018/02/">二月 2018<span class="sidebar_archives-count">11</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>xiaxiaowen的个人博客
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/embedded-notes/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/embedded-notes/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/embedded-notes/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/embedded-notes/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

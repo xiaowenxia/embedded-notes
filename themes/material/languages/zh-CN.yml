@@ -1,0 +1,30 @@
+sidebar:
+    homepage: "主页"
+    archive: "归档"
+    article_num: "文章总数"
+post:
+    visitor: "访客"
+    views: "浏览量"
+    continue: "阅读全文"
+    older: "旧篇"
+    newer: "新篇"
+    qrcode: "在其它设备中阅读本文章"
+    comments_load_button: "阅读评论（请确保 disqus 可以正常加载）"    
+    comments_fully_load_button: "加载完整评论（请确保 disqus 可以正常加载）" 
+    comments_proxy_load_button: "加载评论基本模式"   
+share:
+    article_rss: "文章 RSS"
+    comment_rss: "评论 RSS"
+    toTwitter: "分享到 Twitter"
+    toFacebook: "分享到 Facebook"
+    toLinkedIn: "分享到 LinkedIn"
+    toTelegram: "分享到 Telegram"
+    toGplus: "分享到 Google+"
+    toWeibo: "分享到微博"
+    toQQ: "分享到 QQ"
+title:
+    category: "分类"
+    tag: "标签"
+misc:
+    home: "主页"
+    theme: "主题"

@@ -1,0 +1,14 @@
+<button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item"><%= __('post.qrcode') %></li>
+    <% if(theme.qrcode.use === "plugin") { %>
+        <img src="<%- qrcode(url, {
+            margin: 2
+        }) %>">
+    <% } else if(theme.qrcode.use === "online") { %>
+        <img src="https://pan.baidu.com/share/qrcode?w=246&h=246&url=<%= page.permalink %>">
+    <% } %>
+</ul>

@@ -1,0 +1,119 @@
+<!-- Blog info -->
+<div class="mdl-card <% if(theme.card_elevation) { %><%= 'mdl-shadow--' + theme.card_elevation + 'dp' %><% } %> something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop index-top-block">
+
+    <!-- Search -->
+    <%- partial('_partial/Paradox-search') %>
+
+    <!-- LOGO -->
+    <div class="something-else-logo mdl-color--white mdl-color-text--grey-600">
+        <a href="<%= theme.url.logo || '#' %>" target="_blank">
+            <img src="<%= theme.img.logo %>" alt="logo" />
+        </a>
+    </div>
+
+    <!-- Infomation -->
+    <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
+        <!-- Blog Title -->
+        <div>
+            <strong><%= config.title %></strong>
+        </div>
+        <div class="section-spacer"></div>
+
+        <!-- Pages -->
+        <button id="show-pages-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <i class="material-icons" role="presentation">view_carousel</i>
+            <span class="visuallyhidden">Pages</span>
+        </button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="show-pages-button">
+            <% for (var i in theme.sidebar.pages) { %>
+                <a class="index_share-link" href="<%= theme.sidebar.pages[i].link || '#' %>" title="<%= i %>">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <%= i %>
+                    </li>
+                </a>
+            <% } %>
+        </ul>
+
+        <!-- Menu -->
+        <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <i class="material-icons" role="presentation">more_vert</i>
+            <span class="visuallyhidden">show menu</span>
+        </button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menubtn">
+            <% if(theme.busuanzi.all_site_uv === true) { %>
+                <!-- All Site UV -->
+                <a class="index_share-link" href="#">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <span id="busuanzi_container_site_uv">
+                            <span id="busuanzi_value_site_uv"></span>&nbsp;<%= __('post.views') %>
+                        </span>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.url.rss) { %>
+                <a class="index_share-link" href="<%= theme.url.rss || '#' %>">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <%= __('share.article_rss') %>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.sns_share.weibo === true) { %>
+                <a class="index_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=<%= config.title %>&url=<%- config.url + config.root %>&pic=&searchPic=false&style=simple" target="_blank">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <%= __('share.toWeibo') %>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.sns_share.twitter === true) { %>
+                <a class="index_share-link" href="https://twitter.com/intent/tweet?text=<%= config.title %>&url=<%- config.url + config.root %>&via=<%= config.author %>" target="_blank">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <%= __('share.toTwitter') %>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.sns_share.facebook === true) { %>
+                <a class="index_share-link" href="https://www.facebook.com/sharer/sharer.php?u=<%= config.url + url_for(path) %>" target="_blank">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <%= __('share.toFacebook') %>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.sns_share.googleplus === true) { %>
+                <a class="index_share-link" href="https://plus.google.com/share?url=<%- config.url + config.root %>" target="_blank">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <%= __('share.toGplus') %>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.sns_share.linkedin === true) { %>
+                <a class="index_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=<%- config.url + config.root %>&title=<%= config.title %>" target="_blank">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <%= __('share.toLinkedIn') %>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.sns_share.qq === true) { %>
+                <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=<%= config.title %>&title=<%= config.title %>&summary=<%= config.description %>&pics=<%- config.url + theme.head.favicon %>&url=<%- config.url + config.root %>" target="_blank">
+                    <li class="mdl-menu__item">
+                        <%= __('share.toQQ') %>
+                    </li>
+                </a>
+            <% } %>
+
+            <% if(theme.sns_share.telegram === true) { %>
+                <a class="post_share-link" href="https://telegram.me/share/url?url=<%- config.url + config.root %>&text=<%= config.title %>" target="_blank">
+                    <li class="mdl-menu__item">
+                        <%= __('share.toTelegram') %>
+                    </li>
+                </a>
+            <% } %>
+        </ul>
+    </div>
+</div>

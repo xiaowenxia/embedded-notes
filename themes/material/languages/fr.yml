@@ -1,0 +1,28 @@
+sidebar:
+    homepage: "Accueil"
+    archive: "Archives"
+    article_num: "Nombre d'articles"
+post:
+    visitor: "Visiteurs"
+    views: "Vues"
+    continue: "Continuer la lecture"
+    older: "Ancien"
+    newer: "Récent"
+    qrcode: "Lire cet article depuis un autre appareil"
+    comments_load_button: "Lire les commentaires (Assurez-vous que disq.us, disquscdn.com et disqus.com peuvent être chargés)"    
+share:
+    article_rss: "Flux RSS des articles"
+    comment_rss: "Flux RSS des commentaires"
+    toTwitter: "Partager sur Twitter"
+    toFacebook: "Partager sur Facebook"
+    toLinkedIn: "Partager sur LinkedIn"
+    toTelegram: "Partager sur Telegram"
+    toGplus: "Partager sur Google+"
+    toWeibo: "Partager sur Weibo"
+    toQQ: "Partager sur QQ"
+title:
+    category: "Catégorie"
+    tag: "Libellé"
+misc:
+    home: "Accueil"
+    theme: "Thème"

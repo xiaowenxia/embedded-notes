@@ -1,0 +1,48 @@
+<% if(theme.scheme === 'Paradox') { %>
+    <!-- Paradox Post Header -->
+    <% if(!page.thumbnail) { %>
+        <% if(!theme.thumbnail.purecolor) {%>
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <%- partial('_partial/Paradox-post-thumbnail') %>
+        <% } else { %>
+            <!-- Pure Thumbnail -->
+            <div class="post_thumbnail-pure mdl-card__media mdl-color-text--grey-50" style="background-color:<%= theme.thumbnail.purecolor %> !important">
+        <% } %>
+    <% }else{ %>
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(<%- page.thumbnail %>)">
+    <% } %>
+            <p class="article-headline-p">
+                <%- page.title %>
+            </p>
+        </div>
+<% } %>
+
+<% if(theme.scheme === 'Isolation') { %>
+    <!-- Isolation Post Header -->
+    <!-- Post thumbnail -->
+    <% if(!page.thumbnail) { %>
+        <!-- Post Header Info -->
+        <div class="post-header_info without-thumbnail">
+            <!-- Author Avatar & Name -->
+            <img src="<%= theme.img.avatar %>" class="avatar-img" width="44px" height="44px" alt="<%= config.author %>'s avatar">
+            <span class="name-span"><%= config.author %></span>
+        </div>
+
+        <!-- Null Thumbnail -->
+        <div class="post_thumbnail-null">
+    <% } else { %>
+        <!-- Post Header Info -->
+        <div class="post-header_info with-thumbnail">
+            <!-- Author Avatar & Name -->
+            <img src="<%= theme.img.avatar %>" class="avatar-img" width="44px" height="44px" alt="<%= config.author %>'s avatar">
+            <span class="name-span"><%= config.author %></span>
+        </div>
+
+        <!-- Custom thumbnail -->
+        <div class="post_thumbnail-custom">
+            <img src="<%= page.thumbnail %>">
+    <% } %>
+        </div>
+<% } %>

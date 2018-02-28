@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            嵌入式笔记：tcpip协议栈 | 
+        
+        xiaxiaowen的个人博客
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="xiaxiaowen">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/embedded-notes/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/embedded-notes/img/favicon.png">
+    <link rel="apple-touch-icon" href="/embedded-notes/img/favicon.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="xiaxiaowen的个人博客">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="嵌入式笔记：tcpip协议栈 | xiaxiaowen的个人博客">
+    <meta property="og:image" content="/embedded-notes/img/favicon.png" />
+    <meta property="og:description" content="">
+    
+
+    
+        <meta property="article:published_time" content="2月 28, 2018" />
+        <meta property="article:modified_time" content="2月 28, 2018" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="嵌入式笔记：tcpip协议栈 | xiaxiaowen的个人博客">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://xiaowenxia.github.io/embedded-notes" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "xiaxiaowen的个人博客",
+        "logo": "/embedded-notes/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xiaxiaowen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/embedded-notes/img/favicon.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "headline": "嵌入式笔记：tcpip协议栈",
+    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html",
+    "datePublished": "2月 28, 2018",
+    "dateModified": "2月 28, 2018",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://xiaowenxia.github.io/embedded-notes"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/embedded-notes/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/embedded-notes/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    .footer-sns-facebook {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNjU3LjYgODcuOGw0LjggMy44djU1LjJjMCA1NC42IDAgNTUuMi00LjYgNTkuNi00LjQgNC40LTYgNC42LTUwLjIgNS42bC00NS42IDEtNy4yIDUuNmMtMTAuNCA4LTE2LjggMTcuMi0xOS4yIDI3LjQtMSA1LTEuOCAyNC44LTEuOCA0NCAuMiAzOCAxLjYgNDQuNiAxMC44IDQ4IDIuOCAxLjIgMjguNCAyIDU2LjggMiA0Ny44IDAgNTIgLjIgNTYuMiAzLjhsNC44IDMuOHY1NS4yYzAgNTQuNiAwIDU1LjItNC42IDU5LjYtNC40IDQuNi01LjQgNC42LTU3IDUuMi0yOC44LjItNTQuNC44LTU2LjggMS40LTIuNC42LTUuNiAzLTYuOCA1LjQtMS44IDMuMi0yLjQgNDEuNC0yLjYgMTQzLjJsLS4yIDEzOC44LTUuNiA0LjgtNS42IDQuOEg2MDljLTUyLjQgMC01Mi44IDAtNTguMi00LjZsLTUuNC00LjYtLjItMTQwLjYtLjItMTQwLjYtNC44LTMuOGMtNC4yLTMuNC04LTMuOC0zNS42LTMuOC0zMi44IDAtNDEtMS44LTQzLjYtMTAtLjYtMi4yLTEuMi0yNS40LTEuMi01MS40IDAtNjAuOC0uMi01NyAzLjQtNjEuNiAyLjgtMy42IDYtNCAzNy44LTUgMzMtMSAzNS4yLTEuMiAzOS40LTUuNiA0LjYtNC40IDQuNi01LjIgNS44LTcxIDEuMi03My40LjItNjcuMiAxNi42LTk5LjQgOC0xNS44IDEyLjgtMjIgMjgtMzcgMTUuMi0xNS4yIDIxLjQtMTkuNiAzOC4yLTI4IDExLTUuNCAyNC0xMSAyOS0xMi4yIDYuMi0xLjggMjguNi0yLjYgNzEuMi0yLjYgNTguNi0uMiA2Mi42IDAgNjcgMy42eiIvPjwvc3ZnPg==);
+    }
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    .footer-sns-gplus {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHpNNDMwIDI5NS40YzQwLjYgMTUuNCA1Ni42IDIzLjggNzIuNiAzOC40IDYuOCA2LjIgNy4yIDE1LjIgMSAyMy40LTYuMiA4LTMzLjYgMzMuOC0zOSAzNi42LTUuNiAyLjgtMTcuNiAyLjgtMjMuMi0uMi0yLjQtMS4yLTguMi01LjItMTMtOC44LTExLjItOC42LTI0LjYtMTEuMi01NS4yLTExLjItMjcuNCAwLTQwLjYgMi42LTUyLjIgMTAuNC00LjQgMi44LTEyLjIgNy42LTE3LjIgMTAuNi0yMyAxMy4yLTUxLjQgNTUtNTUuOCA4Mi40LTIuNiAxNS42LTIuNCAzNC44LjIgNTEgMi44IDE3LjQgMTkuOCA0OC44IDM1LjIgNjUuMiAxNiAxNi42IDQ1IDMzLjYgNjIuOCAzNi42IDI2LjggNC40IDY1LjggMS42IDc5LjQtNS44IDIwLjYtMTEuNCAzMS0xOSA0MS0zMC40IDE4LjgtMjEuNiAyMy40LTM0LjIgMTUuNi00My44LTMuOC00LjgtNC40LTQuOC01MS01LjgtNjAuOC0xLjItNTYuMiAyLjItNTYuMi00My4yIDAtMzIuNC4yLTMzLjIgNC44LTM3IDQuNC0zLjYgOS0zLjggOTItMy44IDc5IDAgODcuOC40IDk0LjIgMy42IDExLjIgNS42IDEzIDExLjQgMTIuOCA0My40IDAgMjUuNC0uOCAzMC44LTcuNiA1OC00IDE2LjYtOS44IDM0LTEyLjYgMzktMi44IDUtOC4yIDE0LjItMTEuNiAyMC42LTguNCAxNS40LTI3LjIgMzYuOC00MC44IDQ2LjYtNS44IDQuNC0xMy44IDEwLjItMTcuNiAxMy4yLTMuOCAzLTExIDctMTYuMiA4LjgtNS4yIDEuOC0xNi4yIDYuNC0yNC40IDEwLTIyLjQgOS42LTM0LjggMTEuNi03MyAxMS42LTM3LjYuMi00Ny0xLjQtNzEtMTItOC4yLTMuNi0xNy42LTcuMi0yMC44LTgtMTUuOC0zLjgtNjctNDUuMi03Ny44LTYyLjgtMi4yLTMuOC03LjYtMTEuNi0xMS44LTE3LjItNC4yLTUuNC05LTE0LTEwLjYtMTktMS44LTQuOC02LjItMTYtMTAtMjQuOC0zLjYtOC44LTcuOC0yMi4yLTkuMi0yOS42LTMuMi0xOC44LTEuNC03OS40IDIuOC05MS40IDEzLjgtNDAuNiAzNS42LTc4IDU4LjgtMTAwLjIgMTQtMTMuNiA0Ny4yLTM2LjQgNTgtMzkuOCA0LjItMS40IDEzLjQtNS4yIDIwLjYtOC40IDIyLTEwIDMyLjgtMTEuNiA3Ni0xMSAzMy44LjYgNDAuNCAxLjIgNTAgNC44em0zNDAuOCA4MC44YzggMy42IDkuNiAxMS4yIDkuMiAzOS4yLS42IDM0LjQtLjYgMzQgNSAzOS42IDQuOCA1IDUuNCA1IDM3LjYgNSA0My40IDAgNDQuNC44IDQzLjIgMzYuMi0uOCAxNy0xLjIgMTguNC02LjQgMjMtNS40IDQuNi02LjYgNC44LTM3LjYgNC44LTMxLjIgMC0zMiAuMi0zNi44IDUtNS42IDUuNC01LjYgNC40LTUgNDEuMi40IDI2LjQuMiAyNy40LTQuNiAzMy00LjggNS42LTYgNS44LTI0LjQgNi40LTIwLjguOC0yOS42LTEuNC0zMy40LTguNC0xLjQtMi42LTItMTUuNi0xLjgtMzUuNi40LTMxLjIuNC0zMS42LTQuNi0zNi42cy01LjYtNS0zNi01Yy0xOC44IDAtMzMtLjgtMzYtMi4yLTcuNi0zLjYtOS42LTExLjItOC44LTMzLjguOC0yOC4yLjQtMjggNDEtMjggNDUuNCAwIDQ1LjQgMCA0NC42LTQyLjYtLjYtMzMtLjYtMzMgNS0zOC40IDQuNC00LjYgNi4yLTUgMjQuOC01IDExIDAgMjIuMiAxIDI1IDIuMnoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/embedded-notes/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#tcpip模型"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">tcpip模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#以太网协议"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">以太网协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ARP地址解析协议"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">ARP地址解析协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IP地址分类"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">IP地址分类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP与UDP的区别"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">TCP与UDP的区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ICMP协议"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">ICMP协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ping包"><span class="post-toc-number">1.6.1.</span> <span class="post-toc-text">ping包</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三次握手"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">三次握手</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四次挥手"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">四次挥手</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tcp协议图解"><span class="post-toc-number">1.7.3.</span> <span class="post-toc-text">tcp协议图解</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么会采用三次握手，若采用二次握手可以吗？"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">为什么会采用三次握手，若采用二次握手可以吗？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么四次挥手，主动方要等待２MSL后才关闭连接．"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">为什么四次挥手，主动方要等待２MSL后才关闭连接．</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP拥塞控制"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">TCP拥塞控制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP滑动窗口与回退N针协议"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">TCP滑动窗口与回退N针协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP的可靠性如何保证"><span class="post-toc-number">1.12.</span> <span class="post-toc-text">TCP的可靠性如何保证</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#各种协议对应的传输层协议"><span class="post-toc-number">1.13.</span> <span class="post-toc-text">各种协议对应的传输层协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MQTT协议"><span class="post-toc-number">1.14.</span> <span class="post-toc-text">MQTT协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MQTT有3种网络连接方式"><span class="post-toc-number">1.14.1.</span> <span class="post-toc-text">MQTT有3种网络连接方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主题过滤器-Topic-Filter"><span class="post-toc-number">1.14.2.</span> <span class="post-toc-text">主题过滤器 Topic Filter</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#控制报文-MQTT-Control-Packet"><span class="post-toc-number">1.14.3.</span> <span class="post-toc-text">控制报文 MQTT Control Packet</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#大端模式"><span class="post-toc-number">1.14.4.</span> <span class="post-toc-text">大端模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MQTT控制报文结构"><span class="post-toc-number">1.14.5.</span> <span class="post-toc-text">MQTT控制报文结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#固定报头"><span class="post-toc-number">1.14.5.1.</span> <span class="post-toc-text">固定报头</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#剩余长度"><span class="post-toc-number">1.14.5.2.</span> <span class="post-toc-text">剩余长度</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可变报头-Variable-header"><span class="post-toc-number">1.14.6.</span> <span class="post-toc-text">可变报头 Variable header</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#报文标识符-Packet-Identifier"><span class="post-toc-number">1.14.7.</span> <span class="post-toc-text">报文标识符 Packet Identifier</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#payload"><span class="post-toc-number">1.14.8.</span> <span class="post-toc-text">payload</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP协议"><span class="post-toc-number">1.15.</span> <span class="post-toc-text">HTTP协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP请求方法"><span class="post-toc-number">1.15.1.</span> <span class="post-toc-text">HTTP请求方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-状态码"><span class="post-toc-number">1.15.2.</span> <span class="post-toc-text">HTTP 状态码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-请求收到，继续处理"><span class="post-toc-number">1.15.2.1.</span> <span class="post-toc-text">1** 请求收到，继续处理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-操作成功收到，分析、接受"><span class="post-toc-number">1.15.2.2.</span> <span class="post-toc-text">2** 操作成功收到，分析、接受</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-完成此请求必须进一步处理"><span class="post-toc-number">1.15.2.3.</span> <span class="post-toc-text">3** 完成此请求必须进一步处理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-请求包含一个错误语法或不能完成"><span class="post-toc-number">1.15.2.4.</span> <span class="post-toc-text">4** 请求包含一个错误语法或不能完成</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-服务器执行一个完全有效请求失败"><span class="post-toc-number">1.15.2.5.</span> <span class="post-toc-text">5** 服务器执行一个完全有效请求失败</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#长连接-短连接"><span class="post-toc-number">1.15.3.</span> <span class="post-toc-text">长连接 短连接</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-请求消息格式"><span class="post-toc-number">1.15.4.</span> <span class="post-toc-text">HTTP 请求消息格式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-响应消息格式"><span class="post-toc-number">1.15.5.</span> <span class="post-toc-text">HTTP 响应消息格式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-post发送文件"><span class="post-toc-number">1.15.6.</span> <span class="post-toc-text">HTTP post发送文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP用户名密码机制"><span class="post-toc-number">1.15.7.</span> <span class="post-toc-text">HTTP用户名密码机制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTPS的通信过程"><span class="post-toc-number">1.15.8.</span> <span class="post-toc-text">HTTPS的通信过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTPS、SSH-公钥、秘钥、对称加密、非对称加密、hash算法"><span class="post-toc-number">1.15.9.</span> <span class="post-toc-text">HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数字签名和数字证书"><span class="post-toc-number">1.15.10.</span> <span class="post-toc-text">数字签名和数字证书</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数字签名"><span class="post-toc-number">1.15.10.1.</span> <span class="post-toc-text">数字签名</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数字证书"><span class="post-toc-number">1.15.10.2.</span> <span class="post-toc-text">数字证书</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#websocket"><span class="post-toc-number">1.15.11.</span> <span class="post-toc-text">websocket</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#websocket握手协议"><span class="post-toc-number">1.15.11.1.</span> <span class="post-toc-text">websocket握手协议</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#HTML5-Web-Socket-API"><span class="post-toc-number">1.15.11.2.</span> <span class="post-toc-text">HTML5 Web Socket API</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#coap"><span class="post-toc-number">1.15.12.</span> <span class="post-toc-text">coap</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#coap-特点"><span class="post-toc-number">1.15.12.1.</span> <span class="post-toc-text">coap 特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#协议结构"><span class="post-toc-number">1.15.12.2.</span> <span class="post-toc-text">协议结构</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nb-iot"><span class="post-toc-number">1.15.13.</span> <span class="post-toc-text">nb-iot</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#freertos"><span class="post-toc-number">1.15.14.</span> <span class="post-toc-text">freertos</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#alios-things"><span class="post-toc-number">1.15.15.</span> <span class="post-toc-text">alios-things</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#meos"><span class="post-toc-number">1.15.16.</span> <span class="post-toc-text">meos</span></a></li></ol></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                嵌入式笔记：tcpip协议栈
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xiaxiaowen</strong>
+        <span>2月 28, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：tcpip协议栈&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：tcpip协议栈&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html&via=xiaxiaowen" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：tcpip协议栈&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>嵌入式笔记：tcpip协议栈</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li><a href="#tcpip模型">tcpip模型</a></li>
+<li><a href="#以太网协议">以太网协议</a></li>
+<li><a href="#ARP地址解析协议">ARP地址解析协议</a></li>
+<li><a href="#TCP协议">TCP协议</a></li>
+</ul>
+<h2 id="tcpip模型"><a href="#tcpip模型" class="headerlink" title="tcpip模型"></a>tcpip模型</h2><table style="text-align:center"><br>   <tr><br>      <td>OSI模型</td><br>      <td>linux tcpip模型</td><br>      <td>常用协议</td><br>      <td>网络设备</td><br>   </tr><br>   <tr><br>      <td>网络层</td><br>      <td rowspan="3">网络层</td><br>      <td rowspan="3">telnet/DHCP/TFTP/FTP/MQTT/NFS/DNS/FTP/SNMP</td><br>      <td rowspan="3"></td><br>   </tr><br>   <tr><br>      <td>表示层</td><br>   </tr><br>   <tr><br>      <td>会话层</td><br>   </tr><br>   <tr><br>      <td>传输层</td><br>      <td>传输层</td><br>      <td>TCP/UDP</td><br>      <td>四层交换机</td><br>   </tr><br>   <tr><br>      <td>网络层</td><br>      <td>网络层</td><br>      <td>IP/ICMP/IGMP/ARP</td><br>      <td>路由器，三层交换机</td><br>   </tr><br>   <tr><br>      <td>数据链路层</td><br>      <td rowspan="2">网络接口层</td><br>      <td rowspan="2">Ethernet/PPP/PPPoE</td><br>      <td>交换机（二层交换机），网桥，网卡（一半物理层，一半链路层）</td><br>   </tr><br>   <tr><br>      <td>物理层</td><br>      <td>中继器、集线器</td><br>   </tr><br></table>
+
+<h2 id="以太网协议"><a href="#以太网协议" class="headerlink" title="以太网协议"></a>以太网协议</h2><table style="text-align:center"><br>   <tr><br>      <td>前导码</td><br>      <td>SFD</td><br>      <td>目标地址</td><br>      <td>源地址</td><br>      <td>长度/类型</td><br>      <td>数据</td><br>      <td>CRC校验</td><br>   </tr><br>   <tr><br>      <td>7字节</td><br>      <td>1字节</td><br>      <td>6字节</td><br>      <td>6字节</td><br>      <td>2字节</td><br>      <td>46~1500字节</td><br>      <td>4字节</td><br>   </tr><br></table>
+
+<blockquote>
+<ol>
+<li><strong>前导码和SFD：</strong> 不能算是以太网数据帧，是以太网在物理层上发送以太网数据时添加上去的。</li>
+<li><strong>长度/类型：</strong> 大于1518，表示该以太网帧中的数据属于哪个上层协议（0x0800:IP数据包；0x0806:ARP数据包）</li>
+<li><strong>单播地址、组播地址：</strong> 第一个字节的bit0为0代表单播地址，为1代表组播地址。</li>
+</ol>
+</blockquote>
+<h2 id="ARP地址解析协议"><a href="#ARP地址解析协议" class="headerlink" title="ARP地址解析协议"></a>ARP地址解析协议</h2><table style="text-align:center"><br>   <tr><br>      <td>以太网首部</td><br>      <td>硬件类型</td><br>      <td>协议类型</td><br>      <td>MAC地址长度</td><br>      <td>协议地址长度</td><br>      <td>OP</td><br>      <td>源MAC地址</td><br>      <td>源IP地址</td><br>      <td>目标MAC地址</td><br>      <td>目标IP地址</td><br>   </tr><br>   <tr><br>      <td>14字节</td><br>      <td>2字节</td><br>      <td>2字节</td><br>      <td>1字节</td><br>      <td>1字节</td><br>      <td>2字节</td><br>      <td>6字节</td><br>      <td>4字节</td><br>      <td>6字节</td><br>      <td>4字节</td><br>   </tr><br></table>
+
+<blockquote>
+<ol>
+<li><strong>MAC地址长度和IP地址长度：</strong> 分别为6和4.</li>
+<li><strong>OP：</strong>ARP请求（值为1）、ARP应答（值为2）。</li>
+</ol>
+</blockquote>
+<h2 id="IP地址分类"><a href="#IP地址分类" class="headerlink" title="IP地址分类"></a>IP地址分类</h2><p>IP地址=网络地址＋主机地址</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th style="text-align:center">开头</th>
+<th style="text-align:center">第一个字节范围</th>
+<th>总体范围</th>
+<th style="text-align:center">掩码地址</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A类</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1~126</td>
+<td>1.0.0.0 - 126.255.255.255</td>
+<td style="text-align:center">255.0.0.0</td>
+<td>给规模特别大的网络使用</td>
+</tr>
+<tr>
+<td>B类</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">128~191</td>
+<td>128.0.0.0 - 191.255.255.255</td>
+<td style="text-align:center">255.255.0.0</td>
+<td>给一般的中型网络</td>
+</tr>
+<tr>
+<td>C类</td>
+<td style="text-align:center">110</td>
+<td style="text-align:center">192~223</td>
+<td>192.0.0.0 - 223.255.255.255</td>
+<td style="text-align:center">255.255.255.0</td>
+<td>给小型网络</td>
+</tr>
+<tr>
+<td>D类</td>
+<td style="text-align:center">1110</td>
+<td style="text-align:center">224~239</td>
+<td>224.0.0.0 - 239.255.255.255</td>
+<td style="text-align:center">-</td>
+<td>用于多点广播（组播）</td>
+</tr>
+<tr>
+<td>E类</td>
+<td style="text-align:center">11110</td>
+<td style="text-align:center">240~255</td>
+<td>240.0.0.0 - 255.255.255.255</td>
+<td style="text-align:center">-</td>
+<td>用于广播地址</td>
+</tr>
+</tbody>
+</table>
+<p>其他：</p>
+<blockquote>
+<ol>
+<li>主机号全为0表示本网络本身 主机号全为1表示本网络广播地址</li>
+<li>127.0.0.0 环路自检地址，表示任意主机本身</li>
+<li>0.0.0.0 表示本网络的本主机</li>
+<li>专用地址： A类：10.0.0.0—10.255.255.255，B类：172.16.0.0—172.31.255.255，C类：192.168.0.0—192.168.255.255。</li>
+<li>IP地址与子网掩码相与得到网络号</li>
+</ol>
+</blockquote>
+<h2 id="TCP与UDP的区别"><a href="#TCP与UDP的区别" class="headerlink" title="TCP与UDP的区别"></a>TCP与UDP的区别</h2><table>
+<thead>
+<tr>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>面向连接,需要三次握手，4次挥手</td>
+<td>不需要建立连接</td>
+</tr>
+<tr>
+<td>无差错，不丢失，不重复，且按序到达</td>
+<td>不保证数据可靠、按序到达</td>
+</tr>
+<tr>
+<td>面向字节流</td>
+<td>面向报文</td>
+</tr>
+<tr>
+<td>有拥塞控制,不会使源主机的发送速率降低</td>
+<td>没有拥塞控制</td>
+</tr>
+<tr>
+<td>连接只能是点到点</td>
+<td>支持一对一，一对多，多对一和多对多的交互通信</td>
+</tr>
+<tr>
+<td>首部开销20字节</td>
+<td>首部开销小，只有8个字节</td>
+</tr>
+<tr>
+<td>ftp telnet http https SMTP POP3</td>
+<td>DNS DHCP tftp IGMP RTP</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ICMP协议"><a href="#ICMP协议" class="headerlink" title="ICMP协议"></a>ICMP协议</h2><blockquote>
+<ol>
+<li>ICMP允许主机或路由报告差错情况和提供有关异常情况</li>
+<li>ICMP是因特网的标准协议，属于IP层的协议。</li>
+</ol>
+</blockquote>
+<h3 id="ping包"><a href="#ping包" class="headerlink" title="ping包"></a>ping包</h3><p>同一个局域网中： </p>
+<ol>
+<li>Pc1在应用层发起个目标IP位IP2的Ping请求。</li>
+<li>传输层接到上层请求的数据，将数据分段并加上UDP报头。下传到Internet层。</li>
+<li>网际层接收来处上层的数据后，根据ICMP协议进行封装，添加PC1的IP为源IP为和PC2IP为目标IP后封装成数据包。下传到网络接口层。</li>
+<li>网络接口层接收数据包后，进行封装，源MAC地址为PC1的MAC地址，目标MAC地址则查询自己的ARP缓存表获取。如果PC1 arp缓存表中没有目标IP对应的MAC地址，则PC1发出一个ARP广播报文。ARP报文中源MAC地址为Pc1mac地址，源IP地址为pc1 IP，所要请求的是PC2的IP对应的mac地址。</li>
+<li>PC2收到ARP广播后，进行解封装，发现所请求的MAC地址是自己的。则PC2将PC1的mac地址写入arp缓存表中。然后向PC1发送一个 ARP应答单播。该单播消息包括目标IP为PC1ip，目标Mac为pc1mac地址，源IP为PC2的IP，源Mac为pc2的Mac。</li>
+<li>Pc1接收到PC2的arp应答报文后，将Pc2的MAC地址存入arp缓存中，并将Pc2的Mac地址作为目标地址封装到数据帧中。发给下层进行网络传输。</li>
+<li>PC2接收这个帧后，在网络接口层查看目标mac地址是否指向自己。是，PC2则将帧头去掉，向上层传输。</li>
+<li>Pc2网际层接收到这个信息包，查看包头，发现目标IP和自己匹配，则解封装，将数据向上层传输。</li>
+<li>传输层接收来自下层的Ping请求的UDP报文，则去掉UDP报头，向应用层传送。</li>
+<li>应用层收到ping请求后，发送一个PIng回应报文给PC1</li>
+</ol>
+<h2 id="TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用"><a href="#TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用" class="headerlink" title="TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用"></a>TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><ul>
+<li>第一次握手：客户机首先向服务器的TCP发送一个连接请求报文段，这个特殊的报文段不含应用层数据，其首部中同步位SYN被设置为1。另外，客户机会随机选择一个起始序号seq=x(连接请求报文不携带数据，但要消耗一个序号).</li>
+<li>第二次握手：服务器的TCP收到连接请求报文段后，如果同意建立连接，就向客户机发回确认，并为该TCP连接分配TCP缓存和变量。在确认报文段中，SYN和ACK位都被设置为1，确认号字段值为ack=x+1,并且服务器随机产生起始序号seq=y. 确认包同样不包含应用层数据。</li>
+<li>第三次握手：当客户机收到确认报文段后，还要向服务器给出确认，并且也要给该连接分配缓存和变量。这个报文段的确认为ACK被设置为1，序号段被设置为seq=x+1,确认号字段ack=y+1. 该报文段可以携带数据，如果不携带数据则不消耗序号。 理想状态下，TCP连接一旦建立，在通信双方中的任何一方主动关闭连接之前，TCP 连接都将被一直保持下去。因为TCP提供全双工通信，因此双方任何时候都可以发送数据。<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3></li>
+<li>第一次挥手：客户机打算关闭连接，就向其TCP发送一个连接释放报文，并停止再发送数据，主动关闭TCP连接。该报文段的FIN标志位被设置为1，seq=u,它等于前面已经发送过的数据的最后一个字节的序号加1。</li>
+<li>第二次挥手：服务器收到连接释放报文段后即发出确认，确认号是ack=u+1,序号为v,等于它前面已经发送过的数据的最后一个字节序号加1.此时客户机到服务器这个方向的连接就释放了，TCP处于半关闭状态。ACK=1，seq=v,ack=u+1</li>
+<li>第三次挥手：若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时发出FIN=1，确认号ack= u+1,序号seq =w,已经发送过的数据最后一个字节加1。确认为ACK=1. (FIN = 1, ACK=1,seq = w, ack =u+1) 第四次挥手：客户机收到连接释放报文段后，必须发出确认。在确认报文段中，确认位ACK=1，序号seq=u+1,确认号ack=w+1. 此时连接还没有释放掉，必须经过实践等待计时器设置的时间2MSL(Max Segment Lifetime),后，客户机才进入连接关闭状态。 (ACK=1,seq=u+1,ack=w+1)<br>如下图所示：</li>
+</ul>
+<h3 id="tcp协议图解"><a href="#tcp协议图解" class="headerlink" title="tcp协议图解"></a>tcp协议图解</h3><p><img src="res/tcp协议图解.jpg" alt="tcp协议图解"></p>
+<h2 id="为什么会采用三次握手，若采用二次握手可以吗？"><a href="#为什么会采用三次握手，若采用二次握手可以吗？" class="headerlink" title="为什么会采用三次握手，若采用二次握手可以吗？"></a>为什么会采用三次握手，若采用二次握手可以吗？</h2><p>采用三次握手是为了防止失效的连接请求报文段再次传到服务器，因而产生错误。如果由于网络不稳定，虽然客户端以前发送的连接请求以到达服务方，但服务方的同意连接的应答未能到达客户端。则客户方要重新发送连接请求，若采用二次握手，服务方收到客服端重传的请求连接后，会以为是新的请求，就会发送同意连接报文，并新开进程提供服务，这样会造成服务方资源的无谓浪费。 如果只采用一次的话，客户端不知道服务端是否已经收到自己发送的数据，则会不断地发送数据。为了保证服务端能收接受到客户端的信息并能做出正确的应答而进行前两次(第一次和第二次)握手，为了保证客户端能够接收到服务端的信息并能做出正确的应答而进行后两次(第二次和第三次)握手</p>
+<h2 id="为什么四次挥手，主动方要等待２MSL后才关闭连接．"><a href="#为什么四次挥手，主动方要等待２MSL后才关闭连接．" class="headerlink" title="为什么四次挥手，主动方要等待２MSL后才关闭连接．"></a>为什么四次挥手，主动方要等待２MSL后才关闭连接．</h2><p>一、保证TCP协议的全双工连接能够可靠关闭． 主要为了确保对方能受到ACK信息. 如果Client直接CLOSED了，那么由于IP协议的不可靠性或者是其它网络原因，导致Server没有收到Client最后回复的ACK。那么Server就会在超时之后继续发送FIN，此时由于Client已经CLOSED了，就找不到与重发的FIN对应的连接，最后Server就会收到RST而不是ACK，Server就会以为是连接错误把问题报告给高层。所以，Client不是直接进入CLOSED，而是要保持2MSL,如果在这个时间内又收到了server的关闭请求时可以进行重传，否则说明server已经受到确认包则可以关闭.</p>
+<h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2><p>为了更好对TCP进行拥塞控制，因特网建议标准定义了以下四种算法：慢开始，拥塞避免，快重传，快恢复。 首先在TCP要求发送端维护两个窗口： 1） 接收窗口rwnd，接收方根据当前缓存大小锁许诺的最新窗口值。 2) 拥塞窗口 cwnd ,发送方根据自己估算的网络拥塞程度而设置的窗口值。 发送窗口的上限是取这两者的最小值。 慢开始： TCP刚连接好时，先令拥塞窗口cwnd =1 ,在每次收到一个对新报文段的确认时将cwnd加1. Cwnd的大小呈指数增长。 拥塞避免算法： 当cwnd大于等于慢开始门限ssthresh时，cwnd窗口每次加1而不是加倍。当发送方检测到超时事件的发生时，就将慢开始门限设置为当前cwnd的一半，同时将cwnd设置为1. 这样的目的是迅速减少主机发送到网络的分组数，使得发生拥塞的路由器有足够的时间吧队列中积压的分组处理完毕。 快重传：当发送方连续收到三个重复的ACK报文时，直接重传对方尚未收到的报文段，而不必等待那个报文段设置的重传计时器超时。 快恢复：当发送端收到连续三个冗余的ACK时，就执行“乘法减小”算法，把慢开始门限ssthresh减半，cwnd设置为慢开始门限减半后的数值（与慢开始不同）。</p>
+<h2 id="TCP滑动窗口与回退N针协议"><a href="#TCP滑动窗口与回退N针协议" class="headerlink" title="TCP滑动窗口与回退N针协议"></a>TCP滑动窗口与回退N针协议</h2><p>滑动窗口： 发送方都维持一组连续的允许发送的帧的序号称为发送窗口。同时接收方也维持一组连续的允许接收的帧序号，称为接收窗口。发送窗口是用来对发送方进行流量控制，接收窗口是用来控制接收那些数据帧不可以接收那些帧。 在发送端，收到一个确认帧，发送窗口就向前滑动一个帧位置，当发送窗口没有可以发送的帧时，发送方就停止发送。直到接收方发送的确认帧使发送窗口向前移动。 在接收端，只有收到数据帧的序号落在接收窗口内才将该帧收下，否则一律丢弃。每收到一个帧后就发送回确认帧。<br>后退N帧协议 发送窗口大于1，接收窗口等于1.在后退N帧中，发送方不需要收到上一帧的ACK后才能发送下一帧，而是可以连续发送帧。当接收方检测出失序信息帧后，要求发送方重发最后一个正确接收的帧之后的所有未被确认的帧。源站每发完一帧就要为该帧设置超时计时器，如果在超时时间内没有收到确认帧则进行重发。服务端会采用累积确认的方式，不是每个帧都发确认，可以连续收到好几个正确帧后发回一个确认信息。接收方因为窗口为1，所以必须按序接收数据帧，如果某个序大于当前所期望的序号时就会连续发送3个ACK确认帧，要求客户端重传失序帧。</p>
+<h2 id="TCP的可靠性如何保证"><a href="#TCP的可靠性如何保证" class="headerlink" title="TCP的可靠性如何保证"></a>TCP的可靠性如何保证</h2><p>在TCP的连接中，数据流必须以正确的顺序送达对方。TCP的可靠性是通过顺序编号和确认（ACK）来实现的。TCP在开始传送一个段时，为准备重传而首先将该段插入到发送队列之中，同时启动时钟。其后，如果收到了接受端对该段的ACK信息，就将该段从队列中删去。如果在时钟规定的时间内，ACK未返回，那么就从发送队列中再次送出这个段。TCP在协议中就对数据可靠传输做了保障，握手与断开都需要通讯双方确认，数据传输也需要双方确认成功，在协议中还规定了：分包、重组、重传等规则；而UDP主要是面向不可靠连接的，不能保证数据正确到达目的地。</p>
+<h2 id="各种协议对应的传输层协议"><a href="#各种协议对应的传输层协议" class="headerlink" title="各种协议对应的传输层协议"></a>各种协议对应的传输层协议</h2><table>
+<thead>
+<tr>
+<th>Ethernet应用</th>
+<th style="text-align:center">IP</th>
+<th style="text-align:center">ICMP</th>
+<th style="text-align:center">UDP</th>
+<th style="text-align:center">TCP</th>
+<th style="text-align:center">SCIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ping</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>traceroute</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>OSPF(路由协议)</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>RIP(路由协议)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>BGP(路由协议)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>BOOTP(引导协议)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>DHCP</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>NTP(时间协议)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>TFTP(低级FTP)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>SNMP(网络管理)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>IGMP(组播管理)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>SMTP(电子邮件)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>telnet(远程登录)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>SSH(安全远程登录)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>FTP(文件传输)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>HTTP(web)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>NNTP(网络新闻)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>LPR(远程打印)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>DNS(域名系统)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>NFS(网络文件系统)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Sun RPC(远程过程调用)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>DCE RPC(远程过程调用)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>IUA(ISDN)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+</tr>
+<tr>
+<td>M2UA/M3UA(SS7电话信令)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+</tr>
+<tr>
+<td>H.248(媒体网关控制)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+</tr>
+<tr>
+<td>H.323(IP电话)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+</tr>
+<tr>
+<td>H.248(IP电话)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+<td style="text-align:center">●</td>
+</tr>
+</tbody>
+</table>
+<h2 id="MQTT协议"><a href="#MQTT协议" class="headerlink" title="MQTT协议"></a>MQTT协议</h2><p><a href="https://mcxiaoke.gitbooks.io/mqtt-cn/content/mqtt/04-OperationalBehavior.html" target="_blank" rel="noopener">https://mcxiaoke.gitbooks.io/mqtt-cn/content/mqtt/04-OperationalBehavior.html</a></p>
+<h3 id="MQTT有3种网络连接方式"><a href="#MQTT有3种网络连接方式" class="headerlink" title="MQTT有3种网络连接方式"></a>MQTT有3种网络连接方式</h3><p>tcp（1883端口） TLS（8883端口） websocket</p>
+<h3 id="主题过滤器-Topic-Filter"><a href="#主题过滤器-Topic-Filter" class="headerlink" title="主题过滤器 Topic Filter"></a>主题过滤器 Topic Filter</h3><p>订阅中包含的一个表达式，用于表示相关的一个或多个主题。主题过滤器可以使用通配符。</p>
+<h3 id="控制报文-MQTT-Control-Packet"><a href="#控制报文-MQTT-Control-Packet" class="headerlink" title="控制报文 MQTT Control Packet"></a>控制报文 MQTT Control Packet</h3><p>通过网络连接发送的信息数据包。MQTT规范定义了十四种不同类型的控制报文<br>名字    值    报文流动方向    描述<br>Reserved    0    禁止    保留<br>CONNECT    1    客户端到服务端    客户端请求连接服务端<br>CONNACK    2    服务端到客户端    连接报文确认<br>PUBLISH    3    两个方向都允许    发布消息<br>PUBACK    4    两个方向都允许    QoS 1消息发布收到确认<br>PUBREC    5    两个方向都允许    发布收到（保证交付第一步）<br>PUBREL    6    两个方向都允许    发布释放（保证交付第二步）<br>PUBCOMP    7    两个方向都允许    QoS 2消息发布完成（保证交互第三步）<br>SUBSCRIBE    8    客户端到服务端    客户端订阅请求<br>SUBACK    9    服务端到客户端    订阅请求报文确认<br>UNSUBSCRIBE    10    客户端到服务端    客户端取消订阅请求<br>UNSUBACK    11    服务端到客户端    取消订阅报文确认<br>PINGREQ    12    客户端到服务端    心跳请求<br>PINGRESP    13    服务端到客户端    心跳响应<br>DISCONNECT    14    客户端到服务端    客户端断开连接<br>Reserved    15    禁止    保留</p>
+<h3 id="大端模式"><a href="#大端模式" class="headerlink" title="大端模式"></a>大端模式</h3><blockquote>
+<p>MQTT数据格式使用大端模式存放</p>
+</blockquote>
+<h3 id="MQTT控制报文结构"><a href="#MQTT控制报文结构" class="headerlink" title="MQTT控制报文结构"></a>MQTT控制报文结构</h3><table><br>    <tr><br>    <td>固定报头</td><br>    <td>可变报头</td><br>    <td>payload</td><br>    </tr><br></table>
+
+<h4 id="固定报头"><a href="#固定报头" class="headerlink" title="固定报头"></a>固定报头</h4><blockquote>
+<p>总共是2-5个字节</p>
+<ul>
+<li>第1个字节</li>
+</ul>
+</blockquote>
+<table style="text-align:center"><br>    <tr><br>    <td>7</td><br>    <td>6</td><br>    <td>5</td><br>    <td>4</td><br>    <td>3</td><br>    <td>2</td><br>    <td>1</td><br>    <td>0</td><br>    </tr><br>    <tr><br>    <td colspan="4">表示控制报文类型</td><br>    <td colspan="4">表示控制报文类型的标志位</td><br>    </tr><br></table>
+
+<ul>
+<li>第2-5字节<br>  剩余长度 表示当前报文剩余部分的字节数，包括可变报头和payload的数据。</li>
+</ul>
+<h4 id="剩余长度"><a href="#剩余长度" class="headerlink" title="剩余长度"></a>剩余长度</h4><blockquote>
+<p>剩余长度字段使用一个变长度编码方案，对小于128的值它使用单字节编码。更大的值按下面的方式处理。低7位有效位用于编码数据，最高有效位用于指示是否有更多的字节。因此每个字节可以编码128个数值和一个延续位（continuation bit）</p>
+</blockquote>
+<pre><code>剩余长度字段最大4个字节。
+</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:center">字节数</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td>0 (0x00)</td>
+<td>127 (0x7F)</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td>128 (0x80, 0x01)</td>
+<td>16383 (0xFF, 0x7F)</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td>16 384 (0x80, 0x80, 0x01)</td>
+<td>2097151 (0xFF, 0xFF, 0x7F)</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td>2 097 152 (0x80, 0x80, 0x80, 0x01)</td>
+<td>268435455 (0xFF, 0xFF, 0xFF, 0x7F)</td>
+</tr>
+</tbody>
+</table>
+<p>变长编码方案代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">    encodedByte = X MOD <span class="number">128</span></span><br><span class="line">    X = X DIV <span class="number">128</span></span><br><span class="line">    <span class="comment">// if there are more data to encode, set the top bit of this byte</span></span><br><span class="line">    <span class="keyword">if</span> ( X &gt; <span class="number">0</span> )</span><br><span class="line">        encodedByte = encodedByte OR <span class="number">128</span></span><br><span class="line">    endif</span><br><span class="line">    'output' encodedByte</span><br><span class="line"><span class="keyword">while</span> ( X &gt; <span class="number">0</span> )</span><br></pre></td></tr></table></figure></p>
+<p>变长解码方案代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">multiplier = <span class="number">1</span></span><br><span class="line">value = <span class="number">0</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    encodedByte = 'next byte from stream'</span><br><span class="line">    value += (encodedByte AND <span class="number">127</span>) * multiplier</span><br><span class="line">    multiplier *= <span class="number">128</span></span><br><span class="line">    <span class="keyword">if</span> (multiplier &gt; <span class="number">128</span>*<span class="number">128</span>*<span class="number">128</span>)</span><br><span class="line">        <span class="keyword">throw</span> Error(Malformed Remaining Length)</span><br><span class="line"><span class="keyword">while</span> ((encodedByte AND <span class="number">128</span>) != <span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="可变报头-Variable-header"><a href="#可变报头-Variable-header" class="headerlink" title="可变报头 Variable header"></a>可变报头 Variable header</h3><blockquote>
+<p>某些MQTT控制报文包含一个可变报头部分。它在固定报头和负载之间。可变报头的内容根据报文类型的不同而不同。可变报头的报文标识符（Packet Identifier）字段存在于在多个类型的报文里。</p>
+</blockquote>
+<h3 id="报文标识符-Packet-Identifier"><a href="#报文标识符-Packet-Identifier" class="headerlink" title="报文标识符 Packet Identifier"></a>报文标识符 Packet Identifier</h3><p>很多控制报文的可变报头部分包含一个两字节的报文标识符字段。这些报文是<code>PUBLISH（QoS &gt; 0时）， PUBACK，PUBREC，PUBREL，PUBCOMP，SUBSCRIBE, SUBACK，UNSUBSCIBE，UNSUBACK。SUBSCRIBE，UNSUBSCRIBE和PUBLISH（QoS大于0）</code><br>控制报文必须包含一个非零的16位报文标识符（Packet Identifier）。客户端每次发送一个新的这些类型的报文时都必须分配一个当前未使用的报文标识符。如果一个客户端要重发这个特殊的控制报文，在随后重发那个报文时，它必须使用相同的标识符。当客户端处理完这个报文对应的确认后，这个报文标识符就释放可重用。<br>QoS 1的PUBLISH对应的是PUBACK，QoS 2的PUBLISH对应的是PUBCOMP，与SUBSCRIBE或UNSUBSCRIBE对应的分别是SUBACK或UNSUBACK。发送一个QoS 0的PUBLISH报文时，相同的条件也适用于服务端。</p>
+<blockquote>
+<p>QoS等于0的PUBLISH报文不能包含报文标识符。</p>
+</blockquote>
+<p>PUBACK, PUBREC, PUBREL报文必须包含与最初发送的PUBLISH报文相同的报文标识符。类似地，SUBACK和UNSUBACK必须包含在对应的SUBSCRIBE和UNSUBSCRIBE报文中使用的报文标识符。</p>
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><blockquote>
+<p>某些MQTT控制报文在报文的最后部分包含一个有效载荷<br>对于PUBLISH来说有效载荷就是应用消息。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>控制报文</th>
+<th>有效载荷</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONNECT</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>CONNACK</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>PUBLISH</td>
+<td>可选</td>
+</tr>
+<tr>
+<td>PUBACK</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>PUBREC</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>PUBREL</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>PUBCOMP</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>SUBSCRIBE</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>SUBACK</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>UNSUBSCRIBE</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>UNSUBACK</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>PINGREQ</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>PINGRESP</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>DISCONNECT</td>
+<td>不需要</td>
+</tr>
+</tbody>
+</table>
+<h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><p>RSP</p>
+<h3 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h3><blockquote>
+<p>HTTP协议永远都是客户端发起请求，服务器回送响应。</p>
+</blockquote>
+<ol>
+<li>GET<br> 返回服务器针对特定资源所支持的HTTP请求方法。也可以利用向Web服务器发送’*’的请求来测试服务器的功能性。</li>
+<li>PUT<br> 向指定资源位置上传其最新内容。</li>
+<li>POST<br> 向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的创建和/或已有资源的修改。</li>
+<li>HEAD<br> 向服务器索要与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以在不必传输整个响应内容的情况下，就可以获取包含在响应消息头中的元信息。</li>
+<li>DELETE<br> 请求服务器删除Request-URI所标识的资源。</li>
+<li>TRACE<br> 回显服务器收到的请求，主要用于测试或诊断。</li>
+<li>CONNECT<br> HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器</li>
+<li>OPTIONS<br> 返回服务器针对特定资源所支持的HTTP请求方法。也可以利用向Web服务器发送’*’的请求来测试服务器的功能性。</li>
+</ol>
+<h3 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h3><h4 id="1-请求收到，继续处理"><a href="#1-请求收到，继续处理" class="headerlink" title="1** 请求收到，继续处理"></a>1** 请求收到，继续处理</h4><p>100——客户必须继续发出请求<br>101——客户要求服务器根据请求转换HTTP协议版本</p>
+<h4 id="2-操作成功收到，分析、接受"><a href="#2-操作成功收到，分析、接受" class="headerlink" title="2** 操作成功收到，分析、接受"></a>2** 操作成功收到，分析、接受</h4><p>200——交易成功<br>201——提示知道新文件的URL<br>202——接受和处理、但处理未完成<br>203——返回信息不确定或不完整<br>204——请求收到，但返回信息为空<br>205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件<br>206——服务器已经完成了部分用户的GET请求</p>
+<h4 id="3-完成此请求必须进一步处理"><a href="#3-完成此请求必须进一步处理" class="headerlink" title="3** 完成此请求必须进一步处理"></a>3** 完成此请求必须进一步处理</h4><p>300——请求的资源可在多处得到<br>301——删除请求数据<br>302——在其他地址发现了请求数据<br>303——建议客户访问其他URL或访问方式<br>304——客户端已经执行了GET，但文件未变化<br>305——请求的资源必须从服务器指定的地址得到<br>306——前一版本HTTP中使用的代码，现行版本中不再使用<br>307——申明请求的资源临时性删除</p>
+<h4 id="4-请求包含一个错误语法或不能完成"><a href="#4-请求包含一个错误语法或不能完成" class="headerlink" title="4** 请求包含一个错误语法或不能完成"></a>4** 请求包含一个错误语法或不能完成</h4><p>400——错误请求，如语法错误<br>401——未授权<br>　　HTTP 401.1 - 未授权：登录失败<br>　　HTTP 401.2 - 未授权：服务器配置问题导致登录失败<br>　　HTTP 401.3 - ACL 禁止访问资源<br>　　HTTP 401.4 - 未授权：授权被筛选器拒绝<br>　　HTTP 401.5 - 未授权：ISAPI 或 CGI 授权失败<br>402——保留有效ChargeTo头响应<br>403——禁止访问<br>　　HTTP 403.1 禁止访问：禁止可执行访问<br>　　HTTP 403.2 - 禁止访问：禁止读访问<br>　　HTTP 403.3 - 禁止访问：禁止写访问<br>　　HTTP 403.4 - 禁止访问：要求 SSL<br>　　HTTP 403.5 - 禁止访问：要求 SSL 128<br>　　HTTP 403.6 - 禁止访问：IP 地址被拒绝<br>　　HTTP 403.7 - 禁止访问：要求客户证书<br>　　HTTP 403.8 - 禁止访问：禁止站点访问<br>　　HTTP 403.9 - 禁止访问：连接的用户过多<br>　　HTTP 403.10 - 禁止访问：配置无效<br>　　HTTP 403.11 - 禁止访问：密码更改<br>　　HTTP 403.12 - 禁止访问：映射器拒绝访问<br>　　HTTP 403.13 - 禁止访问：客户证书已被吊销<br>　　HTTP 403.15 - 禁止访问：客户访问许可过多<br>　　HTTP 403.16 - 禁止访问：客户证书不可信或者无效<br>　　HTTP 403.17 - 禁止访问：客户证书已经到期或者尚未生效<br>404——没有发现文件、查询或URl<br>405——用户在Request-Line字段定义的方法不允许<br>406——根据用户发送的Accept拖，请求资源不可访问<br>407——类似401，用户必须首先在代理服务器上得到授权<br>408——客户端没有在用户指定的饿时间内完成请求<br>409——对当前资源状态，请求不能完成<br>410——服务器上不再有此资源且无进一步的参考地址<br>411——服务器拒绝用户定义的Content-Length属性请求<br>412——一个或多个请求头字段在当前请求中错误<br>413——请求的资源大于服务器允许的大小<br>414——请求的资源URL长于服务器允许的长度<br>415——请求资源不支持请求项目格式<br>416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段<br>417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求长。</p>
+<h4 id="5-服务器执行一个完全有效请求失败"><a href="#5-服务器执行一个完全有效请求失败" class="headerlink" title="5** 服务器执行一个完全有效请求失败"></a>5** 服务器执行一个完全有效请求失败</h4><p>　　HTTP 500 - 内部服务器错误<br>　　HTTP 500.100 - 内部服务器错误 - ASP 错误<br>　　HTTP 500-11 服务器关闭<br>　　HTTP 500-12 应用程序重新启动<br>　　HTTP 500-13 - 服务器太忙<br>　　HTTP 500-14 - 应用程序无效<br>　　HTTP 500-15 - 不允许请求 global.asa<br>Error 501 - 未实现<br>　　HTTP 502 - 网关错误</p>
+<h3 id="长连接-短连接"><a href="#长连接-短连接" class="headerlink" title="长连接 短连接"></a>长连接 短连接</h3><p>HTTP 1.0 使用短连接<br>HTTP 1.1版本默认使用长连接</p>
+<h3 id="HTTP-请求消息格式"><a href="#HTTP-请求消息格式" class="headerlink" title="HTTP 请求消息格式"></a>HTTP 请求消息格式</h3><p>请求行<br>通用信息头|请求头|实体头<br>CRLF(回车换行)</p>
+<p>比如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /hello.htm HTTP/<span class="number">1.1</span></span><br><span class="line">Accept: *<span class="comment">/*</span></span><br><span class="line"><span class="comment">Accept-Language: zh-cn</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">If-Modified-Since: Wed, 17 Oct 2007 02:15:55 GMT</span></span><br><span class="line"><span class="comment">If-None-Match: W/"158-1192587355000"</span></span><br><span class="line"><span class="comment">User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)</span></span><br><span class="line"><span class="comment">Host: 192.168.2.162:8080</span></span><br><span class="line"><span class="comment">Connection: Keep-Alive</span></span><br></pre></td></tr></table></figure>
+<h3 id="HTTP-响应消息格式"><a href="#HTTP-响应消息格式" class="headerlink" title="HTTP 响应消息格式"></a>HTTP 响应消息格式</h3><p>状态行</p>
+<p>通用信息头|响应头|实体头</p>
+<p>CRLF</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">ETag: W/<span class="string">"158-1192590101000"</span></span><br><span class="line">Last-Modified: Wed, <span class="number">17</span> Oct <span class="number">2007</span> <span class="number">03</span>:<span class="number">01</span>:<span class="number">41</span> GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: <span class="number">158</span></span><br><span class="line">Date: Wed, <span class="number">17</span> Oct <span class="number">2007</span> <span class="number">03</span>:<span class="number">01</span>:<span class="number">59</span> GMT</span><br><span class="line">Server: Apache-Coyote/<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
+<h3 id="HTTP-post发送文件"><a href="#HTTP-post发送文件" class="headerlink" title="HTTP post发送文件"></a>HTTP post发送文件</h3><p>使用post方法发送文件内容</p>
+<h3 id="HTTP用户名密码机制"><a href="#HTTP用户名密码机制" class="headerlink" title="HTTP用户名密码机制"></a>HTTP用户名密码机制</h3><p>使用cookie的方式：<br>登录成功后用javascript调用cookie的相关接口，创建一个浏览器上的全局变量，变量名和值由你自己约定，然后每个页面载入时检查cookie是否存在，其值是否为你默认的那个值，如果不是的话就跳转到登录页面。</p>
+<h3 id="HTTPS的通信过程"><a href="#HTTPS的通信过程" class="headerlink" title="HTTPS的通信过程"></a>HTTPS的通信过程</h3><p><img src="res/https通讯过程.png" alt="https通讯过程"></p>
+<h3 id="HTTPS、SSH-公钥、秘钥、对称加密、非对称加密、hash算法"><a href="#HTTPS、SSH-公钥、秘钥、对称加密、非对称加密、hash算法" class="headerlink" title="HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法"></a>HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法</h3><ul>
+<li>非对称加密：<br>  DES 秘钥长度为56bit<br>  AES 秘钥长度支持128 196 256</li>
+<li>非对称加密：<br>  DSA 用于数字签名和认证中。和RSA不同之处在于它不能用作加密和解密，也不能进行密钥交换，只用于签名,它比RSA要快很多，DSA只能与SHA-1一起使用，而RSA可以与任何摘要算法一起使用。DSA主要依赖于整数有限域离散对数难题。</li>
+<li>HASH算法：<br>  MD5 SHA1 SHA256<blockquote>
+<p>DSA 用于签名，而 RSA 可用于签名和加密。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="数字签名和数字证书"><a href="#数字签名和数字证书" class="headerlink" title="数字签名和数字证书"></a>数字签名和数字证书</h3><h4 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h4><blockquote>
+<p>服务器把发送内容用hash算法生成摘要（就是校验码），然后用私钥加密这个摘要，就是数字签名。</p>
+</blockquote>
+<h4 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h4><blockquote>
+<p>证书中心把服务器的公钥和一些其他的必要信息通过证书中心的私钥加密生成一个证书，服务器每次把数字签名，内容，数字证书一起发送给客户端，客户端用证书中心的公钥验证数字证书是不是可信任的就可以了。</p>
+</blockquote>
+<h3 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h3><p>WebSocket协议支持客户端与远程主机之间进行全双工通信。<br>协议标识符是ws（如果加密，则为wss），服务器网址就是 URL,比如：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws://example.com:80/some/path`</span><br></pre></td></tr></table></figure></p>
+<h4 id="websocket握手协议"><a href="#websocket握手协议" class="headerlink" title="websocket握手协议"></a>websocket握手协议</h4><ul>
+<li>浏览器请求<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET /webfin/websocket/ HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">　　Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">　　Sec-WebSocket-Key: xqBt3ImNzJbYqRINxEFlkg==</span><br><span class="line">　　Origin: http://服务器地址</span><br><span class="line">　　Sec-WebSocket-Version: 13</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>WebSocket借用http请求进行握手，相比正常的http请求，多了一些内容。其中，<br><code>Upgrade: websocket</code><br><code>Connection: Upgrade</code><br>表示希望将http协议升级到Websocket协议。<br><code>Sec-WebSocket-Key</code>是浏览器随机生成的base64 encode的值，用来询问服务器是否是支持WebSocket。</p>
+</blockquote>
+<ul>
+<li>服务器回应<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 101 Switching Protocols</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Accept: K7DJLdLooIwIG/MOpvWFB3y3FE8=</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>服务器返回<br><code>Upgrade: websocket</code><br><code>Connection: Upgrade</code><br>告诉浏览器即将升级的是Websocket协议</p>
+</blockquote>
+<h4 id="HTML5-Web-Socket-API"><a href="#HTML5-Web-Socket-API" class="headerlink" title="HTML5 Web Socket API"></a>HTML5 Web Socket API</h4><ul>
+<li><p>创建对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(url,name);</span><br><span class="line"><span class="comment">// url为WebSocket服务器的地址，name为发起握手的协议名称，为可选择项。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送文本消息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ws.send(msg);</span><br><span class="line"><span class="comment">// msg为文本消息，对于其他类型的可以通过二进制形式发送。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收消息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>错误处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.onerror = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭连接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.close();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="coap"><a href="#coap" class="headerlink" title="coap"></a>coap</h3><p>HTTP 与 COAP协议都是通过4个请求方法（GET, PUT, POST, DELETE）对服务器端资源进行操作。<br>两者之间明显的区别在于HTTP是通过文本描述方式描述协议包内容，协议包里面会包含一些空格符，换行符等,协议包可读性很强。<br>而COAP是通过定义二进制各位段功能来描述协议包内容。 因此COAP协议包大小更小，更紧凑。COAP协议最小的协议包只有4B。 协议包需要经过解析后才能知道里面具体内容</p>
+<h4 id="coap-特点"><a href="#coap-特点" class="headerlink" title="coap 特点"></a>coap 特点</h4><ul>
+<li>二进制通讯</li>
+<li>对云端设备资源操作都是通过请求与响应机制来完成，类似HTTP，设备端可通过4个请求方法（GET, PUT, POST, DELETE）对服务器端资源进行操作。</li>
+<li>协议包轻量级，最小长度仅为4B。</li>
+<li>支持可靠传输，数据重传，块传输。 确保数据可靠到达。</li>
+<li>支持IP多播, 即可以同时向多个设备发送请求</li>
+<li>非长连接通信，适用于低功耗物联网场景</li>
+</ul>
+<h4 id="协议结构"><a href="#协议结构" class="headerlink" title="协议结构"></a>协议结构</h4><blockquote>
+<p>coap基于UDP之上</p>
+</blockquote>
+<p>UDP—&gt;Messages—&gt;request/response—&gt;payload</p>
+<h3 id="nb-iot"><a href="#nb-iot" class="headerlink" title="nb-iot"></a>nb-iot</h3><h3 id="freertos"><a href="#freertos" class="headerlink" title="freertos"></a>freertos</h3><h3 id="alios-things"><a href="#alios-things" class="headerlink" title="alios-things"></a>alios-things</h3><h3 id="meos"><a href="#meos" class="headerlink" title="meos"></a>meos</h3>
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/uboot/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/embedded-notes/2018/02/28/linux/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/embedded-notes/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/embedded-notes/img/avatar.png" alt="xiaxiaowen's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/embedded-notes/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/embedded-notes/archives/2018/02/">二月 2018<span class="sidebar_archives-count">11</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>xiaxiaowen的个人博客
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/embedded-notes/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/embedded-notes/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/embedded-notes/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/embedded-notes/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

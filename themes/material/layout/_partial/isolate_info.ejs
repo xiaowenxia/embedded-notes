@@ -1,0 +1,66 @@
+<header class="header">
+    <div class="header-wrapper">
+        <!-- Header Copyright -->
+        <div class="header-copyright">
+            <div class="header-site">
+                ©&nbsp;
+                <script type="text/javascript">
+                    var fd = new Date();
+                    document.write(fd.getFullYear());
+                </script>
+                &nbsp;<%- config.title %>
+            </div>
+            <!--
+            I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+            It will not impact the appearance and can give developers a lot of support :)
+
+            很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+            它不会影响美观并可以给开发者很大的支持。 :)
+            -->
+            <div>
+                Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a>
+                <br>
+                Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a>
+            </div>
+        </div>
+
+        <!-- Header Title -->
+        <span class="header-title header-item">
+            <a href="<%= config.root %>" title="<%= config.title %>">
+                <%= config.title %>
+            </a>
+        </span>
+
+        <p class="header-slogan header-item">
+        <% if(theme.uiux.slogan) { %>
+            <% if(Array.isArray(theme.uiux.slogan)) { %>
+                <%- theme.uiux.slogan.join('<br>') %>
+            <% } else { %>
+                <%- theme.uiux.slogan %>
+            <% } %>
+        <% } %>
+        </p>
+
+        <!-- Header Nav -->
+        <nav class="header-nav header-item">
+            <span class="header-nav-item">
+                <a href="<%= config.root %>" title="Home">
+                    <span><%= __('misc.home') %></span>
+                </a>
+            </span>
+
+            <!-- Pages  -->
+            <% for (var i in theme.sidebar.pages) { %>
+                <span class="header-nav-item">
+                    <a href="<%= theme.sidebar.pages[i].link || '#' %>" title="<%= i %>">
+                        <span><%= i %></span>
+                    </a>
+                </span>
+            <% } %>
+            
+        </nav>
+
+        <!-- Header SNS -->
+        <%- partial('_partial/isolate-sns_list') %>
+    </div>
+</header>

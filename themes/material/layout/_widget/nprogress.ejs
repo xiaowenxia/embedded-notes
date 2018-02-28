@@ -1,0 +1,26 @@
+<% if(theme.materialcdn.use === true) { %>
+    <%- jsLsload({path:(theme.materialcdn.base + '/js/nprogress.js'),key:'js/nprogress.js'}) %>
+<%}else{%>
+    <%- jsLsload('js/nprogress.js') %>
+<%}%>
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '<%= theme.uiux.nprogress_color %>'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px <%= theme.uiux.nprogress_color %>, 0 0 15px <%= theme.uiux.nprogress_color %>'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '<%= theme.uiux.nprogress_color %>',
+        'border-left-color': '<%= theme.uiux.nprogress_color %>'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, <%= theme.uiux.nprogress_buffer %>);
+</script>
