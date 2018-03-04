@@ -1,495 +1,141 @@
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
+<html lang=zh>
+<head>
+    <!-- so meta -->
     <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.4.0 -->
-    <script>window.materialVersion = "1.4.0"</script>
-
-    <!-- Title -->
-    
-    <title>
-        
-            嵌入式笔记：tcpip协议栈 | 
-        
-        xiaxiaowen的个人博客
-    </title>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="xiaxiaowen">
-    <meta name="description" itemprop="description" content="">
-    <meta name="keywords" content="">
-
-    <!-- Site Verification -->
-    
-    
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/embedded-notes/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/embedded-notes/img/favicon.png">
-    <link rel="apple-touch-icon" href="/embedded-notes/img/favicon.png">
-
-    <!--iOS -->
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="xiaxiaowen的个人博客">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="嵌入式笔记：tcpip协议栈 | xiaxiaowen的个人博客">
-    <meta property="og:image" content="/embedded-notes/img/favicon.png" />
-    <meta property="og:description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="嵌入式笔记：tcpip协议栈 目录 tcpip模型 以太网协议 ARP地址解析协议 TCP协议  tcpip模型         OSI模型      linux tcpip模型      常用协议      网络设备            网络层      网络层      telnet/DHCP/TFTP/FTP/MQTT/NFS/DNS/FTP/SNMP                  表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式笔记：tcpip协议栈">
+<meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/index.html">
+<meta property="og:site_name" content="xiaxiaowen的个人博客">
+<meta property="og:description" content="嵌入式笔记：tcpip协议栈 目录 tcpip模型 以太网协议 ARP地址解析协议 TCP协议  tcpip模型         OSI模型      linux tcpip模型      常用协议      网络设备            网络层      网络层      telnet/DHCP/TFTP/FTP/MQTT/NFS/DNS/FTP/SNMP                  表">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/res/tcp协议图解.jpg">
+<meta property="og:image" content="http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/res/https通讯过程.png">
+<meta property="og:updated_time" content="2018-02-28T01:14:22.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嵌入式笔记：tcpip协议栈">
+<meta name="twitter:description" content="嵌入式笔记：tcpip协议栈 目录 tcpip模型 以太网协议 ARP地址解析协议 TCP协议  tcpip模型         OSI模型      linux tcpip模型      常用协议      网络设备            网络层      网络层      telnet/DHCP/TFTP/FTP/MQTT/NFS/DNS/FTP/SNMP                  表">
+<meta name="twitter:image" content="http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/res/tcp协议图解.jpg">
     
-
-    
-        <meta property="article:published_time" content="2月 28, 2018" />
-        <meta property="article:modified_time" content="2月 28, 2018" />
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="嵌入式笔记：tcpip协议栈 | xiaxiaowen的个人博客">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="/embedded-notes/img/favicon.png">
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="http://xiaowenxia.github.io/embedded-notes" />
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
     
         
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "publisher": {
-        "@type": "Organization",
-        "name": "xiaxiaowen的个人博客",
-        "logo": "/embedded-notes/img/favicon.png"
-    },
-    "author": {
-        "@type": "Person",
-        "name": "xiaxiaowen",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/embedded-notes/img/favicon.png"
-        },
-        "description": "Hi, nice to meet you"
-    },
-    "headline": "嵌入式笔记：tcpip协议栈",
-    "url": "http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html",
-    "datePublished": "2月 28, 2018",
-    "dateModified": "2月 28, 2018",
-    "description": "",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "http://xiaowenxia.github.io/embedded-notes"
-    }
-}
-</script>
-
-
-    
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
-
-    <!-- Import CSS & jQuery -->
-    
-        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/embedded-notes/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
-        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/embedded-notes/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+          
+              <link rel="shortcut icon" href="/embedded-notes/images/favicon.ico">
+          
         
         
-            <style>
-    
-    .footer-sns-facebook {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNjU3LjYgODcuOGw0LjggMy44djU1LjJjMCA1NC42IDAgNTUuMi00LjYgNTkuNi00LjQgNC40LTYgNC42LTUwLjIgNS42bC00NS42IDEtNy4yIDUuNmMtMTAuNCA4LTE2LjggMTcuMi0xOS4yIDI3LjQtMSA1LTEuOCAyNC44LTEuOCA0NCAuMiAzOCAxLjYgNDQuNiAxMC44IDQ4IDIuOCAxLjIgMjguNCAyIDU2LjggMiA0Ny44IDAgNTIgLjIgNTYuMiAzLjhsNC44IDMuOHY1NS4yYzAgNTQuNiAwIDU1LjItNC42IDU5LjYtNC40IDQuNi01LjQgNC42LTU3IDUuMi0yOC44LjItNTQuNC44LTU2LjggMS40LTIuNC42LTUuNiAzLTYuOCA1LjQtMS44IDMuMi0yLjQgNDEuNC0yLjYgMTQzLjJsLS4yIDEzOC44LTUuNiA0LjgtNS42IDQuOEg2MDljLTUyLjQgMC01Mi44IDAtNTguMi00LjZsLTUuNC00LjYtLjItMTQwLjYtLjItMTQwLjYtNC44LTMuOGMtNC4yLTMuNC04LTMuOC0zNS42LTMuOC0zMi44IDAtNDEtMS44LTQzLjYtMTAtLjYtMi4yLTEuMi0yNS40LTEuMi01MS40IDAtNjAuOC0uMi01NyAzLjQtNjEuNiAyLjgtMy42IDYtNCAzNy44LTUgMzMtMSAzNS4yLTEuMiAzOS40LTUuNiA0LjYtNC40IDQuNi01LjIgNS44LTcxIDEuMi03My40LjItNjcuMiAxNi42LTk5LjQgOC0xNS44IDEyLjgtMjIgMjgtMzcgMTUuMi0xNS4yIDIxLjQtMTkuNiAzOC4yLTI4IDExLTUuNCAyNC0xMSAyOS0xMi4yIDYuMi0xLjggMjguNi0yLjYgNzEuMi0yLjYgNTguNi0uMiA2Mi42IDAgNjcgMy42eiIvPjwvc3ZnPg==);
-    }
-    
-    
-    .footer-sns-twitter {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
-    }
-    
-    
-    .footer-sns-gplus {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHpNNDMwIDI5NS40YzQwLjYgMTUuNCA1Ni42IDIzLjggNzIuNiAzOC40IDYuOCA2LjIgNy4yIDE1LjIgMSAyMy40LTYuMiA4LTMzLjYgMzMuOC0zOSAzNi42LTUuNiAyLjgtMTcuNiAyLjgtMjMuMi0uMi0yLjQtMS4yLTguMi01LjItMTMtOC44LTExLjItOC42LTI0LjYtMTEuMi01NS4yLTExLjItMjcuNCAwLTQwLjYgMi42LTUyLjIgMTAuNC00LjQgMi44LTEyLjIgNy42LTE3LjIgMTAuNi0yMyAxMy4yLTUxLjQgNTUtNTUuOCA4Mi40LTIuNiAxNS42LTIuNCAzNC44LjIgNTEgMi44IDE3LjQgMTkuOCA0OC44IDM1LjIgNjUuMiAxNiAxNi42IDQ1IDMzLjYgNjIuOCAzNi42IDI2LjggNC40IDY1LjggMS42IDc5LjQtNS44IDIwLjYtMTEuNCAzMS0xOSA0MS0zMC40IDE4LjgtMjEuNiAyMy40LTM0LjIgMTUuNi00My44LTMuOC00LjgtNC40LTQuOC01MS01LjgtNjAuOC0xLjItNTYuMiAyLjItNTYuMi00My4yIDAtMzIuNC4yLTMzLjIgNC44LTM3IDQuNC0zLjYgOS0zLjggOTItMy44IDc5IDAgODcuOC40IDk0LjIgMy42IDExLjIgNS42IDEzIDExLjQgMTIuOCA0My40IDAgMjUuNC0uOCAzMC44LTcuNiA1OC00IDE2LjYtOS44IDM0LTEyLjYgMzktMi44IDUtOC4yIDE0LjItMTEuNiAyMC42LTguNCAxNS40LTI3LjIgMzYuOC00MC44IDQ2LjYtNS44IDQuNC0xMy44IDEwLjItMTcuNiAxMy4yLTMuOCAzLTExIDctMTYuMiA4LjgtNS4yIDEuOC0xNi4yIDYuNC0yNC40IDEwLTIyLjQgOS42LTM0LjggMTEuNi03MyAxMS42LTM3LjYuMi00Ny0xLjQtNzEtMTItOC4yLTMuNi0xNy42LTcuMi0yMC44LTgtMTUuOC0zLjgtNjctNDUuMi03Ny44LTYyLjgtMi4yLTMuOC03LjYtMTEuNi0xMS44LTE3LjItNC4yLTUuNC05LTE0LTEwLjYtMTktMS44LTQuOC02LjItMTYtMTAtMjQuOC0zLjYtOC44LTcuOC0yMi4yLTkuMi0yOS42LTMuMi0xOC44LTEuNC03OS40IDIuOC05MS40IDEzLjgtNDAuNiAzNS42LTc4IDU4LjgtMTAwLjIgMTQtMTMuNiA0Ny4yLTM2LjQgNTgtMzkuOCA0LjItMS40IDEzLjQtNS4yIDIwLjYtOC40IDIyLTEwIDMyLjgtMTEuNiA3Ni0xMSAzMy44LjYgNDAuNCAxLjIgNTAgNC44em0zNDAuOCA4MC44YzggMy42IDkuNiAxMS4yIDkuMiAzOS4yLS42IDM0LjQtLjYgMzQgNSAzOS42IDQuOCA1IDUuNCA1IDM3LjYgNSA0My40IDAgNDQuNC44IDQzLjIgMzYuMi0uOCAxNy0xLjIgMTguNC02LjQgMjMtNS40IDQuNi02LjYgNC44LTM3LjYgNC44LTMxLjIgMC0zMiAuMi0zNi44IDUtNS42IDUuNC01LjYgNC40LTUgNDEuMi40IDI2LjQuMiAyNy40LTQuNiAzMy00LjggNS42LTYgNS44LTI0LjQgNi40LTIwLjguOC0yOS42LTEuNC0zMy40LTguNC0xLjQtMi42LTItMTUuNi0xLjgtMzUuNi40LTMxLjIuNC0zMS42LTQuNi0zNi42cy01LjYtNS0zNi01Yy0xOC44IDAtMzMtLjgtMzYtMi4yLTcuNi0zLjYtOS42LTExLjItOC44LTMzLjguOC0yOC4yLjQtMjggNDEtMjggNDUuNCAwIDQ1LjQgMCA0NC42LTQyLjYtLjYtMzMtLjYtMzMgNS0zOC40IDQuNC00LjYgNi4yLTUgMjQuOC01IDExIDAgMjIuMiAxIDI1IDIuMnoiLz48L3N2Zz4=);
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</style>
-
+          
+            <link rel="icon" type="image/png" href="/embedded-notes/images/favicon-192x192.png" sizes="192x192">
+          
         
-        <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-
-
-        <script>lsloader.load("js/jquery.min.js","/embedded-notes/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/embedded-notes/images/apple-touch-icon.png">
+          
+        
     
+    <!-- title -->
+    <title>嵌入式笔记：tcpip协议栈</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/embedded-notes/css/style.css">
+    <!-- rss -->
     
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Analytics -->
-    
-
-    <!-- Custom Head -->
     
 </head>
 
-
+<body>
     
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#tcpip模型"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">tcpip模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#以太网协议"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">以太网协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ARP地址解析协议"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">ARP地址解析协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IP地址分类"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">IP地址分类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP与UDP的区别"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">TCP与UDP的区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ICMP协议"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">ICMP协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ping包"><span class="post-toc-number">1.6.1.</span> <span class="post-toc-text">ping包</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三次握手"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">三次握手</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四次挥手"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">四次挥手</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tcp协议图解"><span class="post-toc-number">1.7.3.</span> <span class="post-toc-text">tcp协议图解</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么会采用三次握手，若采用二次握手可以吗？"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">为什么会采用三次握手，若采用二次握手可以吗？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么四次挥手，主动方要等待２MSL后才关闭连接．"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">为什么四次挥手，主动方要等待２MSL后才关闭连接．</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP拥塞控制"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">TCP拥塞控制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP滑动窗口与回退N针协议"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">TCP滑动窗口与回退N针协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCP的可靠性如何保证"><span class="post-toc-number">1.12.</span> <span class="post-toc-text">TCP的可靠性如何保证</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#各种协议对应的传输层协议"><span class="post-toc-number">1.13.</span> <span class="post-toc-text">各种协议对应的传输层协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MQTT协议"><span class="post-toc-number">1.14.</span> <span class="post-toc-text">MQTT协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MQTT有3种网络连接方式"><span class="post-toc-number">1.14.1.</span> <span class="post-toc-text">MQTT有3种网络连接方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主题过滤器-Topic-Filter"><span class="post-toc-number">1.14.2.</span> <span class="post-toc-text">主题过滤器 Topic Filter</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#控制报文-MQTT-Control-Packet"><span class="post-toc-number">1.14.3.</span> <span class="post-toc-text">控制报文 MQTT Control Packet</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#大端模式"><span class="post-toc-number">1.14.4.</span> <span class="post-toc-text">大端模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MQTT控制报文结构"><span class="post-toc-number">1.14.5.</span> <span class="post-toc-text">MQTT控制报文结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#固定报头"><span class="post-toc-number">1.14.5.1.</span> <span class="post-toc-text">固定报头</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#剩余长度"><span class="post-toc-number">1.14.5.2.</span> <span class="post-toc-text">剩余长度</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可变报头-Variable-header"><span class="post-toc-number">1.14.6.</span> <span class="post-toc-text">可变报头 Variable header</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#报文标识符-Packet-Identifier"><span class="post-toc-number">1.14.7.</span> <span class="post-toc-text">报文标识符 Packet Identifier</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#payload"><span class="post-toc-number">1.14.8.</span> <span class="post-toc-text">payload</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP协议"><span class="post-toc-number">1.15.</span> <span class="post-toc-text">HTTP协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP请求方法"><span class="post-toc-number">1.15.1.</span> <span class="post-toc-text">HTTP请求方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-状态码"><span class="post-toc-number">1.15.2.</span> <span class="post-toc-text">HTTP 状态码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-请求收到，继续处理"><span class="post-toc-number">1.15.2.1.</span> <span class="post-toc-text">1** 请求收到，继续处理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-操作成功收到，分析、接受"><span class="post-toc-number">1.15.2.2.</span> <span class="post-toc-text">2** 操作成功收到，分析、接受</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-完成此请求必须进一步处理"><span class="post-toc-number">1.15.2.3.</span> <span class="post-toc-text">3** 完成此请求必须进一步处理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-请求包含一个错误语法或不能完成"><span class="post-toc-number">1.15.2.4.</span> <span class="post-toc-text">4** 请求包含一个错误语法或不能完成</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-服务器执行一个完全有效请求失败"><span class="post-toc-number">1.15.2.5.</span> <span class="post-toc-text">5** 服务器执行一个完全有效请求失败</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#长连接-短连接"><span class="post-toc-number">1.15.3.</span> <span class="post-toc-text">长连接 短连接</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-请求消息格式"><span class="post-toc-number">1.15.4.</span> <span class="post-toc-text">HTTP 请求消息格式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-响应消息格式"><span class="post-toc-number">1.15.5.</span> <span class="post-toc-text">HTTP 响应消息格式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP-post发送文件"><span class="post-toc-number">1.15.6.</span> <span class="post-toc-text">HTTP post发送文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTP用户名密码机制"><span class="post-toc-number">1.15.7.</span> <span class="post-toc-text">HTTP用户名密码机制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTPS的通信过程"><span class="post-toc-number">1.15.8.</span> <span class="post-toc-text">HTTPS的通信过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTTPS、SSH-公钥、秘钥、对称加密、非对称加密、hash算法"><span class="post-toc-number">1.15.9.</span> <span class="post-toc-text">HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数字签名和数字证书"><span class="post-toc-number">1.15.10.</span> <span class="post-toc-text">数字签名和数字证书</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数字签名"><span class="post-toc-number">1.15.10.1.</span> <span class="post-toc-text">数字签名</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数字证书"><span class="post-toc-number">1.15.10.2.</span> <span class="post-toc-text">数字证书</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#websocket"><span class="post-toc-number">1.15.11.</span> <span class="post-toc-text">websocket</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#websocket握手协议"><span class="post-toc-number">1.15.11.1.</span> <span class="post-toc-text">websocket握手协议</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#HTML5-Web-Socket-API"><span class="post-toc-number">1.15.11.2.</span> <span class="post-toc-text">HTML5 Web Socket API</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#coap"><span class="post-toc-number">1.15.12.</span> <span class="post-toc-text">coap</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#coap-特点"><span class="post-toc-number">1.15.12.1.</span> <span class="post-toc-text">coap 特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#协议结构"><span class="post-toc-number">1.15.12.2.</span> <span class="post-toc-text">协议结构</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nb-iot"><span class="post-toc-number">1.15.13.</span> <span class="post-toc-text">nb-iot</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#freertos"><span class="post-toc-number">1.15.14.</span> <span class="post-toc-text">freertos</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#alios-things"><span class="post-toc-number">1.15.15.</span> <span class="post-toc-text">alios-things</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#meos"><span class="post-toc-number">1.15.16.</span> <span class="post-toc-text">meos</span></a></li></ol></li></ol></li></ol>
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-    
-
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/embedded-notes/">Home</a></li>
+         
+          <li><a href="/embedded-notes/about/">About</a></li>
+         
+          <li><a href="/embedded-notes/posts/">Writing</a></li>
+         
+          <li><a href="http://github.com/sergodeeva">Projects</a></li>
         
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/embedded-notes/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
         
-    
-            <p class="article-headline-p">
-                嵌入式笔记：tcpip协议栈
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/embedded-notes/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>xiaxiaowen</strong>
-        <span>2月 28, 2018</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
+        <li><a class="icon" href="/embedded-notes/2018/02/28/linux/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=嵌入式笔记：tcpip协议栈&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=嵌入式笔记：tcpip协议栈&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html&via=xiaxiaowen" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=xiaxiaowen的个人博客&title=嵌入式笔记：tcpip协议栈&summary=&pics=http://xiaowenxia.github.io/embedded-notes/embedded-notes/img/favicon.png&url=http://xiaowenxia.github.io/embedded-notes/embedded-notes/2018/02/28/tcpip协议栈/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 QQ
-            </li>
-        </a>
-    
-
-    <!-- Share Telegram -->
-    
+        
+        <li><a class="icon" href="/embedded-notes/2018/02/28/gpu/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&text=嵌入式笔记：tcpip协议栈"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&is_video=false&description=嵌入式笔记：tcpip协议栈"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式笔记：tcpip协议栈&body=Check out this article: http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&name=嵌入式笔记：tcpip协议栈&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#目录"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tcpip模型"><span class="toc-number">1.1.</span> <span class="toc-text">tcpip模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以太网协议"><span class="toc-number">1.2.</span> <span class="toc-text">以太网协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP地址解析协议"><span class="toc-number">1.3.</span> <span class="toc-text">ARP地址解析协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP地址分类"><span class="toc-number">1.4.</span> <span class="toc-text">IP地址分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP与UDP的区别"><span class="toc-number">1.5.</span> <span class="toc-text">TCP与UDP的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ICMP协议"><span class="toc-number">1.6.</span> <span class="toc-text">ICMP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ping包"><span class="toc-number">1.6.1.</span> <span class="toc-text">ping包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用"><span class="toc-number">1.7.</span> <span class="toc-text">TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三次握手"><span class="toc-number">1.7.1.</span> <span class="toc-text">三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四次挥手"><span class="toc-number">1.7.2.</span> <span class="toc-text">四次挥手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tcp协议图解"><span class="toc-number">1.7.3.</span> <span class="toc-text">tcp协议图解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么会采用三次握手，若采用二次握手可以吗？"><span class="toc-number">1.8.</span> <span class="toc-text">为什么会采用三次握手，若采用二次握手可以吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么四次挥手，主动方要等待２MSL后才关闭连接．"><span class="toc-number">1.9.</span> <span class="toc-text">为什么四次挥手，主动方要等待２MSL后才关闭连接．</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP拥塞控制"><span class="toc-number">1.10.</span> <span class="toc-text">TCP拥塞控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP滑动窗口与回退N针协议"><span class="toc-number">1.11.</span> <span class="toc-text">TCP滑动窗口与回退N针协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的可靠性如何保证"><span class="toc-number">1.12.</span> <span class="toc-text">TCP的可靠性如何保证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各种协议对应的传输层协议"><span class="toc-number">1.13.</span> <span class="toc-text">各种协议对应的传输层协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTT协议"><span class="toc-number">1.14.</span> <span class="toc-text">MQTT协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MQTT有3种网络连接方式"><span class="toc-number">1.14.1.</span> <span class="toc-text">MQTT有3种网络连接方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主题过滤器-Topic-Filter"><span class="toc-number">1.14.2.</span> <span class="toc-text">主题过滤器 Topic Filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制报文-MQTT-Control-Packet"><span class="toc-number">1.14.3.</span> <span class="toc-text">控制报文 MQTT Control Packet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大端模式"><span class="toc-number">1.14.4.</span> <span class="toc-text">大端模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MQTT控制报文结构"><span class="toc-number">1.14.5.</span> <span class="toc-text">MQTT控制报文结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#固定报头"><span class="toc-number">1.14.5.1.</span> <span class="toc-text">固定报头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#剩余长度"><span class="toc-number">1.14.5.2.</span> <span class="toc-text">剩余长度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可变报头-Variable-header"><span class="toc-number">1.14.6.</span> <span class="toc-text">可变报头 Variable header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#报文标识符-Packet-Identifier"><span class="toc-number">1.14.7.</span> <span class="toc-text">报文标识符 Packet Identifier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#payload"><span class="toc-number">1.14.8.</span> <span class="toc-text">payload</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.15.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP请求方法"><span class="toc-number">1.15.1.</span> <span class="toc-text">HTTP请求方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-状态码"><span class="toc-number">1.15.2.</span> <span class="toc-text">HTTP 状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-请求收到，继续处理"><span class="toc-number">1.15.2.1.</span> <span class="toc-text">1** 请求收到，继续处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-操作成功收到，分析、接受"><span class="toc-number">1.15.2.2.</span> <span class="toc-text">2** 操作成功收到，分析、接受</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-完成此请求必须进一步处理"><span class="toc-number">1.15.2.3.</span> <span class="toc-text">3** 完成此请求必须进一步处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-请求包含一个错误语法或不能完成"><span class="toc-number">1.15.2.4.</span> <span class="toc-text">4** 请求包含一个错误语法或不能完成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-服务器执行一个完全有效请求失败"><span class="toc-number">1.15.2.5.</span> <span class="toc-text">5** 服务器执行一个完全有效请求失败</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长连接-短连接"><span class="toc-number">1.15.3.</span> <span class="toc-text">长连接 短连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-请求消息格式"><span class="toc-number">1.15.4.</span> <span class="toc-text">HTTP 请求消息格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-响应消息格式"><span class="toc-number">1.15.5.</span> <span class="toc-text">HTTP 响应消息格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-post发送文件"><span class="toc-number">1.15.6.</span> <span class="toc-text">HTTP post发送文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP用户名密码机制"><span class="toc-number">1.15.7.</span> <span class="toc-text">HTTP用户名密码机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS的通信过程"><span class="toc-number">1.15.8.</span> <span class="toc-text">HTTPS的通信过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS、SSH-公钥、秘钥、对称加密、非对称加密、hash算法"><span class="toc-number">1.15.9.</span> <span class="toc-text">HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字签名和数字证书"><span class="toc-number">1.15.10.</span> <span class="toc-text">数字签名和数字证书</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数字签名"><span class="toc-number">1.15.10.1.</span> <span class="toc-text">数字签名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数字证书"><span class="toc-number">1.15.10.2.</span> <span class="toc-text">数字证书</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#websocket"><span class="toc-number">1.15.11.</span> <span class="toc-text">websocket</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#websocket握手协议"><span class="toc-number">1.15.11.1.</span> <span class="toc-text">websocket握手协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTML5-Web-Socket-API"><span class="toc-number">1.15.11.2.</span> <span class="toc-text">HTML5 Web Socket API</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#coap"><span class="toc-number">1.15.12.</span> <span class="toc-text">coap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#coap-特点"><span class="toc-number">1.15.12.1.</span> <span class="toc-text">coap 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#协议结构"><span class="toc-number">1.15.12.2.</span> <span class="toc-text">协议结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nb-iot"><span class="toc-number">1.15.13.</span> <span class="toc-text">nb-iot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#freertos"><span class="toc-number">1.15.14.</span> <span class="toc-text">freertos</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alios-things"><span class="toc-number">1.15.15.</span> <span class="toc-text">alios-things</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#meos"><span class="toc-number">1.15.16.</span> <span class="toc-text">meos</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
 </div>
 
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>嵌入式笔记：tcpip协议栈</p>
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        嵌入式笔记：tcpip协议栈
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">xiaxiaowen的个人博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-02-28T01:20:58.912Z" itemprop="datePublished">2018-02-28</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>嵌入式笔记：tcpip协议栈</p>
 <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
 <li><a href="#tcpip模型">tcpip模型</a></li>
 <li><a href="#以太网协议">以太网协议</a></li>
@@ -1105,386 +751,106 @@
 </blockquote>
 <p>UDP—&gt;Messages—&gt;request/response—&gt;payload</p>
 <h3 id="nb-iot"><a href="#nb-iot" class="headerlink" title="nb-iot"></a>nb-iot</h3><h3 id="freertos"><a href="#freertos" class="headerlink" title="freertos"></a>freertos</h3><h3 id="alios-things"><a href="#alios-things" class="headerlink" title="alios-things"></a>alios-things</h3><h3 id="meos"><a href="#meos" class="headerlink" title="meos"></a>meos</h3>
+  </div>
+</article>
+
+
+
+    </div>
     
+      <div id="footer-post-container">
+  <div id="footer-post">
 
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/embedded-notes/2018/02/28/uboot/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/embedded-notes/2018/02/28/linux/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/embedded-notes/">Home</a></li>
+         
+          <li><a href="/embedded-notes/about/">About</a></li>
+         
+          <li><a href="/embedded-notes/posts/">Writing</a></li>
+         
+          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+        
+      </ul>
     </div>
 
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/embedded-notes/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/embedded-notes/img/avatar.png" alt="xiaxiaowen's avatar">
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#目录"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tcpip模型"><span class="toc-number">1.1.</span> <span class="toc-text">tcpip模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以太网协议"><span class="toc-number">1.2.</span> <span class="toc-text">以太网协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP地址解析协议"><span class="toc-number">1.3.</span> <span class="toc-text">ARP地址解析协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP地址分类"><span class="toc-number">1.4.</span> <span class="toc-text">IP地址分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP与UDP的区别"><span class="toc-number">1.5.</span> <span class="toc-text">TCP与UDP的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ICMP协议"><span class="toc-number">1.6.</span> <span class="toc-text">ICMP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ping包"><span class="toc-number">1.6.1.</span> <span class="toc-text">ping包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用"><span class="toc-number">1.7.</span> <span class="toc-text">TCP的三次握手与四次挥手过程，各个状态名称与含义，TIMEWAIT的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三次握手"><span class="toc-number">1.7.1.</span> <span class="toc-text">三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四次挥手"><span class="toc-number">1.7.2.</span> <span class="toc-text">四次挥手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tcp协议图解"><span class="toc-number">1.7.3.</span> <span class="toc-text">tcp协议图解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么会采用三次握手，若采用二次握手可以吗？"><span class="toc-number">1.8.</span> <span class="toc-text">为什么会采用三次握手，若采用二次握手可以吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么四次挥手，主动方要等待２MSL后才关闭连接．"><span class="toc-number">1.9.</span> <span class="toc-text">为什么四次挥手，主动方要等待２MSL后才关闭连接．</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP拥塞控制"><span class="toc-number">1.10.</span> <span class="toc-text">TCP拥塞控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP滑动窗口与回退N针协议"><span class="toc-number">1.11.</span> <span class="toc-text">TCP滑动窗口与回退N针协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的可靠性如何保证"><span class="toc-number">1.12.</span> <span class="toc-text">TCP的可靠性如何保证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各种协议对应的传输层协议"><span class="toc-number">1.13.</span> <span class="toc-text">各种协议对应的传输层协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTT协议"><span class="toc-number">1.14.</span> <span class="toc-text">MQTT协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MQTT有3种网络连接方式"><span class="toc-number">1.14.1.</span> <span class="toc-text">MQTT有3种网络连接方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主题过滤器-Topic-Filter"><span class="toc-number">1.14.2.</span> <span class="toc-text">主题过滤器 Topic Filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制报文-MQTT-Control-Packet"><span class="toc-number">1.14.3.</span> <span class="toc-text">控制报文 MQTT Control Packet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大端模式"><span class="toc-number">1.14.4.</span> <span class="toc-text">大端模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MQTT控制报文结构"><span class="toc-number">1.14.5.</span> <span class="toc-text">MQTT控制报文结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#固定报头"><span class="toc-number">1.14.5.1.</span> <span class="toc-text">固定报头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#剩余长度"><span class="toc-number">1.14.5.2.</span> <span class="toc-text">剩余长度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可变报头-Variable-header"><span class="toc-number">1.14.6.</span> <span class="toc-text">可变报头 Variable header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#报文标识符-Packet-Identifier"><span class="toc-number">1.14.7.</span> <span class="toc-text">报文标识符 Packet Identifier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#payload"><span class="toc-number">1.14.8.</span> <span class="toc-text">payload</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.15.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP请求方法"><span class="toc-number">1.15.1.</span> <span class="toc-text">HTTP请求方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-状态码"><span class="toc-number">1.15.2.</span> <span class="toc-text">HTTP 状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-请求收到，继续处理"><span class="toc-number">1.15.2.1.</span> <span class="toc-text">1** 请求收到，继续处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-操作成功收到，分析、接受"><span class="toc-number">1.15.2.2.</span> <span class="toc-text">2** 操作成功收到，分析、接受</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-完成此请求必须进一步处理"><span class="toc-number">1.15.2.3.</span> <span class="toc-text">3** 完成此请求必须进一步处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-请求包含一个错误语法或不能完成"><span class="toc-number">1.15.2.4.</span> <span class="toc-text">4** 请求包含一个错误语法或不能完成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-服务器执行一个完全有效请求失败"><span class="toc-number">1.15.2.5.</span> <span class="toc-text">5** 服务器执行一个完全有效请求失败</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长连接-短连接"><span class="toc-number">1.15.3.</span> <span class="toc-text">长连接 短连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-请求消息格式"><span class="toc-number">1.15.4.</span> <span class="toc-text">HTTP 请求消息格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-响应消息格式"><span class="toc-number">1.15.5.</span> <span class="toc-text">HTTP 响应消息格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-post发送文件"><span class="toc-number">1.15.6.</span> <span class="toc-text">HTTP post发送文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP用户名密码机制"><span class="toc-number">1.15.7.</span> <span class="toc-text">HTTP用户名密码机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS的通信过程"><span class="toc-number">1.15.8.</span> <span class="toc-text">HTTPS的通信过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS、SSH-公钥、秘钥、对称加密、非对称加密、hash算法"><span class="toc-number">1.15.9.</span> <span class="toc-text">HTTPS、SSH 公钥、秘钥、对称加密、非对称加密、hash算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字签名和数字证书"><span class="toc-number">1.15.10.</span> <span class="toc-text">数字签名和数字证书</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数字签名"><span class="toc-number">1.15.10.1.</span> <span class="toc-text">数字签名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数字证书"><span class="toc-number">1.15.10.2.</span> <span class="toc-text">数字证书</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#websocket"><span class="toc-number">1.15.11.</span> <span class="toc-text">websocket</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#websocket握手协议"><span class="toc-number">1.15.11.1.</span> <span class="toc-text">websocket握手协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTML5-Web-Socket-API"><span class="toc-number">1.15.11.2.</span> <span class="toc-text">HTML5 Web Socket API</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#coap"><span class="toc-number">1.15.12.</span> <span class="toc-text">coap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#coap-特点"><span class="toc-number">1.15.12.1.</span> <span class="toc-text">coap 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#协议结构"><span class="toc-number">1.15.12.2.</span> <span class="toc-text">协议结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nb-iot"><span class="toc-number">1.15.13.</span> <span class="toc-text">nb-iot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#freertos"><span class="toc-number">1.15.14.</span> <span class="toc-text">freertos</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alios-things"><span class="toc-number">1.15.15.</span> <span class="toc-text">alios-things</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#meos"><span class="toc-number">1.15.16.</span> <span class="toc-text">meos</span></a></li></ol></li></ol></li></ol>
     </div>
 
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        youremail@email.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/embedded-notes/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/embedded-notes/archives/2018/02/">二月 2018<span class="sidebar_archives-count">11</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-
-    <!-- Article Number  -->
-    
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&text=嵌入式笔记：tcpip协议栈"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&is_video=false&description=嵌入式笔记：tcpip协议栈"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=嵌入式笔记：tcpip协议栈&body=Check out this article: http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&title=嵌入式笔记：tcpip协议栈"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://xiaowenxia.github.io/embedded-notes/2018/02/28/tcpip协议栈/&name=嵌入式笔记：tcpip协议栈&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
     </div>
 
-    <!-- Sidebar Image -->
-    
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
 
-</aside>
-
-                    
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
+  </div>
 </div>
 
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
     
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/twitter" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-        <a href="https://www.facebook.com/facebook" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
-                <span class="visuallyhidden">Facebook</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Google + -->
-    
-        <a href="https://www.google.com/" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
-                <span class="visuallyhidden">Google Plus</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>xiaxiaowen的个人博客
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 xiaxiaowen
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/embedded-notes/">Home</a></li>
+         
+          <li><a href="/embedded-notes/about/">About</a></li>
+         
+          <li><a href="/embedded-notes/posts/">Writing</a></li>
+         
+          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
 
-
-                    <!-- Import File -->
-
-
-    <script>lsloader.load("js/lazyload.min.js","/embedded-notes/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
-    <script>lsloader.load("js/js.min.js","/embedded-notes/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
-
-
-
-    <script>lsloader.load("js/nprogress.js","/embedded-notes/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/embedded-notes/css/uc.css">');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Window Load-->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-</script>
-
-<!-- MathJax Load-->
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Bing Background -->
-
-
-<script>
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
-    })()
-console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
-
-                </main>
-            </div>
-        </body>
-    
+</body>
 </html>
+<!-- styles -->
+<link rel="stylesheet" href="/embedded-notes/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/embedded-notes/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/embedded-notes/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/embedded-notes/lib/jquery/jquery.min.js"></script>
+<script src="/embedded-notes/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/embedded-notes/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

@@ -72,7 +72,8 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: material
+##theme: material
+theme: cactus-white
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -80,3 +81,9 @@ deploy:
   type: git
   repo: https://github.com/xiaowenxia/embedded-notes.git
   branch: gh-pages
+
+# hexo-admin authentification
+admin:
+  username: xiaxiaowen
+  password_hash: $2a$10$sdAXW/lEwuIqE/jGIDql8uMnaf19DLVV6yg9n6Lk0TETrjrJiGQMS
+  secret: my super secret phrase

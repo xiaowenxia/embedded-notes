@@ -1,0 +1,162 @@
+#header-post
+  position: fixed
+  top: 2rem
+  right: 0
+  display: inline-block
+  float: right
+  a
+    color: inherit
+    text-decoration: none
+    background: none
+  a.icon
+    background: none
+    &:hover
+      color: $color-link
+  ol
+    list-style-type: none
+  ul
+    list-style-type: none
+    margin: 0
+    padding: 0
+    display: inline-block
+    li
+      margin-right: 15px
+      display: inline-block
+      vertical-align: middle
+    li:last-child
+      margin-right: 0
+  #menu-icon
+    float: right
+    margin-left: 15px
+    margin-right: 2rem
+    &:hover
+      color: $color-accent
+  #menu-icon-tablet
+    float: right
+    margin-left: 15px
+    margin-right: 2rem
+    &:hover
+      color: $color-accent
+  #top-icon-tablet
+    margin-left: 15px
+    margin-right: 2rem
+    bottom: 2rem
+    right: 2rem
+    position: fixed
+    &:hover
+      color: $color-accent
+  .active
+    color: $color-accent
+  #menu
+    visibility: hidden
+    margin-right: 2rem
+  #nav
+    letter-spacing: 0.01em
+    font-size: .8rem
+    font-style: normal
+    font-weight: 200
+    color: $color-accent
+    ul
+      line-height: 15px
+      a
+        margin-right: 15px
+        color: color-accent
+      a:hover
+          underline(5px, $color-accent)
+      li
+        border-right: 1px dotted $color-accent
+      li:last-child
+        border-right: 0
+        margin-right: 0
+        a
+          margin-right: 0
+  #actions
+    float: right
+    margin-top: 2rem
+    margin-right: 2rem
+    width: 100%
+    text-align: right
+    ul
+      display: block
+    .info
+      display: block
+      font-style: italic
+  #share
+    clear: both
+    text-align: right
+    padding-top: 1rem
+    padding-right: 2rem
+    li
+      margin: 0
+      display: block
+  #toc
+    clear: both
+    text-align: right
+    margin-top: 1rem
+    padding-right: 2rem
+    max-width: 20em
+    float: right
+    overflow: auto
+    max-height: calc(95vh - 7rem);
+    a:hover
+      color: $color-link
+    .toc-level-1 > .toc-link
+      display: none
+    .toc-level-2
+      font-size: 0.8rem
+      color: $color-text
+      &:before
+        content: "#"
+        color: $color-accent
+    .toc-level-3
+      font-size: 0.7rem
+      color: #b3b3b3
+    .toc-level-4
+      font-size: 0.4rem
+      color: #666 
+    .toc-level-5
+      display: none
+    .toc-level-6
+      display: none
+    .toc-number
+      display: none
+
+
+// smartphone + phapblet
+@media screen and (max-width:500px)
+  #header-post
+    display: none
+
+
+@media screen and (max-width:900px)
+  #header-post
+    #menu-icon
+      display: none
+    #actions
+      display: none
+
+@media screen and (max-width:1199px)
+  #header-post
+    #toc
+      display: none
+
+
+@media screen and (min-width:900px)
+  #header-post
+    #menu-icon-tablet
+      display: none !important
+    #top-icon-tablet
+      display: none !important
+
+@media screen and (min-width:1199px)
+  #header-post
+    #actions
+      width: auto
+      ul
+        display: inline-block
+        float: right
+      .info
+        float: left
+        margin-right: 2rem
+        font-style: italic
+        display: inline

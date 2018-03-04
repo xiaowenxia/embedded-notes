@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html<%= config.language ? " lang=" + config.language.substring(0, 2) : ""%>>
+<%- partial('_partial/head') %>
+<body>
+    <% if (is_post()) { %>
+      <%- partial('_partial/post/actions_desktop') %>
+    <% } %>
+    <div class="content index width mx-auto px2 my4">
+        <% if (!is_post()) { %>
+          <%- partial('_partial/header') %>
+        <% } %>
+        <%- body %>
+    </div>
+    <% if (is_post()) { %>
+      <%- partial('_partial/post/actions_mobile') %>
+    <% } %>
+    <%- partial('_partial/footer') %>
+</body>
+</html>
+<%- partial('_partial/styles') %>
+<%- partial('_partial/scripts') %>

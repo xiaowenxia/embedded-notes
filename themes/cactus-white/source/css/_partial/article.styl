@@ -1,0 +1,110 @@
+article
+  header
+    .posttitle
+      margin-top: 0
+      margin-bottom: 0
+      text-transform: none
+      font-size: 1.5em
+      line-height: 1.25
+    .meta
+      margin-top: 0
+      margin-bottom: 1rem
+    .meta *
+      color: $color-light
+      font-size: 0.85rem
+    .author
+      text-transform: uppercase
+      letter-spacing: 0.01em
+      font-weight: 700
+    .postdate
+      display: inline
+  .content
+    h2:before
+      content: "#"
+      color: $color-accent
+      position: absolute
+      left: -1rem
+      top: -4px
+      font-size: 1.2rem
+      font-weight: bold
+    img, video
+        max-width: 100%
+        height: auto
+        margin: auto
+    /* http://webdesignerwall.com/tutorials/css-elastic-videos */
+    .video-container
+        position: relative
+        padding-top: (9 / 16 * 100)% // 16:9 ratio
+        height: 0
+        overflow: hidden
+        iframe, object, embed
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            margin-top: 0
+    blockquote
+        background: inherit;
+        color: #ccffb6
+        border-left: 0px solid #ccc;
+        margin: 1rem 10px;
+        padding: 0.5em 10px;
+        quotes: "\201C""\201D""\2018""\2019"
+        p
+          margin: 0
+        &:before
+            color: #ccffb6;
+            content: "\201C";
+            font-size: 2em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em
+        footer
+            color: #666
+            font-size: 11px
+            margin: line-height 0
+            a
+              color: #666
+              background-image: linear-gradient(transparent, transparent 5px, #666 5px, #666)
+            a:hover
+              color: #999
+              background-image: linear-gradient(transparent, transparent 4px, #999 4px, #999)
+            cite
+                &:before
+                    content: "—"
+                    padding: 0 0.5em
+    .pullquote
+        text-align: left
+        width: 45%
+        margin: 0
+        &.left
+            margin-left: 0.5em
+            margin-right: 1em
+        &.right
+            margin-right: 0.5em
+            margin-left: 1em
+    .caption
+        color: color-grey
+        display: block
+        font-size: 0.9em
+        margin-top: 0.5em
+        position: relative
+        text-align: center
+
+.posttitle
+    text-transform: none
+    font-size: 1.5em
+    line-height: 1.25
+
+
+.article-tag
+  .tag-link
+    &:before
+      content: "#"
+
+@media (min-width: 480px)
+  .article-tag
+      display: inline
+      &:before
+        content: "|"

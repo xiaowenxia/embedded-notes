@@ -1,0 +1,47 @@
+.search-input
+  width: 100%
+  font-size: 1.2rem
+  color: $color-background
+  background-color: $color-lightest
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px
+  border: solid 1px $color-light
+  padding: 4px 7px
+  outline: none
+  -webkit-appearance: none
+  &:focus
+    border: solid 1px $color-accent
+
+
+#search-result 
+  ul.search-result-list 
+    list-style-type:none
+    padding: 0px
+
+  li 
+    margin: 2em auto
+
+  a.search-result-title
+    line-height: 1.2
+    font-weight: bold
+    color: $color-text
+    text-transform: capitalize
+    background-image: none
+
+  p.search-result
+    margin: 0.4em auto
+    max-height: 13em
+    overflow: hidden
+    font-size: 0.8em
+    text-align: justify
+
+  em.search-keyword
+    color: $color-link
+    border-bottom: 1px dashed $color-link
+    font-weight: bold
+
+.search-no-result
+  display: none
+  padding-bottom: 0.5em
+  color: $color-text

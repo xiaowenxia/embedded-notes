@@ -1,0 +1,49 @@
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <%- open_graph({
+        image:          thumbnail(page),
+        fb_app_id:      theme.miscellaneous.open_graph.fb_app_id,
+        fb_admins:      theme.miscellaneous.open_graph.fb_admins,
+        twitter_id:     theme.miscellaneous.open_graph.twitter_id,
+        google_plus:    theme.miscellaneous.open_graph.google_plus,
+    }) %>
+    <%- meta(page) %>
+    <% if (theme.customize.favicon) { %>
+        <% if (theme.customize.favicon.desktop) { %>
+          <% if (theme.customize.gravatar.email && theme.customize.favicon.desktop.gravatar) { %>
+              <link rel="shortcut icon" href="<%= gravatar(theme.customize.gravatar.email, 16) %>">
+          <% } else { %>
+              <link rel="shortcut icon" href="<%= url_for(theme.customize.favicon.desktop.url) %>">
+          <% } %>
+        <% } %>
+        <% if (theme.customize.favicon.android) { %>
+          <% if (theme.customize.gravatar.email && theme.customize.favicon.android.gravatar) { %>
+            <link rel="icon" type="image/png" href="<%= gravatar(theme.customize.gravatar.email, 192) %>" sizes="192x192">
+          <% } else { %>
+            <link rel="icon" type="image/png" href="<%= url_for(theme.customize.favicon.android.url) %>" sizes="192x192">
+          <% } %>
+        <% } %>
+        <% if (theme.customize.favicon.apple) { %>
+          <% if (theme.customize.gravatar.email && theme.customize.favicon.apple.gravatar) { %>
+            <link rel="apple-touch-icon" sizes="180x180" href="<%= gravatar(theme.customize.gravatar.email, 180) %>">
+          <% } else { %>
+            <link rel="apple-touch-icon" sizes="180x180" href="<%= url_for(theme.customize.favicon.apple.url) %>">
+          <% } %>
+        <% } %>
+    <% } %>
+    <!-- title -->
+    <title><%= page.title ? page.title : config.title %></title>
+    <!-- styles -->
+    <%- css('css/style') %>
+    <!-- rss -->
+    <% if (theme.rss === '' && config.feed && config.feed.path) { %>
+      <% theme.rss = config.feed.path %>
+    <% } %>
+    <% if (theme.rss) { %>
+      <link rel="alternate" href="<%= url_for(theme.rss) %>" title="<%= config.title %>" type="application/atom+xml" />
+    <% } %>
+</head>

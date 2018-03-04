@@ -1,0 +1,12 @@
+<% if (page.total > 1) { %>
+    <div class="pagination">
+        <% if (page.prev) { %>
+            <a href="<%- url_for(page.prev_link) %>"><i class="fa fa-angle-left"></i></a>
+        <% } %>
+        <span class="page-number"><%= 'Page ' + page.current + ' of ' + page.total %></span>
+        <% if (page.next) { %>
+            <a href="<%- url_for(page.next_link) %>"><i class="fa fa-angle-right"></i>
+            </a>
+        <% } %>
+    </div>
+<% } %>

@@ -1,0 +1,5 @@
+@font-face {
+  font-family: 'Meslo LG';
+  font-style: normal;
+  src: local('Meslo LG S'), url(fonts/MesloLGS-Regular.ttf) format('truetype');
+}

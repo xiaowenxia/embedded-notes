@@ -1,0 +1,9 @@
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <% if (page.search) { %>
+    <%- partial('_partial/search') %>
+  <% } %>
+  <%- partial('_partial/post/gallery') %>
+  <div class="content" itemprop="articleBody">
+    <%- page.content %>
+  </div>
+</article>

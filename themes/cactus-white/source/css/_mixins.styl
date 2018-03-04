@@ -1,0 +1,22 @@
+antialias()
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+
+hyphens($value)
+  -moz-hyphens: $value
+  -ms-hyphens: $value
+  -webkit-hyphens: $value
+  hyphens: $value
+
+underline($size, $color)
+  background-repeat: repeat-x
+  background-position: bottom
+  background-size: 100% 6px
+  background-image: linear-gradient(transparent, transparent $size, $color $size, $color)
+
+no-select()
+  -khtml-user-select: none
+  -o-user-select: none
+  -moz-user-select: none
+  -webkit-user-select: none
+  user-select: none

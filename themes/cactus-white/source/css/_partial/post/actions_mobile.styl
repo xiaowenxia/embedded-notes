@@ -1,0 +1,113 @@
+#footer-post
+  bottom: 0
+  left: 0
+  right: 0
+  position: fixed
+  transition: opacity .2s
+  width: 100%
+  z-index: 5000000
+  background: lighten($color-background, 2%)
+  border-top: 1px solid #666673
+
+
+  a
+    color: inherit
+    text-decoration: none
+    background: none
+  a.icon
+    background: none
+    &:hover
+      color: $color-link
+
+  #nav-footer
+    margin-left: 1rem
+    margin-right: 1rem
+    text-align: center
+    a
+      color: $color-accent
+      font-size: 1rem
+    a:hover
+      underline(5px, $color-accent)
+    ul
+      list-style-type: none
+      margin: 0
+      padding: 0
+      display: table
+      width: 100%
+      li
+        display: inline-table
+        width: 20%
+        padding: 10px
+        vertical-align: middle
+  
+  #actions-footer
+    text-align: center
+    margin-top: 1rem
+    margin-bottom: 1rem
+    width: 100%
+    a
+      color: $color-accent
+    ul
+        list-style-type: none
+        margin: 0
+        padding: 0
+        display: table
+        width: 100%
+        li
+          display: table-cell
+          vertical-align: middle
+  
+
+  #share-footer
+    margin-left: 1rem
+    margin-right: 1rem
+    text-align: center
+    ul
+      list-style-type: none
+      margin: 0
+      padding: 0
+      display: table
+      width: 100%
+      li
+        display: inline-table
+        width: 20%
+        padding: 10px
+        vertical-align: middle
+  
+
+  #toc-footer
+    clear: both
+    text-align: left
+    padding-top: 1rem
+    ol
+      list-style-type: none
+      padding-left: 20px
+      li
+        line-height: 30px
+    a:hover
+      color: $color-link
+    .toc-level-1 > .toc-link
+      display: none
+    .toc-level-2
+      font-size: 0.8rem
+      color: $color-text
+      &:before
+        content: "#"
+        color: $color-accent
+    .toc-level-3
+      font-size: 0.7rem
+      color: #b3b3b3
+      color: #666 
+      line-height: 15px
+    .toc-level-4
+      display: none
+    .toc-level-5
+      display: none
+    .toc-level-6
+      display: none
+    .toc-number
+      display: none
+
+@media screen and (min-width:500px)
+  #footer-post-container
+    display: none

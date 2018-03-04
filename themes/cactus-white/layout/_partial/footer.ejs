@@ -1,0 +1,14 @@
+<footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; <%= new Date().getFullYear() %> <%= config.author || config.title %>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <% for (var i in theme.nav) { %> 
+          <li><a href="<%- url_for(theme.nav[i]) %>"><%= i %></a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </div>
+</footer>
