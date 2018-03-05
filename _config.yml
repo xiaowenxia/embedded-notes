@@ -38,7 +38,7 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
+  enable: false
   line_number: true
   auto_detect: false
   tab_replace:
@@ -87,3 +87,7 @@ admin:
   username: xiaxiaowen
   password_hash: $2a$10$sdAXW/lEwuIqE/jGIDql8uMnaf19DLVV6yg9n6Lk0TETrjrJiGQMS
   secret: my super secret phrase
+prism_plugin:
+  mode: 'preprocess'    # realtime/preprocess
+  theme: 'tomorrow'
+  line_number: true # default true

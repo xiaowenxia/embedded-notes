@@ -44,7 +44,8 @@
     <!-- rss -->
     
     
-</head>
+<link rel="stylesheet" href="/embedded-notes/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/embedded-notes/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
     
@@ -70,10 +71,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/embedded-notes/2018/02/28/uboot/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/embedded-notes/2018/02/28/tcpip协议栈/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/embedded-notes/2018/02/28/tcpip协议栈/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/embedded-notes/2018/02/28/gpu/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -214,29 +215,149 @@
 <blockquote>
 <p><strong>tac</strong>： cat的反向指令，从最后一行倒序显示全部内容<br><strong>head</strong>： 只显示头几行<br><strong>tail</strong>： 只显示最后几行 tail -f 可以实时显示log文件的更新<br><strong>nl</strong>： 类似于cat -n，显示时输出行号</p>
 </blockquote>
-<h3 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h3><p>命令格式：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount [-t vfstype] [-o options] device dir</span><br></pre></td></tr></table></figure></p>
-<p>挂载nfs<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t nfs 192.168.0.1:/tmp /mnt/nfs</span><br></pre></td></tr></table></figure></p>
-<h3 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/<span class="built_in">log</span>/messages</span><br></pre></td></tr></table></figure>
-<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>选项<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-c：只输出匹配行的计数。</span><br><span class="line">-C：匹配的上下文分别显示[number]行。</span><br><span class="line">-I：不区分大小写(只适用于单字符)。</span><br><span class="line">-i：不区分大小写。</span><br><span class="line">-h：查询多文件时不显示文件名。</span><br><span class="line">-l：查询多文件时只输出包含匹配字符的文件名。</span><br><span class="line">-L：列出不匹配的文件名。</span><br><span class="line">-n：显示匹配行及 行号。</span><br><span class="line">-s：不显示不存在或无匹配文本的错误信息。</span><br><span class="line">-v：显示不包含匹配文本的所有行。</span><br><span class="line">-w：只匹配整个单词。</span><br><span class="line">-E：扩展的正则表达式</span><br><span class="line">-R：递归搜寻</span><br><span class="line">--exclude=FILE：跳过FILE</span><br></pre></td></tr></table></figure></p>
+<h3 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h3><p>命令格式：</p>
+<pre class="line-numbers language-sh"><code class="language-sh">mount [-t vfstype] [-o options] device dir
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>挂载nfs</p>
+<pre class="line-numbers language-sh"><code class="language-sh">mount -t nfs 192.168.0.1:/tmp /mnt/nfs 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h3><pre class="line-numbers language-sh"><code class="language-sh">cat /var/log/messages
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>选项</p>
+<pre class="line-numbers language-sh"><code class="language-sh">-c：只输出匹配行的计数。
+-C：匹配的上下文分别显示[number]行。
+-I：不区分大小写(只适用于单字符)。
+-i：不区分大小写。
+-h：查询多文件时不显示文件名。
+-l：查询多文件时只输出包含匹配字符的文件名。
+-L：列出不匹配的文件名。
+-n：显示匹配行及 行号。
+-s：不显示不存在或无匹配文本的错误信息。
+-v：显示不包含匹配文本的所有行。
+-w：只匹配整个单词。
+-E：扩展的正则表达式
+-R：递归搜寻
+--exclude=FILE：跳过FILE
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>正则表达式主要参数：<br>    \：忽略正则表达式中特殊字符的原有含义。<br>    ^：匹配正则表达式的开始行。<br>    $：匹配正则表达式的结束行。<br>    \&lt;：从匹配正则表达式的行开始。<br>    >：到匹配正则表达式的行结束。<br>    []：单个字符，如[A]即A符合要求 。<br>    [-]：范围，如[A-Z]，即A、B、C一直到Z都符合要求 。<br>    .：所有的单个字符。<br>    *：有字符，长度可以为0。</p>
-<p>经典使用方法<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#所有以d开头的文件，包含test的匹配行</span></span><br><span class="line">grep <span class="string">"test"</span> d*</span><br><span class="line"><span class="comment">#包含test或者zephyr 不区分大小写 显示行号 扩展正则表达式</span></span><br><span class="line">grep -inE <span class="string">"test|zephyr"</span> d*</span><br><span class="line"><span class="comment">#包含test和zephyr 不区分大小写 显示行号 扩展正则表达式</span></span><br><span class="line">grep -<span class="keyword">in</span> <span class="string">"test"</span> d* | grep <span class="string">'zephyr'</span></span><br></pre></td></tr></table></figure></p>
+<p>经典使用方法</p>
+<pre class="line-numbers language-sh"><code class="language-sh">#所有以d开头的文件，包含test的匹配行
+grep "test" d*
+#包含test或者zephyr 不区分大小写 显示行号 扩展正则表达式
+grep -inE "test|zephyr" d*
+#包含test和zephyr 不区分大小写 显示行号 扩展正则表达式
+grep -in "test" d* | grep 'zephyr'
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>主要参数：<br>    －c：只输出匹配行的计数。<br>    －I：不区分大小写(只适用于单字符)。<br>    －h：查询多文件时不显示文件名。<br>    －l：查询多文件时只输出包含匹配字符的文件名。<br>    －L：列出不匹配的文件名<br>    －n：显示匹配行及行号。<br>    －s：不显示不存在或无匹配文本的错误信息。<br>    －v：显示不包含匹配文本的所有行。<br>    －R：递归搜寻<br>    －d skip：不递归搜寻<br>    －w：匹配整个单词<br>正则表达式主要参数：<br>    \：忽略正则表达式中特殊字符的原有含义。<br>    ^：匹配正则表达式的开始行。<br>    $：匹配正则表达式的结束行。<br>    \&lt;：从匹配正则表达式的行开始。<br>    >：到匹配正则表达式的行结束。<br>    []：单个字符，如[A]即A符合要求 。<br>    [-]：范围，如[A-Z]，即A、B、C一直到Z都符合要求 。<br>    .：所有的单个字符。<br>    *：有字符，长度可以为0。</p>
 <p>grep ‘test’ d*        显示以d开头的文件中包含的test行<br>grep ‘test’ aa bb cc     查找文件aa bb cc 中匹配的test行<br>grep ‘test’|’hello’ files 匹配test或者hello<br>grep ‘\&lt;man’ files    匹配manic 和man 不匹配batman<br>grep ‘\&lt;man>‘        只匹配man 不匹配batman和manic<br>grep ‘^man’ files    匹配的字符行首<br>grep ‘$man’ files    匹配的字符串仔行尾</p>
-<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>用法<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find [-path ..] [expression]</span><br></pre></td></tr></table></figure></p>
-<p>选项<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-name     按照文件名</span><br><span class="line">-iname     按照文件名 忽略大小写</span><br><span class="line">-perm     按照文件权限</span><br><span class="line">-user     按照文件拥有者</span><br><span class="line">-group    按照文件所属的组</span><br><span class="line">-mtime -n +n 按照文件的更改时间来查找文件， -n：n天以内，+n：n天以前</span><br><span class="line">-<span class="built_in">type</span>     查找某一类型：文件类型有：普通文件(f)，目录(d)，字符设备文件(c)，块设备文件(b)，符号链接文件(l)，套接字文件(s)，管道文件(p)</span><br><span class="line">-size n   查找文件长度为n块（一块等于512字节）的文件，带有c时表示文件长度以字节计。 </span><br><span class="line">-mount    不跨越文件系统</span><br><span class="line">-follow   遇到符号链接文件，就跟踪至链接所指向的文件</span><br><span class="line">-path     匹配文件路径或者文件</span><br><span class="line">-<span class="built_in">exec</span>     执行后续命令操作</span><br><span class="line">-a        and 与操作</span><br><span class="line">-o        or  或操作</span><br><span class="line">-not      not 非操作</span><br></pre></td></tr></table></figure></p>
-<p>经典使用方法<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查找/run中所有的socket文件</span></span><br><span class="line">find /run -<span class="built_in">type</span> s</span><br><span class="line"><span class="comment">#搜索/dev中所有包含tty的文件</span></span><br><span class="line">find /dev -name <span class="string">"*tty*"</span></span><br><span class="line"><span class="comment">#搜索/dev中大小大于10字节，名称包含bus的文件</span></span><br><span class="line">find /dev -size +10c -name <span class="string">"*bus*"</span></span><br><span class="line"><span class="comment">#或操作，搜索debug开头的文件或者.rst的文件</span></span><br><span class="line">find -name <span class="string">'debug*'</span> -o -name <span class="string">'*.rst'</span></span><br><span class="line"><span class="comment">#与操作，搜索debug开头的文件同时是.rst的文件</span></span><br><span class="line">find -name <span class="string">'debug*'</span> -a -name <span class="string">'*.rst'</span></span><br><span class="line"><span class="comment">#找出文件大小大于10000块的文件，并复制到当前目录</span></span><br><span class="line">find -size +100000 -<span class="built_in">exec</span> cp &#123;&#125; . \;</span><br></pre></td></tr></table></figure></p>
-<h3 id="lsusb"><a href="#lsusb" class="headerlink" title="lsusb"></a>lsusb</h3><p>显示系统中以及连接到系统的USB总线信息的工具。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb</span><br><span class="line"></span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 006 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 007 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 008 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 002 Device 003: ID 17ef:4811 Lenovo Integrated Webcam [R5U877]</span><br><span class="line">Bus 008 Device 002: ID 0a5c:217f Broadcom Corp. Bluetooth Controller</span><br></pre></td></tr></table></figure></p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>用法</p>
+<pre class="line-numbers language-sh"><code class="language-sh">find [-path ..] [expression]
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>选项</p>
+<pre class="line-numbers language-sh"><code class="language-sh">-name     按照文件名
+-iname     按照文件名 忽略大小写
+-perm     按照文件权限
+-user     按照文件拥有者
+-group    按照文件所属的组
+-mtime -n +n 按照文件的更改时间来查找文件， -n：n天以内，+n：n天以前
+-type     查找某一类型：文件类型有：普通文件(f)，目录(d)，字符设备文件(c)，块设备文件(b)，符号链接文件(l)，套接字文件(s)，管道文件(p)
+-size n   查找文件长度为n块（一块等于512字节）的文件，带有c时表示文件长度以字节计。 
+-mount    不跨越文件系统
+-follow   遇到符号链接文件，就跟踪至链接所指向的文件
+-path     匹配文件路径或者文件
+-exec     执行后续命令操作
+-a        and 与操作
+-o        or  或操作
+-not      not 非操作
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>经典使用方法</p>
+<pre class="line-numbers language-sh"><code class="language-sh">#查找/run中所有的socket文件
+find /run -type s
+#搜索/dev中所有包含tty的文件
+find /dev -name "*tty*"
+#搜索/dev中大小大于10字节，名称包含bus的文件
+find /dev -size +10c -name "*bus*"
+#或操作，搜索debug开头的文件或者.rst的文件
+find -name 'debug*' -o -name '*.rst'
+#与操作，搜索debug开头的文件同时是.rst的文件
+find -name 'debug*' -a -name '*.rst'
+#找出文件大小大于10000块的文件，并复制到当前目录
+find -size +100000 -exec cp {} . \;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="lsusb"><a href="#lsusb" class="headerlink" title="lsusb"></a>lsusb</h3><p>显示系统中以及连接到系统的USB总线信息的工具。</p>
+<pre class="line-numbers language-sh"><code class="language-sh">$ lsusb
+
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 006 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 007 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 008 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 003: ID 17ef:4811 Lenovo Integrated Webcam [R5U877]
+Bus 008 Device 002: ID 0a5c:217f Broadcom Corp. Bluetooth Controller
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>Bus 008 : 指明设备连接到哪（哪条总线）<br>Device 002 : 表明这是连接到总线上的第二台设备<br>ID : 设备的ID<br>Broadcom Corp. Bluetooth Controller :生产商名字和设备名</p>
 </blockquote>
-<p>列出USB详细信息<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb -v</span><br></pre></td></tr></table></figure></p>
-<p>列出有多少USB设备<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /dev/bus</span><br></pre></td></tr></table></figure></p>
-<p>打印特定设备的详细信息<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb -D /dev/bus/usb/008/002</span><br></pre></td></tr></table></figure></p>
-<h3 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h3><p>列出当前系统打开文件的工具<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo lsof</span><br><span class="line">COMMAND    PID      USER   FD      TYPE     DEVICE     SIZE       NODE      NAME</span><br><span class="line">init       1         root  cwd      DIR       3,3       1024       2         /</span><br><span class="line">init       1         root  rtd      DIR       3,3       1024       2         /</span><br><span class="line">init       1         root  txt      REG       3,3       38432      1763452  /sbin/init</span><br><span class="line">init       1         root  mem      REG       3,3       106114     1091620  /lib/libdl-2.6.so</span><br><span class="line">init       1         root  mem      REG       3,3       7560696    1091614  /lib/libc-2.6.so</span><br><span class="line">init       1         root  mem      REG       3,3       79460      1091669  /lib/libselinux.so.1</span><br><span class="line">init       1         root  mem      REG       3,3       223280     1091668  /lib/libsepol.so.1</span><br><span class="line">init       1         root  mem      REG       3,3       564136     1091607  /lib/ld-2.6.so</span><br><span class="line">init       1         root  10u      FIFO      0,15                  1309     /dev/initctl</span><br></pre></td></tr></table></figure></p>
+<p>列出USB详细信息</p>
+<pre class="line-numbers language-sh"><code class="language-sh">$ lsusb -v
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>列出有多少USB设备</p>
+<pre class="line-numbers language-sh"><code class="language-sh">$ find /dev/bus
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>打印特定设备的详细信息</p>
+<pre class="line-numbers language-sh"><code class="language-sh">$ lsusb -D /dev/bus/usb/008/002
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h3><p>列出当前系统打开文件的工具</p>
+<pre class="line-numbers language-sh"><code class="language-sh">$ sudo lsof
+COMMAND    PID      USER   FD      TYPE     DEVICE     SIZE       NODE      NAME
+init       1         root  cwd      DIR       3,3       1024       2         /
+init       1         root  rtd      DIR       3,3       1024       2         /
+init       1         root  txt      REG       3,3       38432      1763452  /sbin/init
+init       1         root  mem      REG       3,3       106114     1091620  /lib/libdl-2.6.so
+init       1         root  mem      REG       3,3       7560696    1091614  /lib/libc-2.6.so
+init       1         root  mem      REG       3,3       79460      1091669  /lib/libselinux.so.1
+init       1         root  mem      REG       3,3       223280     1091668  /lib/libsepol.so.1
+init       1         root  mem      REG       3,3       564136     1091607  /lib/ld-2.6.so
+init       1         root  10u      FIFO      0,15                  1309     /dev/initctl
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <table style="text-align:center"><br>   <tr><br>      <td>COMMAND</td><br>      <td>进程的名称</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>PID</td><br>      <td>进程标识符</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>USER</td><br>      <td>进程所有者</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>FD</td><br>      <td>文件描述符</td><br>      <td>应用程序通过文件描述符识别该文件。如cwd、txt、mem等</td><br>   </tr><br>   <tr><br>      <td>TYPE</td><br>      <td>文件类型</td><br>      <td>REG(文件) DIR(目录) CHR(字符) BLK(块设备) FIFO(管道) UNIX(UNIX 域套接字) IPv4(IP套接字)</td><br>   </tr><br>   <tr><br>      <td>DEVICE</td><br>      <td>指定磁盘的名称</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>SIZE</td><br>      <td>文件大小</td><br>      <td></td><br>   </tr><br>   <tr><br>      <td>NODE</td><br>      <td>文件inode</td><br>      <td>每个文件都有一个唯一的inode</td><br>   </tr><br>   <tr><br>      <td>NAME</td><br>      <td>文件名称</td><br>      <td></td><br>   </tr><br></table>
 
-<p>参数列表<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lsof  filename      显示打开指定文件的所有进程</span><br><span class="line">lsof -a             表示两个参数都必须满足时才显示结果</span><br><span class="line">lsof -c string      显示COMMAND列中包含指定字符的进程所有打开的文件</span><br><span class="line">lsof -u username    显示所属user进程打开的文件</span><br><span class="line">lsof -g gid         显示归属gid的进程情况</span><br><span class="line">lsof +d /DIR/       显示目录下被进程打开的文件</span><br><span class="line">lsof +D /DIR/       同上，但是会搜索目录下的所有目录，时间相对较长</span><br><span class="line">lsof -d FD          显示指定文件描述符的进程</span><br><span class="line">lsof -n             不将IP转换为hostname，缺省是不加上-n参数</span><br><span class="line">lsof -i             用以显示符合条件的进程情况</span><br><span class="line">lsof -i[46] [protocol][@hostname|hostaddr][:service|port]</span><br><span class="line">                    46 --&gt; IPv4 or IPv6</span><br><span class="line">                    protocol --&gt; TCP or UDP</span><br><span class="line">                    hostname --&gt; Internet host name</span><br><span class="line">                    hostaddr --&gt; IPv4地址</span><br><span class="line">                    service --&gt; /etc/service中的 service name (可以不只一个)</span><br><span class="line">                    port --&gt; 端口号 (可以不只一个)</span><br></pre></td></tr></table></figure></p>
-<p>查找应用程序打开的文件的名称和数目<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示打开指定文件的所有进程</span></span><br><span class="line">$ lsof  filename</span><br><span class="line"><span class="comment">#例如:打开所有使用/dev/urandom的进程</span></span><br><span class="line">$ lsof /dev/urandom</span><br><span class="line"><span class="comment">#查看22端口现在运行的情况 </span></span><br><span class="line">$ lsof -i :22</span><br><span class="line"><span class="comment">#查看所属xiaxiaowen用户进程所打开的文件类型为txt的文件</span></span><br><span class="line">$ lsof -a -u xiaxiaowen -d txt</span><br><span class="line"><span class="comment">#查找谁在使用文件系统</span></span><br><span class="line">$ lsof /media/xiaxiaowen/机械硬盘</span><br><span class="line">COMMAND  PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">zsh     8465 xiaxiaowen  cwd    DIR   8,17     8192    5 /media/xiaxiaowen/机械硬盘</span><br></pre></td></tr></table></figure></p>
+<p>参数列表</p>
+<pre class="line-numbers language-sh"><code class="language-sh">lsof  filename      显示打开指定文件的所有进程
+lsof -a             表示两个参数都必须满足时才显示结果
+lsof -c string      显示COMMAND列中包含指定字符的进程所有打开的文件
+lsof -u username    显示所属user进程打开的文件
+lsof -g gid         显示归属gid的进程情况
+lsof +d /DIR/       显示目录下被进程打开的文件
+lsof +D /DIR/       同上，但是会搜索目录下的所有目录，时间相对较长
+lsof -d FD          显示指定文件描述符的进程
+lsof -n             不将IP转换为hostname，缺省是不加上-n参数
+lsof -i             用以显示符合条件的进程情况
+lsof -i[46] [protocol][@hostname|hostaddr][:service|port]
+                    46 --> IPv4 or IPv6
+                    protocol --> TCP or UDP
+                    hostname --> Internet host name
+                    hostaddr --> IPv4地址
+                    service --> /etc/service中的 service name (可以不只一个)
+                    port --> 端口号 (可以不只一个)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>查找应用程序打开的文件的名称和数目</p>
+<pre class="line-numbers language-sh"><code class="language-sh">#显示打开指定文件的所有进程
+$ lsof  filename
+#例如:打开所有使用/dev/urandom的进程
+$ lsof /dev/urandom
+#查看22端口现在运行的情况 
+$ lsof -i :22
+#查看所属xiaxiaowen用户进程所打开的文件类型为txt的文件
+$ lsof -a -u xiaxiaowen -d txt
+#查找谁在使用文件系统
+$ lsof /media/xiaxiaowen/机械硬盘
+COMMAND  PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+zsh     8465 xiaxiaowen  cwd    DIR   8,17     8192    5 /media/xiaxiaowen/机械硬盘
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="linux软件开发知识点"><a href="#linux软件开发知识点" class="headerlink" title="linux软件开发知识点"></a>linux软件开发知识点</h2><ul>
 <li><a href="#linux进程间通讯方式">linux进程间通讯方式</a></li>
 <li><a href="#内存申请函数">内存申请函数</a></li>
@@ -276,13 +397,13 @@
 <li>硬链接直接指向文件的i节点</li>
 <li>硬链接和原文件的i节点是一样的</li>
 <li>硬链接文件显示的大小是跟原文件是一样的</li>
-<li>硬链接不能链接目录文件。<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln file2 /home/xiaxiaowen/file2hard</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="软链接-符号链接"><a href="#软链接-符号链接" class="headerlink" title="软链接(符号链接)"></a>软链接(符号链接)</h4><ul>
+<li>硬链接不能链接目录文件。<pre class="line-numbers language-sh"><code class="language-sh">ln file2 /home/xiaxiaowen/file2hard
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="软链接-符号链接"><a href="#软链接-符号链接" class="headerlink" title="软链接(符号链接)"></a>软链接(符号链接)</h4></li>
 <li>软链接则是建立了一个新文件</li>
 <li>这个文件指向链接的文件，i节点不一样</li>
-<li>可以链接目录<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s file2 /home/xiaxiaowen/file2soft</span><br></pre></td></tr></table></figure>
+<li>可以链接目录<pre class="line-numbers language-sh"><code class="language-sh">ln -s file2 /home/xiaxiaowen/file2soft
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 </ul>
 <h3 id="linux内核子系统"><a href="#linux内核子系统" class="headerlink" title="linux内核子系统"></a>linux内核子系统</h3><ol>
@@ -347,7 +468,16 @@
 
 <h4 id="共享内存相关函数"><a href="#共享内存相关函数" class="headerlink" title="共享内存相关函数"></a>共享内存相关函数</h4><table style="color:red"><br>  <tr><br>      <td>shmctl</td><br>      <td>控制共享内存</td><br>  </tr><br>  <tr><br>      <td>shmget</td><br>      <td>获取共享内存</td><br>  </tr><br>  <tr><br>      <td>shmat</td><br>      <td>连接共享内存</td><br>  </tr><br>  <tr><br>      <td>shmdt</td><br>      <td>拆卸共享内存</td><br>  </tr><br></table>
 
-<h3 id="fork函数"><a href="#fork函数" class="headerlink" title="fork函数"></a>fork函数</h3><p>fork是用来创建子进程的，这个函数的特别之处在于一次调用，两次返回，一次返回到父进程中，一次返回到子进程中，我们可以通过返回值来判断其返回点：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pid_t</span> child = fork();</span><br><span class="line"><span class="keyword">if</span>( child &lt; <span class="number">0</span>  ) &#123;     <span class="comment">//fork error.</span></span><br><span class="line">    perror(<span class="string">"fork process fail.\n"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>( child ==<span class="number">0</span>  ) &#123;   <span class="comment">// in child process</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" fork succ, this run in child process\n "</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;                        <span class="comment">// in parent process</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" this run in parent process\n "</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="fork函数"><a href="#fork函数" class="headerlink" title="fork函数"></a>fork函数</h3><p>fork是用来创建子进程的，这个函数的特别之处在于一次调用，两次返回，一次返回到父进程中，一次返回到子进程中，我们可以通过返回值来判断其返回点：</p>
+<pre class="line-numbers language-c"><code class="language-c">pid_t child <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span> child <span class="token operator">&lt;</span> <span class="token number">0</span>  <span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment" spellcheck="true">//fork error.</span>
+    <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"fork process fail.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span> child <span class="token operator">==</span><span class="token number">0</span>  <span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">// in child process</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" fork succ, this run in child process\n "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>                        <span class="token comment" spellcheck="true">// in parent process</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" this run in parent process\n "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h3><ul>
 <li><a href="#僵尸进程产生原因">僵尸进程产生原因</a></li>
 <li><a href="#僵尸进程解决办法">僵尸进程解决办法</a></li>
@@ -358,12 +488,72 @@
 <li>通过信号机制<br>子进程退出时向父进程发送SIGCHILD信号，父进程处理SIGCHILD信号。在信号处理函数中调用wait进行处理僵尸进程。</li>
 <li>fork两次<br>父进程创建子进程A，子进程A再创建子进程B，然后子进程A退出，z这样子进程B就交给init进程处理了。init进程可以处理僵尸进程.</li>
 </ol>
-<h4 id="ps指令查看僵尸进程"><a href="#ps指令查看僵尸进程" class="headerlink" title="ps指令查看僵尸进程"></a>ps指令查看僵尸进程</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -A -ostat,pid,cmd |grep -iE <span class="string">'^z'</span></span><br></pre></td></tr></table></figure>
+<h4 id="ps指令查看僵尸进程"><a href="#ps指令查看僵尸进程" class="headerlink" title="ps指令查看僵尸进程"></a>ps指令查看僵尸进程</h4><pre class="line-numbers language-sh"><code class="language-sh">ps -A -ostat,pid,cmd |grep -iE '^z'
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>-A 显示所有任务<br>  -o 按照指定格式输出<br>  grep -iE 显示z开头的行，不区分大小写</p>
 </blockquote>
 <h3 id="常见文件说明"><a href="#常见文件说明" class="headerlink" title="常见文件说明"></a>常见文件说明</h3><p>/var/log/boot.log 系统引导日志<br>/var/log/dmesg    系统核心启动日志<br>/var/log/messages 核心系统日志<br>/var/log/maillog  邮件系统日志<br>/var/log/xferlog  FTP系统日志<br>/var/log/syslog   系统出问题的日志<br>/var/log/secure   安全信息和系统登录与网络连接的信息<br>/var/log/wtmp     登录记录<br>/var/spool/clientmqueue<br>/proc/interrupts<br>/etc/fstab        Linux内核引导时,从文件/etc/fstab 中读取要加载的文件系统.</p>
-<h3 id="proc目录说明"><a href="#proc目录说明" class="headerlink" title="proc目录说明"></a>proc目录说明</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">proc文件系统是一个伪文件系统，它只存在内存当中。</span><br><span class="line">/proc/buddyinfo   每个内存区中的每个order有多少块可用，和内存碎片问题有关</span><br><span class="line">/proc/cmdline     启动时传递给kernel的参数信息</span><br><span class="line">/proc/cpuinfo     cpu的信息</span><br><span class="line">/proc/crypto      内核使用的所有已安装的加密密码及细节</span><br><span class="line">/proc/devices     已经加载的设备并分类</span><br><span class="line">/proc/dma         已注册使用的ISA DMA频道列表</span><br><span class="line">/proc/execdomains Linux内核当前支持的execution domains</span><br><span class="line">/proc/fb          帧缓冲设备列表，包括数量和控制它的驱动</span><br><span class="line">/proc/filesystems 内核当前支持的文件系统类型</span><br><span class="line">/proc/interrupts  x86架构中的每个IRQ中断数</span><br><span class="line">/proc/iomem       每个物理设备当前在系统内存中的映射</span><br><span class="line">/proc/ioports     一个设备的输入输出所使用的注册端口范围</span><br><span class="line">/proc/kcore       代表系统的物理内存，存储为核心文件格式，里边显示的是字节数，等于RAM大小加上4kb</span><br><span class="line">/proc/kmsg        记录内核生成的信息，可以通过/sbin/klogd或/bin/dmesg来处理</span><br><span class="line">/proc/loadavg     根据过去一段时间内CPU和IO的状态得出的负载状态，与uptime命令有关</span><br><span class="line">/proc/locks       内核锁住的文件列表</span><br><span class="line">/proc/mdstat      多硬盘，RAID配置信息(md=multiple disks)</span><br><span class="line">/proc/meminfo     RAM使用的相关信息</span><br><span class="line">/proc/misc        其他的主要设备(设备号为10)上注册的驱动</span><br><span class="line">/proc/modules     所有加载到内核的模块列表</span><br><span class="line">/proc/mounts      系统中使用的所有挂载</span><br><span class="line">/proc/mtrr        系统使用的Memory Type Range Registers (MTRRs)</span><br><span class="line">/proc/partitions  分区中的块分配信息</span><br><span class="line">/proc/pci         系统中的PCI设备列表</span><br><span class="line">/proc/slabinfo    系统中所有活动的 slab 缓存信息</span><br><span class="line">/proc/<span class="built_in">stat</span>        所有的CPU活动信息</span><br><span class="line">/proc/sysrq-trigger 使用<span class="built_in">echo</span>命令来写这个文件的时候，远程root用户可以执行大多数的系统请求关键命令，就好像在本地终端执行一样。要写入这个文件，需要把/proc/sys/kernel/sysrq不能设置为0。这个文件对root也是不可读的</span><br><span class="line">/proc/uptime      系统已经运行了多久</span><br><span class="line">/proc/swaps       交换空间的使用情况</span><br><span class="line">/proc/version     Linux内核版本和gcc版本</span><br><span class="line">/proc/bus         系统总线(Bus)信息，例如pci/usb等</span><br><span class="line">/proc/driver      驱动信息</span><br><span class="line">/proc/fs          文件系统信息</span><br><span class="line">/proc/ide         ide设备信息</span><br><span class="line">/proc/irq         中断请求设备信息</span><br><span class="line">/proc/net         网卡设备信息</span><br><span class="line">/proc/scsi        scsi设备信息</span><br><span class="line">/proc/tty         tty设备信息</span><br><span class="line">/proc/net/dev     显示网络适配器及统计信息</span><br><span class="line">/proc/vmstat      虚拟内存统计信息</span><br><span class="line">/proc/vmcore      内核panic时的内存映像</span><br><span class="line">/proc/diskstats   取得磁盘信息</span><br><span class="line">/proc/schedstat   kernel调度器的统计信息</span><br><span class="line">/proc/zoneinfo    显示内存空间的统计信息，对分析虚拟内存行为很有用</span><br><span class="line"><span class="comment">#### 以下是/proc目录中进程N的信息</span></span><br><span class="line">/proc/N           pid为N的进程信息</span><br><span class="line">/proc/N/cmdline   进程启动命令</span><br><span class="line">/proc/N/cwd       链接到进程当前工作目录</span><br><span class="line">/proc/N/environ   进程环境变量列表</span><br><span class="line">/proc/N/exe       链接到进程的执行命令文件</span><br><span class="line">/proc/N/fd        包含进程相关的所有的文件描述符</span><br><span class="line">/proc/N/maps      与进程相关的内存映射信息</span><br><span class="line">/proc/N/mem       指代进程持有的内存，不可读</span><br><span class="line">/proc/N/root      链接到进程的根目录</span><br><span class="line">/proc/N/<span class="built_in">stat</span>      进程的状态</span><br><span class="line">/proc/N/statm     进程使用的内存的状态</span><br><span class="line">/proc/N/status    进程状态信息，比<span class="built_in">stat</span>/statm更具可读性</span><br><span class="line">/proc/self        链接到当前正在运行的进程</span><br></pre></td></tr></table></figure>
+<h3 id="proc目录说明"><a href="#proc目录说明" class="headerlink" title="proc目录说明"></a>proc目录说明</h3><pre class="line-numbers language-sh"><code class="language-sh">proc文件系统是一个伪文件系统，它只存在内存当中。
+/proc/buddyinfo   每个内存区中的每个order有多少块可用，和内存碎片问题有关
+/proc/cmdline     启动时传递给kernel的参数信息
+/proc/cpuinfo     cpu的信息
+/proc/crypto      内核使用的所有已安装的加密密码及细节
+/proc/devices     已经加载的设备并分类
+/proc/dma         已注册使用的ISA DMA频道列表
+/proc/execdomains Linux内核当前支持的execution domains
+/proc/fb          帧缓冲设备列表，包括数量和控制它的驱动
+/proc/filesystems 内核当前支持的文件系统类型
+/proc/interrupts  x86架构中的每个IRQ中断数
+/proc/iomem       每个物理设备当前在系统内存中的映射
+/proc/ioports     一个设备的输入输出所使用的注册端口范围
+/proc/kcore       代表系统的物理内存，存储为核心文件格式，里边显示的是字节数，等于RAM大小加上4kb
+/proc/kmsg        记录内核生成的信息，可以通过/sbin/klogd或/bin/dmesg来处理
+/proc/loadavg     根据过去一段时间内CPU和IO的状态得出的负载状态，与uptime命令有关
+/proc/locks       内核锁住的文件列表
+/proc/mdstat      多硬盘，RAID配置信息(md=multiple disks)
+/proc/meminfo     RAM使用的相关信息
+/proc/misc        其他的主要设备(设备号为10)上注册的驱动
+/proc/modules     所有加载到内核的模块列表
+/proc/mounts      系统中使用的所有挂载
+/proc/mtrr        系统使用的Memory Type Range Registers (MTRRs)
+/proc/partitions  分区中的块分配信息
+/proc/pci         系统中的PCI设备列表
+/proc/slabinfo    系统中所有活动的 slab 缓存信息
+/proc/stat        所有的CPU活动信息
+/proc/sysrq-trigger 使用echo命令来写这个文件的时候，远程root用户可以执行大多数的系统请求关键命令，就好像在本地终端执行一样。要写入这个文件，需要把/proc/sys/kernel/sysrq不能设置为0。这个文件对root也是不可读的
+/proc/uptime      系统已经运行了多久
+/proc/swaps       交换空间的使用情况
+/proc/version     Linux内核版本和gcc版本
+/proc/bus         系统总线(Bus)信息，例如pci/usb等
+/proc/driver      驱动信息
+/proc/fs          文件系统信息
+/proc/ide         ide设备信息
+/proc/irq         中断请求设备信息
+/proc/net         网卡设备信息
+/proc/scsi        scsi设备信息
+/proc/tty         tty设备信息
+/proc/net/dev     显示网络适配器及统计信息
+/proc/vmstat      虚拟内存统计信息
+/proc/vmcore      内核panic时的内存映像
+/proc/diskstats   取得磁盘信息
+/proc/schedstat   kernel调度器的统计信息
+/proc/zoneinfo    显示内存空间的统计信息，对分析虚拟内存行为很有用
+#### 以下是/proc目录中进程N的信息
+/proc/N           pid为N的进程信息
+/proc/N/cmdline   进程启动命令
+/proc/N/cwd       链接到进程当前工作目录
+/proc/N/environ   进程环境变量列表
+/proc/N/exe       链接到进程的执行命令文件
+/proc/N/fd        包含进程相关的所有的文件描述符
+/proc/N/maps      与进程相关的内存映射信息
+/proc/N/mem       指代进程持有的内存，不可读
+/proc/N/root      链接到进程的根目录
+/proc/N/stat      进程的状态
+/proc/N/statm     进程使用的内存的状态
+/proc/N/status    进程状态信息，比stat/statm更具可读性
+/proc/self        链接到当前正在运行的进程
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="fopen参数说明"><a href="#fopen参数说明" class="headerlink" title="fopen参数说明"></a>fopen参数说明</h3><table>
 <thead>
 <tr>
@@ -439,7 +629,11 @@
 </blockquote>
 <h2 id="linux驱动开发知识点"><a href="#linux驱动开发知识点" class="headerlink" title="linux驱动开发知识点"></a>linux驱动开发知识点</h2><h3 id="insmod-rmmod-加载-卸载模块"><a href="#insmod-rmmod-加载-卸载模块" class="headerlink" title="insmod rmmod 加载 卸载模块"></a>insmod rmmod 加载 卸载模块</h3><h3 id="i-max6UL"><a href="#i-max6UL" class="headerlink" title="i.max6UL"></a>i.max6UL</h3><h4 id="系统框图"><a href="#系统框图" class="headerlink" title="系统框图"></a>系统框图</h4><p><img src="./res/IMX6UL-BD.png" alt="i.max6ul系统框图"></p>
 <h3 id="linux启动过程"><a href="#linux启动过程" class="headerlink" title="linux启动过程"></a>linux启动过程</h3><p>系统上电—&gt;bootrom—&gt;uboot—&gt;kernel加载—&gt;init—&gt;应用程序</p>
-<h2 id="makefile"><a href="#makefile" class="headerlink" title="makefile"></a>makefile</h2><h3 id="makefile的规则"><a href="#makefile的规则" class="headerlink" title="makefile的规则"></a>makefile的规则</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target xxx : prerequisites aaa</span><br><span class="line">	[command]</span><br><span class="line">	...</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<h2 id="makefile"><a href="#makefile" class="headerlink" title="makefile"></a>makefile</h2><h3 id="makefile的规则"><a href="#makefile的规则" class="headerlink" title="makefile的规则"></a>makefile的规则</h3><pre class="line-numbers language-makefile"><code class="language-makefile"><span class="token symbol">target xxx </span><span class="token punctuation">:</span> prerequisites aaa
+    [command]
+    ...
+    ...
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>prerequisites中如果有一个以上的文件比target文件要新的话，command所定义的命令就会被执行</p>
 </blockquote>
@@ -509,30 +703,50 @@
 </tr>
 </tbody>
 </table>
-<h3 id="nm命令"><a href="#nm命令" class="headerlink" title="nm命令"></a>nm命令</h3><p>显示二进制目标文件的符号表<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-A：每个符号前显示文件名；</span><br><span class="line">-D：显示动态符号；</span><br><span class="line">-g：仅显示外部符号；</span><br><span class="line">-r：反序显示符号表。</span><br></pre></td></tr></table></figure></p>
-<h3 id="ldd命令"><a href="#ldd命令" class="headerlink" title="ldd命令"></a>ldd命令</h3><p>用于打印程序或者库文件所依赖的共享库列表。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-v：详细信息模式，打印所有相关信息；</span><br><span class="line">-u：打印未使用的直接依赖；</span><br><span class="line">-d：执行重定位和报告任何丢失的对象；</span><br><span class="line">-r：执行数据对象和函数的重定位，并且报告任何丢失的对象和函数；</span><br></pre></td></tr></table></figure></p>
+<h3 id="nm命令"><a href="#nm命令" class="headerlink" title="nm命令"></a>nm命令</h3><p>显示二进制目标文件的符号表</p>
+<pre class="line-numbers language-sh"><code class="language-sh">-A：每个符号前显示文件名；
+-D：显示动态符号；
+-g：仅显示外部符号；
+-r：反序显示符号表。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="ldd命令"><a href="#ldd命令" class="headerlink" title="ldd命令"></a>ldd命令</h3><p>用于打印程序或者库文件所依赖的共享库列表。</p>
+<pre class="line-numbers language-sh"><code class="language-sh">-v：详细信息模式，打印所有相关信息；
+-u：打印未使用的直接依赖；
+-d：执行重定位和报告任何丢失的对象；
+-r：执行数据对象和函数的重定位，并且报告任何丢失的对象和函数；
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="交叉编译工具链说明"><a href="#交叉编译工具链说明" class="headerlink" title="交叉编译工具链说明"></a>交叉编译工具链说明</h3><h4 id="gcc-交叉编译器"><a href="#gcc-交叉编译器" class="headerlink" title="gcc 交叉编译器"></a>gcc 交叉编译器</h4><blockquote>
 <p>将写好的C程序代码编译为ARM架构下的可执行文件.</p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc hello.c -o hello</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sh"><code class="language-sh">gcc hello.c -o hello
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="ld-交叉链接器"><a href="#ld-交叉链接器" class="headerlink" title="ld 交叉链接器"></a>ld 交叉链接器</h4><blockquote>
 <p>将多个编译后产生的过程文件连接为一个最终的可执行文件。</p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld [options] 链接器脚本 -o 文件名.elf</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sh"><code class="language-sh">ld [options] 链接器脚本 -o 文件名.elf
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="readelf-交叉ELF文件查看器"><a href="#readelf-交叉ELF文件查看器" class="headerlink" title="readelf 交叉ELF文件查看器"></a>readelf 交叉ELF文件查看器</h4><blockquote>
 <p>用来查看一个可执行文件的相关信息</p>
 </blockquote>
-<p>可以查看elf文件的运行架构，大小端等信息:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -a 文件名.elf</span><br></pre></td></tr></table></figure></p>
-<p>显示程序需要的动态链接库:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -d 文件名.elf</span><br></pre></td></tr></table></figure></p>
+<p>可以查看elf文件的运行架构，大小端等信息:</p>
+<pre class="line-numbers language-sh"><code class="language-sh">readelf -a 文件名.elf
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>显示程序需要的动态链接库:</p>
+<pre class="line-numbers language-sh"><code class="language-sh">readelf -d 文件名.elf
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="objdump-交叉反汇编器"><a href="#objdump-交叉反汇编器" class="headerlink" title="objdump 交叉反汇编器"></a>objdump 交叉反汇编器</h4><blockquote>
 <p>将一个可执行文件转换为汇编下的程序</p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-objdump -D -S elf文件名 &gt;目标文件</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sh"><code class="language-sh">-objdump -D -S elf文件名 >目标文件
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="objcopy-交叉转换器"><a href="#objcopy-交叉转换器" class="headerlink" title="objcopy 交叉转换器"></a>objcopy 交叉转换器</h4><blockquote>
 <p>将elf格式文件转换成其他的格式</p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objcopy -O 目标文件格式 原ELF文件 目标文件</span><br></pre></td></tr></table></figure>
-<p>例子:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objcopy -O binary a.elf a.bin</span><br></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-sh"><code class="language-sh">objcopy -O 目标文件格式 原ELF文件 目标文件
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>例子:</p>
+<pre class="line-numbers language-sh"><code class="language-sh">objcopy -O binary a.elf a.bin
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
   </div>
 </article>

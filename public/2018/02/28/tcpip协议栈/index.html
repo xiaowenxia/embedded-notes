@@ -45,7 +45,8 @@
     <!-- rss -->
     
     
-</head>
+<link rel="stylesheet" href="/embedded-notes/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/embedded-notes/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
     
@@ -71,10 +72,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/embedded-notes/2018/02/28/linux/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/embedded-notes/2018/02/28/uboot/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/embedded-notes/2018/02/28/gpu/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/embedded-notes/2018/02/28/linux/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -582,8 +583,28 @@
 </tr>
 </tbody>
 </table>
-<p>变长编码方案代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">    encodedByte = X MOD <span class="number">128</span></span><br><span class="line">    X = X DIV <span class="number">128</span></span><br><span class="line">    <span class="comment">// if there are more data to encode, set the top bit of this byte</span></span><br><span class="line">    <span class="keyword">if</span> ( X &gt; <span class="number">0</span> )</span><br><span class="line">        encodedByte = encodedByte OR <span class="number">128</span></span><br><span class="line">    endif</span><br><span class="line">    'output' encodedByte</span><br><span class="line"><span class="keyword">while</span> ( X &gt; <span class="number">0</span> )</span><br></pre></td></tr></table></figure></p>
-<p>变长解码方案代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">multiplier = <span class="number">1</span></span><br><span class="line">value = <span class="number">0</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    encodedByte = 'next byte from stream'</span><br><span class="line">    value += (encodedByte AND <span class="number">127</span>) * multiplier</span><br><span class="line">    multiplier *= <span class="number">128</span></span><br><span class="line">    <span class="keyword">if</span> (multiplier &gt; <span class="number">128</span>*<span class="number">128</span>*<span class="number">128</span>)</span><br><span class="line">        <span class="keyword">throw</span> Error(Malformed Remaining Length)</span><br><span class="line"><span class="keyword">while</span> ((encodedByte AND <span class="number">128</span>) != <span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>变长编码方案代码：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">do</span>
+    encodedByte <span class="token operator">=</span> X MOD <span class="token number">128</span>
+    X <span class="token operator">=</span> X DIV <span class="token number">128</span>
+    <span class="token comment" spellcheck="true">// if there are more data to encode, set the top bit of this byte</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> X <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">)</span>
+        encodedByte <span class="token operator">=</span> encodedByte OR <span class="token number">128</span>
+    endif
+    <span class="token string">'output'</span> encodedByte
+<span class="token keyword">while</span> <span class="token punctuation">(</span> X <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>变长解码方案代码：</p>
+<pre class="line-numbers language-c"><code class="language-c">multiplier <span class="token operator">=</span> <span class="token number">1</span>
+value <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">do</span>
+    encodedByte <span class="token operator">=</span> <span class="token string">'next byte from stream'</span>
+    value <span class="token operator">+</span><span class="token operator">=</span> <span class="token punctuation">(</span>encodedByte AND <span class="token number">127</span><span class="token punctuation">)</span> <span class="token operator">*</span> multiplier
+    multiplier <span class="token operator">*</span><span class="token operator">=</span> <span class="token number">128</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>multiplier <span class="token operator">></span> <span class="token number">128</span><span class="token operator">*</span><span class="token number">128</span><span class="token operator">*</span><span class="token number">128</span><span class="token punctuation">)</span>
+        throw <span class="token function">Error</span><span class="token punctuation">(</span>Malformed Remaining Length<span class="token punctuation">)</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>encodedByte AND <span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="可变报头-Variable-header"><a href="#可变报头-Variable-header" class="headerlink" title="可变报头 Variable header"></a>可变报头 Variable header</h3><blockquote>
 <p>某些MQTT控制报文包含一个可变报头部分。它在固定报头和负载之间。可变报头的内容根据报文类型的不同而不同。可变报头的报文标识符（Packet Identifier）字段存在于在多个类型的报文里。</p>
 </blockquote>
@@ -683,11 +704,27 @@
 <h3 id="长连接-短连接"><a href="#长连接-短连接" class="headerlink" title="长连接 短连接"></a>长连接 短连接</h3><p>HTTP 1.0 使用短连接<br>HTTP 1.1版本默认使用长连接</p>
 <h3 id="HTTP-请求消息格式"><a href="#HTTP-请求消息格式" class="headerlink" title="HTTP 请求消息格式"></a>HTTP 请求消息格式</h3><p>请求行<br>通用信息头|请求头|实体头<br>CRLF(回车换行)</p>
 <p>比如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /hello.htm HTTP/<span class="number">1.1</span></span><br><span class="line">Accept: *<span class="comment">/*</span></span><br><span class="line"><span class="comment">Accept-Language: zh-cn</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">If-Modified-Since: Wed, 17 Oct 2007 02:15:55 GMT</span></span><br><span class="line"><span class="comment">If-None-Match: W/"158-1192587355000"</span></span><br><span class="line"><span class="comment">User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)</span></span><br><span class="line"><span class="comment">Host: 192.168.2.162:8080</span></span><br><span class="line"><span class="comment">Connection: Keep-Alive</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c">GET <span class="token operator">/</span>hello<span class="token punctuation">.</span>htm HTTP<span class="token operator">/</span><span class="token number">1.1</span>
+Accept<span class="token punctuation">:</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token operator">*</span>
+Accept<span class="token operator">-</span>Language<span class="token punctuation">:</span> zh<span class="token operator">-</span>cn
+Accept<span class="token operator">-</span>Encoding<span class="token punctuation">:</span> gzip<span class="token punctuation">,</span> deflate
+If<span class="token operator">-</span>Modified<span class="token operator">-</span>Since<span class="token punctuation">:</span> Wed<span class="token punctuation">,</span> <span class="token number">17</span> Oct <span class="token number">2007</span> <span class="token number">02</span><span class="token punctuation">:</span><span class="token number">15</span><span class="token punctuation">:</span><span class="token number">55</span> GMT
+If<span class="token operator">-</span>None<span class="token operator">-</span>Match<span class="token punctuation">:</span> W<span class="token operator">/</span><span class="token string">"158-1192587355000"</span>
+User<span class="token operator">-</span>Agent<span class="token punctuation">:</span> Mozilla<span class="token operator">/</span><span class="token number">4</span><span class="token punctuation">.</span><span class="token function">0</span> <span class="token punctuation">(</span>compatible<span class="token punctuation">;</span> MSIE <span class="token number">6.0</span><span class="token punctuation">;</span> Windows NT <span class="token number">5.1</span><span class="token punctuation">;</span> SV1<span class="token punctuation">)</span>
+Host<span class="token punctuation">:</span> <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">2.162</span><span class="token punctuation">:</span><span class="token number">8080</span>
+Connection<span class="token punctuation">:</span> Keep<span class="token operator">-</span>Alive
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="HTTP-响应消息格式"><a href="#HTTP-响应消息格式" class="headerlink" title="HTTP 响应消息格式"></a>HTTP 响应消息格式</h3><p>状态行</p>
 <p>通用信息头|响应头|实体头</p>
 <p>CRLF</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">ETag: W/<span class="string">"158-1192590101000"</span></span><br><span class="line">Last-Modified: Wed, <span class="number">17</span> Oct <span class="number">2007</span> <span class="number">03</span>:<span class="number">01</span>:<span class="number">41</span> GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: <span class="number">158</span></span><br><span class="line">Date: Wed, <span class="number">17</span> Oct <span class="number">2007</span> <span class="number">03</span>:<span class="number">01</span>:<span class="number">59</span> GMT</span><br><span class="line">Server: Apache-Coyote/<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c"><code class="language-c">HTTP<span class="token operator">/</span><span class="token number">1.1</span> <span class="token number">200</span> OK
+ETag<span class="token punctuation">:</span> W<span class="token operator">/</span><span class="token string">"158-1192590101000"</span>
+Last<span class="token operator">-</span>Modified<span class="token punctuation">:</span> Wed<span class="token punctuation">,</span> <span class="token number">17</span> Oct <span class="token number">2007</span> <span class="token number">03</span><span class="token punctuation">:</span><span class="token number">01</span><span class="token punctuation">:</span><span class="token number">41</span> GMT
+Content<span class="token operator">-</span>Type<span class="token punctuation">:</span> text<span class="token operator">/</span>html
+Content<span class="token operator">-</span>Length<span class="token punctuation">:</span> <span class="token number">158</span>
+Date<span class="token punctuation">:</span> Wed<span class="token punctuation">,</span> <span class="token number">17</span> Oct <span class="token number">2007</span> <span class="token number">03</span><span class="token punctuation">:</span><span class="token number">01</span><span class="token punctuation">:</span><span class="token number">59</span> GMT
+Server<span class="token punctuation">:</span> Apache<span class="token operator">-</span>Coyote<span class="token operator">/</span><span class="token number">1.1</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="HTTP-post发送文件"><a href="#HTTP-post发送文件" class="headerlink" title="HTTP post发送文件"></a>HTTP post发送文件</h3><p>使用post方法发送文件内容</p>
 <h3 id="HTTP用户名密码机制"><a href="#HTTP用户名密码机制" class="headerlink" title="HTTP用户名密码机制"></a>HTTP用户名密码机制</h3><p>使用cookie的方式：<br>登录成功后用javascript调用cookie的相关接口，创建一个浏览器上的全局变量，变量名和值由你自己约定，然后每个页面载入时检查cookie是否存在，其值是否为你默认的那个值，如果不是的话就跳转到登录页面。</p>
 <h3 id="HTTPS的通信过程"><a href="#HTTPS的通信过程" class="headerlink" title="HTTPS的通信过程"></a>HTTPS的通信过程</h3><p><img src="res/https通讯过程.png" alt="https通讯过程"></p>
@@ -705,39 +742,52 @@
 <h4 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h4><blockquote>
 <p>证书中心把服务器的公钥和一些其他的必要信息通过证书中心的私钥加密生成一个证书，服务器每次把数字签名，内容，数字证书一起发送给客户端，客户端用证书中心的公钥验证数字证书是不是可信任的就可以了。</p>
 </blockquote>
-<h3 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h3><p>WebSocket协议支持客户端与远程主机之间进行全双工通信。<br>协议标识符是ws（如果加密，则为wss），服务器网址就是 URL,比如：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws://example.com:80/some/path`</span><br></pre></td></tr></table></figure></p>
+<h3 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h3><p>WebSocket协议支持客户端与远程主机之间进行全双工通信。<br>协议标识符是ws（如果加密，则为wss），服务器网址就是 URL,比如：</p>
+<pre class="line-numbers language-sh"><code class="language-sh">ws://example.com:80/some/path`
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="websocket握手协议"><a href="#websocket握手协议" class="headerlink" title="websocket握手协议"></a>websocket握手协议</h4><ul>
-<li>浏览器请求<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET /webfin/websocket/ HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">　　Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">　　Sec-WebSocket-Key: xqBt3ImNzJbYqRINxEFlkg==</span><br><span class="line">　　Origin: http://服务器地址</span><br><span class="line">　　Sec-WebSocket-Version: 13</span><br></pre></td></tr></table></figure>
-</li>
+<li>浏览器请求<pre><code>GET /webfin/websocket/ HTTP/1.1
+Host: localhost
+　　Upgrade: websocket
+Connection: Upgrade
+　　Sec-WebSocket-Key: xqBt3ImNzJbYqRINxEFlkg==
+　　Origin: http://服务器地址
+　　Sec-WebSocket-Version: 13
+</code></pre></li>
 </ul>
 <blockquote>
 <p>WebSocket借用http请求进行握手，相比正常的http请求，多了一些内容。其中，<br><code>Upgrade: websocket</code><br><code>Connection: Upgrade</code><br>表示希望将http协议升级到Websocket协议。<br><code>Sec-WebSocket-Key</code>是浏览器随机生成的base64 encode的值，用来询问服务器是否是支持WebSocket。</p>
 </blockquote>
 <ul>
-<li>服务器回应<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 101 Switching Protocols</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Accept: K7DJLdLooIwIG/MOpvWFB3y3FE8=</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
+<li><p>服务器回应</p>
+<pre><code>HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: K7DJLdLooIwIG/MOpvWFB3y3FE8=
+</code></pre><blockquote>
 <p>服务器返回<br><code>Upgrade: websocket</code><br><code>Connection: Upgrade</code><br>告诉浏览器即将升级的是Websocket协议</p>
 </blockquote>
-<h4 id="HTML5-Web-Socket-API"><a href="#HTML5-Web-Socket-API" class="headerlink" title="HTML5 Web Socket API"></a>HTML5 Web Socket API</h4><ul>
+<h4 id="HTML5-Web-Socket-API"><a href="#HTML5-Web-Socket-API" class="headerlink" title="HTML5 Web Socket API"></a>HTML5 Web Socket API</h4></li>
 <li><p>创建对象</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(url,name);</span><br><span class="line"><span class="comment">// url为WebSocket服务器的地址，name为发起握手的协议名称，为可选择项。</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-js"><code class="language-js"><span class="token keyword">var</span> ws <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WebSocket</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// url为WebSocket服务器的地址，name为发起握手的协议名称，为可选择项。</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
-<li><p>发送文本消息</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ws.send(msg);</span><br><span class="line"><span class="comment">// msg为文本消息，对于其他类型的可以通过二进制形式发送。</span></span><br></pre></td></tr></table></figure>
+<li>发送文本消息<pre class="line-numbers language-js"><code class="language-js">ws<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// msg为文本消息，对于其他类型的可以通过二进制形式发送。</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
-<li><p>接收消息</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;)();</span><br></pre></td></tr></table></figure>
+<li>接收消息<pre class="line-numbers language-js"><code class="language-js">ws<span class="token punctuation">.</span>onmessage <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token operator">...</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>错误处理</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.onerror = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;)();</span><br></pre></td></tr></table></figure>
+<li>错误处理<pre class="line-numbers language-js"><code class="language-js">ws<span class="token punctuation">.</span>onerror <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token operator">...</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
-<li><p>关闭连接</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.close();</span><br></pre></td></tr></table></figure>
-</li>
+<li>关闭连接<pre class="line-numbers language-js"><code class="language-js">ws<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="coap"><a href="#coap" class="headerlink" title="coap"></a>coap</h3></li>
 </ul>
-<h3 id="coap"><a href="#coap" class="headerlink" title="coap"></a>coap</h3><p>HTTP 与 COAP协议都是通过4个请求方法（GET, PUT, POST, DELETE）对服务器端资源进行操作。<br>两者之间明显的区别在于HTTP是通过文本描述方式描述协议包内容，协议包里面会包含一些空格符，换行符等,协议包可读性很强。<br>而COAP是通过定义二进制各位段功能来描述协议包内容。 因此COAP协议包大小更小，更紧凑。COAP协议最小的协议包只有4B。 协议包需要经过解析后才能知道里面具体内容</p>
+<p>HTTP 与 COAP协议都是通过4个请求方法（GET, PUT, POST, DELETE）对服务器端资源进行操作。<br>两者之间明显的区别在于HTTP是通过文本描述方式描述协议包内容，协议包里面会包含一些空格符，换行符等,协议包可读性很强。<br>而COAP是通过定义二进制各位段功能来描述协议包内容。 因此COAP协议包大小更小，更紧凑。COAP协议最小的协议包只有4B。 协议包需要经过解析后才能知道里面具体内容</p>
 <h4 id="coap-特点"><a href="#coap-特点" class="headerlink" title="coap 特点"></a>coap 特点</h4><ul>
 <li>二进制通讯</li>
 <li>对云端设备资源操作都是通过请求与响应机制来完成，类似HTTP，设备端可通过4个请求方法（GET, PUT, POST, DELETE）对服务器端资源进行操作。</li>

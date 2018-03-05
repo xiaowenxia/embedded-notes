@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="嵌入式笔记：git操作 目录说明git操作笔记 添加文件1git add . 删除文件1git rm . 提交改动到本地1git commit -m &quot;first commit&quot; 上传改动到服务器1git push 列出当前分支1git branch 列出所有分支，包括远程分支1git branch -a 从已有的分支创建新的分支(如从master分支),创建一个dev分支1git checkou">
+    <meta name="description" content="嵌入式笔记：git操作 目录说明git操作笔记 添加文件git add .  删除文件git rm .  提交改动到本地git commit -m &quot;first commit&quot;  上传改动到服务器git push  列出当前分支git branch  列出所有分支，包括远程分支git branch -a  从已有的分支创建新的分支(如从master分支),创建一个dev分支git checkout">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式笔记：git操作">
 <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes/2018/02/28/git/index.html">
 <meta property="og:site_name" content="xiaxiaowen的个人博客">
-<meta property="og:description" content="嵌入式笔记：git操作 目录说明git操作笔记 添加文件1git add . 删除文件1git rm . 提交改动到本地1git commit -m &quot;first commit&quot; 上传改动到服务器1git push 列出当前分支1git branch 列出所有分支，包括远程分支1git branch -a 从已有的分支创建新的分支(如从master分支),创建一个dev分支1git checkou">
+<meta property="og:description" content="嵌入式笔记：git操作 目录说明git操作笔记 添加文件git add .  删除文件git rm .  提交改动到本地git commit -m &quot;first commit&quot;  上传改动到服务器git push  列出当前分支git branch  列出所有分支，包括远程分支git branch -a  从已有的分支创建新的分支(如从master分支),创建一个dev分支git checkout">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-02-28T01:29:25.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="嵌入式笔记：git操作">
-<meta name="twitter:description" content="嵌入式笔记：git操作 目录说明git操作笔记 添加文件1git add . 删除文件1git rm . 提交改动到本地1git commit -m &quot;first commit&quot; 上传改动到服务器1git push 列出当前分支1git branch 列出所有分支，包括远程分支1git branch -a 从已有的分支创建新的分支(如从master分支),创建一个dev分支1git checkou">
+<meta name="twitter:description" content="嵌入式笔记：git操作 目录说明git操作笔记 添加文件git add .  删除文件git rm .  提交改动到本地git commit -m &quot;first commit&quot;  上传改动到服务器git push  列出当前分支git branch  列出所有分支，包括远程分支git branch -a  从已有的分支创建新的分支(如从master分支),创建一个dev分支git checkout">
     
     
         
@@ -42,7 +42,8 @@
     <!-- rss -->
     
     
-</head>
+<link rel="stylesheet" href="/embedded-notes/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/embedded-notes/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
     
@@ -134,18 +135,28 @@
   <div class="content" itemprop="articleBody">
     <p>嵌入式笔记：git操作</p>
 <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>git操作笔记</p>
-<h3 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm .</span><br></pre></td></tr></table></figure>
-<h3 id="提交改动到本地"><a href="#提交改动到本地" class="headerlink" title="提交改动到本地"></a>提交改动到本地</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"first commit"</span></span><br></pre></td></tr></table></figure>
-<h3 id="上传改动到服务器"><a href="#上传改动到服务器" class="headerlink" title="上传改动到服务器"></a>上传改动到服务器</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
-<h3 id="列出当前分支"><a href="#列出当前分支" class="headerlink" title="列出当前分支"></a>列出当前分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
-<h3 id="列出所有分支，包括远程分支"><a href="#列出所有分支，包括远程分支" class="headerlink" title="列出所有分支，包括远程分支"></a>列出所有分支，包括远程分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
-<h3 id="从已有的分支创建新的分支-如从master分支-创建一个dev分支"><a href="#从已有的分支创建新的分支-如从master分支-创建一个dev分支" class="headerlink" title="从已有的分支创建新的分支(如从master分支),创建一个dev分支"></a>从已有的分支创建新的分支(如从master分支),创建一个dev分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
-<h3 id="从服务器拉取分支到本地分支"><a href="#从服务器拉取分支到本地分支" class="headerlink" title="从服务器拉取分支到本地分支"></a>从服务器拉取分支到本地分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin gh-pages:gh-pages</span><br></pre></td></tr></table></figure>
+<h3 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h3><pre class="line-numbers language-sh"><code class="language-sh">git add .
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><pre class="line-numbers language-sh"><code class="language-sh">git rm .
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="提交改动到本地"><a href="#提交改动到本地" class="headerlink" title="提交改动到本地"></a>提交改动到本地</h3><pre class="line-numbers language-sh"><code class="language-sh">git commit -m "first commit"
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="上传改动到服务器"><a href="#上传改动到服务器" class="headerlink" title="上传改动到服务器"></a>上传改动到服务器</h3><pre class="line-numbers language-sh"><code class="language-sh">git push
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="列出当前分支"><a href="#列出当前分支" class="headerlink" title="列出当前分支"></a>列出当前分支</h3><pre class="line-numbers language-sh"><code class="language-sh">git branch
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="列出所有分支，包括远程分支"><a href="#列出所有分支，包括远程分支" class="headerlink" title="列出所有分支，包括远程分支"></a>列出所有分支，包括远程分支</h3><pre class="line-numbers language-sh"><code class="language-sh">git branch -a
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="从已有的分支创建新的分支-如从master分支-创建一个dev分支"><a href="#从已有的分支创建新的分支-如从master分支-创建一个dev分支" class="headerlink" title="从已有的分支创建新的分支(如从master分支),创建一个dev分支"></a>从已有的分支创建新的分支(如从master分支),创建一个dev分支</h3><pre class="line-numbers language-sh"><code class="language-sh">git checkout -b dev
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="从服务器拉取分支到本地分支"><a href="#从服务器拉取分支到本地分支" class="headerlink" title="从服务器拉取分支到本地分支"></a>从服务器拉取分支到本地分支</h3><pre class="line-numbers language-sh"><code class="language-sh">git pull origin gh-pages:gh-pages
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>需要本地没有gh-pages分支，否则会提示已拒绝</p>
 </blockquote>
-<h3 id="上传本地分支到远程分支"><a href="#上传本地分支到远程分支" class="headerlink" title="上传本地分支到远程分支"></a>上传本地分支到远程分支</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch --<span class="built_in">set</span>-upstream-to=gh-pages</span><br><span class="line">git push origin gh-pages</span><br></pre></td></tr></table></figure>
+<h3 id="上传本地分支到远程分支"><a href="#上传本地分支到远程分支" class="headerlink" title="上传本地分支到远程分支"></a>上传本地分支到远程分支</h3><pre class="line-numbers language-sh"><code class="language-sh">git branch --set-upstream-to=gh-pages
+git push origin gh-pages
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
   </div>
 </article>

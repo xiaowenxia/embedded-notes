@@ -2,9 +2,9 @@ nav:
   Home: /
   About: /about/
   Writing: /posts/
-  Projects: http://github.com/sergodeeva
+  Projects: http://github.com/xiaowenxia
 
-projects_url: http://github.com/sergodeeva
+projects_url: http://github.com/xiaowenxia
 
 customize:
     gravatar:

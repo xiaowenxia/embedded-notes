@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="嵌入式笔记：shell脚本 目录shell种类    bash  csh  ksh  zsh    基本语法定义和使用变量1234#!/bin/sha=&quot; hello world&quot;echo $aecho &apos;a is xiaxaiwen$&amp;#123;a&amp;#125;&apos; if else1234567if ....; then 　 .... elif ....; then 　 .... else 　 ..">
+    <meta name="description" content="嵌入式笔记：shell脚本 目录shell种类    bash  csh  ksh  zsh    基本语法定义和使用变量#!/bin/sh a=&quot; hello world&quot; echo $a echo &apos;a is xiaxaiwen${a}&apos;  if elseif ....; then  　 ....  elif ....; then  　 ....  else  　 ....  fi   []">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式笔记：shell脚本">
 <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes/2018/02/28/shell/index.html">
 <meta property="og:site_name" content="xiaxiaowen的个人博客">
-<meta property="og:description" content="嵌入式笔记：shell脚本 目录shell种类    bash  csh  ksh  zsh    基本语法定义和使用变量1234#!/bin/sha=&quot; hello world&quot;echo $aecho &apos;a is xiaxaiwen$&amp;#123;a&amp;#125;&apos; if else1234567if ....; then 　 .... elif ....; then 　 .... else 　 ..">
+<meta property="og:description" content="嵌入式笔记：shell脚本 目录shell种类    bash  csh  ksh  zsh    基本语法定义和使用变量#!/bin/sh a=&quot; hello world&quot; echo $a echo &apos;a is xiaxaiwen${a}&apos;  if elseif ....; then  　 ....  elif ....; then  　 ....  else  　 ....  fi   []">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-02-28T01:36:59.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="嵌入式笔记：shell脚本">
-<meta name="twitter:description" content="嵌入式笔记：shell脚本 目录shell种类    bash  csh  ksh  zsh    基本语法定义和使用变量1234#!/bin/sha=&quot; hello world&quot;echo $aecho &apos;a is xiaxaiwen$&amp;#123;a&amp;#125;&apos; if else1234567if ....; then 　 .... elif ....; then 　 .... else 　 ..">
+<meta name="twitter:description" content="嵌入式笔记：shell脚本 目录shell种类    bash  csh  ksh  zsh    基本语法定义和使用变量#!/bin/sh a=&quot; hello world&quot; echo $a echo &apos;a is xiaxaiwen${a}&apos;  if elseif ....; then  　 ....  elif ....; then  　 ....  else  　 ....  fi   []">
     
     
         
@@ -42,7 +42,8 @@
     <!-- rss -->
     
     
-</head>
+<link rel="stylesheet" href="/embedded-notes/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/embedded-notes/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
     
@@ -135,8 +136,19 @@
     <p>嵌入式笔记：shell脚本</p>
 <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><h2 id="shell种类"><a href="#shell种类" class="headerlink" title="shell种类"></a>shell种类</h2><table><br>  <tr><br>  <td>bash</td><br>  <td>csh</td><br>  <td>ksh</td><br>  <td>zsh</td><br>  </tr><br></table>
 
-<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><h3 id="定义和使用变量"><a href="#定义和使用变量" class="headerlink" title="定义和使用变量"></a>定义和使用变量</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">a=<span class="string">" hello world"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$a</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'a is xiaxaiwen$&#123;a&#125;'</span></span><br></pre></td></tr></table></figure>
-<h3 id="if-else"><a href="#if-else" class="headerlink" title="if else"></a>if else</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ....; <span class="keyword">then</span> </span><br><span class="line">　 .... </span><br><span class="line"><span class="keyword">elif</span> ....; <span class="keyword">then</span> </span><br><span class="line">　 .... </span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">　 .... </span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><h3 id="定义和使用变量"><a href="#定义和使用变量" class="headerlink" title="定义和使用变量"></a>定义和使用变量</h3><pre class="line-numbers language-sh"><code class="language-sh">#!/bin/sh
+a=" hello world"
+echo $a
+echo 'a is xiaxaiwen${a}'
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="if-else"><a href="#if-else" class="headerlink" title="if else"></a>if else</h3><pre class="line-numbers language-sh"><code class="language-sh">if ....; then 
+　 .... 
+elif ....; then 
+　 .... 
+else 
+　 .... 
+fi 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="条件测试"><a href="#条件测试" class="headerlink" title="[] 条件测试"></a>[] 条件测试</h3><blockquote>
 <p>[] 中前后一定要加空格</p>
 </blockquote>
@@ -295,9 +307,9 @@
 <li><code>${var_name:=val}</code><br> 如果变量var_name存在且为非null，返回该变量的值，否则，把val的值赋给变量var_name，并返回var_name的值val<br> 注意var_name与:之间没有空格，:与=之间也不能有空格。</li>
 <li><code>${var_name:?message}</code><br> 如果变量var_name存在且为非null，返回该变量的值，否则返回该变量的名字var_name:提示信息meesage，并退出当前命令或脚本<br> 注意var_name与:之间没有空格，:与?之间也不能有空格。</li>
 <li><code>${var_name:+val}</code><br> 如果变量var_name存在且为非null，返回val，否则返回null<br> 注意var_name与<code>:</code>之间没有空格，<code>:</code>与<code>+</code>之间也不能有空格。</li>
-<li><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;#val_name&#125;</span></span><br></pre></td></tr></table></figure>
-<p> 返回变量长度</p>
-</li>
+<li><pre class="line-numbers language-sh"><code class="language-sh">${#val_name}
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+ 返回变量长度</li>
 <li><code>$*</code> <code>$@</code><br> 显示所有命令行参数</li>
 <li><code>$0</code><br> 脚本程序名称</li>
 <li><code>$n</code><br>第n个参数</li>
@@ -305,8 +317,32 @@
 <li><code>$((var1 opr var2))</code><br>例如:<code>$((5+1))</code> 只能是<code>+ - * / ()运算符</code>，并且只能做整数运算</li>
 <li><code>$()</code><br>命令代换 类似于 <code>反引号</code> 例如：<code>echo $(date)</code></li>
 </ol>
-<h3 id="循环语句用法"><a href="#循环语句用法" class="headerlink" title="循环语句用法"></a>循环语句用法</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$path</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `seq 1 9`</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 1 9)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;a..z&#125;</span><br><span class="line"><span class="keyword">for</span> (( i=1; i&lt;=10; i++ ))</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$cnt</span> -ge  0 ]</span><br><span class="line">until [ <span class="variable">$cnt</span> -lt 0 ]</span><br></pre></td></tr></table></figure>
-<h3 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">name=`basename <span class="variable">$0</span> .sh`</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">  s|start)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"start..."</span></span><br><span class="line">    ;;</span><br><span class="line">  stop)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"stop ..."</span></span><br><span class="line">        ;;</span><br><span class="line">  reload)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"reload..."</span></span><br><span class="line">        ;;</span><br><span class="line">  *)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$name</span> [start|stop|reload]"</span></span><br><span class="line">        <span class="built_in">exit</span> 1</span><br><span class="line">        ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
+<h3 id="循环语句用法"><a href="#循环语句用法" class="headerlink" title="循环语句用法"></a>循环语句用法</h3><pre class="line-numbers language-sh"><code class="language-sh">    for i in $path
+    for i in `seq 1 9`
+    for i in $(seq 1 9)
+    for i in {a..z}
+    for (( i=1; i<=10; i++ ))
+    while [ $cnt -ge  0 ]
+    until [ $cnt -lt 0 ]
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h3><pre class="line-numbers language-sh"><code class="language-sh">    name=`basename $0 .sh`
+    case $1 in
+      s|start)
+        echo "start..."
+        ;;
+      stop)
+        echo "stop ..."
+            ;;
+      reload)
+            echo "reload..."
+            ;;
+      *)
+            echo "Usage: $name [start|stop|reload]"
+            exit 1
+            ;;
+    esac
+    exit 0
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre><code>1、*) 相当于其他语言中的default。
 2、除了*)模式，各个分支中;;是必须的，;;相当于其他语言中的break
 3、 | 分割多个模式，相当于or

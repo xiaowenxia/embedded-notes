@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="嵌入式笔记：linux驱动 驱动开发注意事项 不能访问C库 只有一个很小的定长堆栈 没有内存保护机制 浮点数很难使用，应该使用整型数  Kconfig 描述了所属目录源文档相关的内核配置菜单，用于make menuconfig中的配置  示例：123456789menu &quot;Network device support&quot;config NETDEVICES    bool &quot;Enable Net De">
+    <meta name="description" content="嵌入式笔记：linux驱动 驱动开发注意事项 不能访问C库 只有一个很小的定长堆栈 没有内存保护机制 浮点数很难使用，应该使用整型数  Kconfig 描述了所属目录源文档相关的内核配置菜单，用于make menuconfig中的配置  示例： menu &quot;Network device support&quot; config NETDEVICES     bool &quot;Enable Net Devices&quot;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式笔记：linux驱动">
 <meta property="og:url" content="http://xiaowenxia.github.io/embedded-notes/2018/02/28/driver/index.html">
 <meta property="og:site_name" content="xiaxiaowen的个人博客">
-<meta property="og:description" content="嵌入式笔记：linux驱动 驱动开发注意事项 不能访问C库 只有一个很小的定长堆栈 没有内存保护机制 浮点数很难使用，应该使用整型数  Kconfig 描述了所属目录源文档相关的内核配置菜单，用于make menuconfig中的配置  示例：123456789menu &quot;Network device support&quot;config NETDEVICES    bool &quot;Enable Net De">
+<meta property="og:description" content="嵌入式笔记：linux驱动 驱动开发注意事项 不能访问C库 只有一个很小的定长堆栈 没有内存保护机制 浮点数很难使用，应该使用整型数  Kconfig 描述了所属目录源文档相关的内核配置菜单，用于make menuconfig中的配置  示例： menu &quot;Network device support&quot; config NETDEVICES     bool &quot;Enable Net Devices&quot;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-02-28T01:11:52.942Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="嵌入式笔记：linux驱动">
-<meta name="twitter:description" content="嵌入式笔记：linux驱动 驱动开发注意事项 不能访问C库 只有一个很小的定长堆栈 没有内存保护机制 浮点数很难使用，应该使用整型数  Kconfig 描述了所属目录源文档相关的内核配置菜单，用于make menuconfig中的配置  示例：123456789menu &quot;Network device support&quot;config NETDEVICES    bool &quot;Enable Net De">
+<meta name="twitter:description" content="嵌入式笔记：linux驱动 驱动开发注意事项 不能访问C库 只有一个很小的定长堆栈 没有内存保护机制 浮点数很难使用，应该使用整型数  Kconfig 描述了所属目录源文档相关的内核配置菜单，用于make menuconfig中的配置  示例： menu &quot;Network device support&quot; config NETDEVICES     bool &quot;Enable Net Devices&quot;">
     
     
         
@@ -42,7 +42,8 @@
     <!-- rss -->
     
     
-</head>
+<link rel="stylesheet" href="/embedded-notes/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/embedded-notes/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
     
@@ -142,7 +143,17 @@
 <h2 id="Kconfig"><a href="#Kconfig" class="headerlink" title="Kconfig"></a>Kconfig</h2><blockquote>
 <p>描述了所属目录源文档相关的内核配置菜单，用于make menuconfig中的配置</p>
 </blockquote>
-<p>示例：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu <span class="string">"Network device support"</span></span><br><span class="line">config NETDEVICES</span><br><span class="line">    bool <span class="string">"Enable Net Devices"</span>  菜单类型</span><br><span class="line">    depends on NET             该项依赖项，如果没有选中NET，则不会显示这项菜单。</span><br><span class="line">        default y              默认yes</span><br><span class="line">        <span class="built_in">help</span>                   帮助信息</span><br><span class="line">            This is <span class="built_in">help</span> desciption。</span><br><span class="line">    ...</span><br><span class="line">    endmenu</span><br></pre></td></tr></table></figure></p>
+<p>示例：</p>
+<pre class="line-numbers language-sh"><code class="language-sh">menu "Network device support"
+config NETDEVICES
+    bool "Enable Net Devices"  菜单类型
+    depends on NET             该项依赖项，如果没有选中NET，则不会显示这项菜单。
+        default y              默认yes
+        help                   帮助信息
+            This is help desciption。
+    ...
+    endmenu
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="菜单类型"><a href="#菜单类型" class="headerlink" title="菜单类型"></a>菜单类型</h3><p>菜单类型有：</p>
 <ul>
 <li><code>bool</code> []</li>
@@ -154,7 +165,9 @@
 <h2 id="config"><a href="#config" class="headerlink" title=".config"></a>.config</h2><blockquote>
 <p>make menuconfig之后保存的文件</p>
 </blockquote>
-<h2 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj-y += foo.o  <span class="comment"># 默认由foo.c或者foo.s 编译得到</span></span><br><span class="line">obj-m += foo.o  <span class="comment"># 默认编译成模块</span></span><br></pre></td></tr></table></figure>
+<h2 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h2><pre class="line-numbers language-makefile"><code class="language-makefile">    obj-y <span class="token operator">+=</span> foo.o  <span class="token comment" spellcheck="true"># 默认由foo.c或者foo.s 编译得到</span>
+    obj-m <span class="token operator">+=</span> foo.o  <span class="token comment" spellcheck="true"># 默认编译成模块</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h2 id="vmlinux"><a href="#vmlinux" class="headerlink" title="vmlinux"></a>vmlinux</h2><blockquote>
 <p>是由linux源码编译后未压缩的内核</p>
 </blockquote>
@@ -208,7 +221,25 @@
 </tr>
 </tbody>
 </table>
-<h2 id="linux内核编译操作"><a href="#linux内核编译操作" class="headerlink" title="linux内核编译操作"></a>linux内核编译操作</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">make bzImage                    <span class="comment"># 编译生成压缩的内核二进制文件</span></span><br><span class="line">make vmlinux                    <span class="comment"># 编译生成二进制内核文件</span></span><br><span class="line">make modules                    <span class="comment"># 编译生成内核模块</span></span><br><span class="line">make modules_install <span class="comment"># 安装模块</span></span><br><span class="line">make bzdisk|fdimage|isoimage    <span class="comment"># 编译生成启动软盘镜像或者光盘镜像</span></span><br><span class="line">make install                    <span class="comment"># 安装内核文件</span></span><br><span class="line">make all                        <span class="comment"># 相当于vmlinux+modules+bzImage</span></span><br><span class="line">make rpm                        <span class="comment"># 构建内核rpm包</span></span><br><span class="line">make foo/bar/foobar.ko          <span class="comment"># 编译单个驱动</span></span><br><span class="line">make header_install             <span class="comment"># 安装内核头文件</span></span><br><span class="line">make M=some/sub/dir             <span class="comment"># 编译指定目录</span></span><br><span class="line">make O=/path/to/some/dir        <span class="comment"># 指定生成的文件放到该目录</span></span><br><span class="line">make kernelversion              <span class="comment"># 输出内核版本信息</span></span><br><span class="line">make kernelrelease              <span class="comment"># 输出内核发行标识</span></span><br><span class="line">make rpm-pkg|deb-pkg|tar-pkg|targz-pkg|tarbz2-pkg   <span class="comment"># 构建这种格式的内核包</span></span><br><span class="line">make clean                      <span class="comment"># 清除生成文件（保留.config和部分模块文件）</span></span><br><span class="line">make mrproper                   <span class="comment"># 清除全部文件（包括.config和备份文件）</span></span><br><span class="line">make distclean                  <span class="comment"># 在make mrproper上还清除编辑器其他的备份文件</span></span><br></pre></td></tr></table></figure>
+<h2 id="linux内核编译操作"><a href="#linux内核编译操作" class="headerlink" title="linux内核编译操作"></a>linux内核编译操作</h2><pre class="line-numbers language-sh"><code class="language-sh">make bzImage                    # 编译生成压缩的内核二进制文件
+make vmlinux                    # 编译生成二进制内核文件
+make modules                    # 编译生成内核模块
+make modules_install # 安装模块
+make bzdisk|fdimage|isoimage    # 编译生成启动软盘镜像或者光盘镜像
+make install                    # 安装内核文件
+make all                        # 相当于vmlinux+modules+bzImage
+make rpm                        # 构建内核rpm包
+make foo/bar/foobar.ko          # 编译单个驱动
+make header_install             # 安装内核头文件
+make M=some/sub/dir             # 编译指定目录
+make O=/path/to/some/dir        # 指定生成的文件放到该目录
+make kernelversion              # 输出内核版本信息
+make kernelrelease              # 输出内核发行标识
+make rpm-pkg|deb-pkg|tar-pkg|targz-pkg|tarbz2-pkg   # 构建这种格式的内核包
+make clean                      # 清除生成文件（保留.config和部分模块文件）
+make mrproper                   # 清除全部文件（包括.config和备份文件）
+make distclean                  # 在make mrproper上还清除编辑器其他的备份文件
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="modules-order"><a href="#modules-order" class="headerlink" title="modules.order"></a>modules.order</h2><pre><code>记录了Makefile中模块出现的顺序
 </code></pre><h2 id="o-cmd"><a href="#o-cmd" class="headerlink" title=".o.cmd"></a>.o.cmd</h2><pre><code>表示生成该对象的具体命令
 </code></pre>
