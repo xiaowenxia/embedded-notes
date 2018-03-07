@@ -42,7 +42,8 @@
     <!-- rss -->
     
     
-</head>
+<link rel="stylesheet" href="/embedded-notes/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/embedded-notes/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
     
@@ -60,7 +61,7 @@
          
           <li><a href="/embedded-notes/posts/">Writing</a></li>
          
-          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+          <li><a href="http://github.com/xiaowenxia">Projects</a></li>
         
       </ul>
     </span>
@@ -312,7 +313,12 @@
 </ul>
 </li>
 </ul>
-<p>设备位于<code>/dev/graphics/fb*</code>,主设备号为29<br>相关代码：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">include/linux/fb.h</span><br><span class="line">driver/video/fbmem.c</span><br><span class="line">fbmem.c	<span class="comment"># 提供用户接口</span></span><br><span class="line">xxxfb.c	<span class="comment"># 提供硬件操作接口</span></span><br></pre></td></tr></table></figure></p>
+<p>设备位于<code>/dev/graphics/fb*</code>,主设备号为29<br>相关代码：</p>
+<pre class="line-numbers language-sh"><code class="language-sh">include/linux/fb.h
+driver/video/fbmem.c
+fbmem.c    # 提供用户接口
+xxxfb.c    # 提供硬件操作接口
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>用户操作：<br>|函数|说明|<br>|-|-|<br>|<code>ioctl()</code>|获取/设置信息|<br>|<code>mmap()</code>|映射内存|</p>
 
   </div>
@@ -334,7 +340,7 @@
          
           <li><a href="/embedded-notes/posts/">Writing</a></li>
          
-          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+          <li><a href="http://github.com/xiaowenxia">Projects</a></li>
         
       </ul>
     </div>
@@ -386,7 +392,7 @@
          
           <li><a href="/embedded-notes/posts/">Writing</a></li>
          
-          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+          <li><a href="http://github.com/xiaowenxia">Projects</a></li>
         
       </ul>
     </nav>
