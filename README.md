@@ -1,5 +1,6 @@
 # 面试要点记录
 > 主要涉及到嵌入式软件开发、嵌入式驱动开发、RTOS开发、IOT开发等知识点。
+> 最新的请参考[wiki](https://github.com/xiaowenxia/embedded-notes/wiki)和我的[个人博客](https://xiaowenxia.github.io/embedded-notes/)
 ---
 ### 要点
 - [x] c基础知识
