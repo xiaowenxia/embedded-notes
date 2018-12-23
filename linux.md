@@ -189,6 +189,17 @@ find -name 'debug*' -a -name '*.rst'
 #找出文件大小大于10000块的文件，并复制到当前目录
 find -size +100000 -exec cp {} . \;
 ```
+
+高级使用方法
+
+##### 查询所有mk文件中的date文本
+
+```sh
+find ./build/ -name "*.mk" -print -exec grep -rwn "date" --color=auto {} \;
+```
+
+![](./res/find-01.jpg)
+
 ### lsusb
 显示系统中以及连接到系统的USB总线信息的工具。
 ```sh

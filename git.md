@@ -40,3 +40,34 @@ git pull origin gh-pages:gh-pages
 git branch --set-upstream-to=gh-pages
 git push origin gh-pages
 ```
+
+## gerrit
+
+如何修改一个commit：
+
+1. 先在一个干净的repo里面把这一个commit 拉取下来：
+
+```sh
+git fetch ssh://xxx@xxxx/xxx/xxx refs/changes/20/190820/6 && cherry-pick FETCH_HEAD
+```
+具体指令需要看gerrit网页右上角：
+
+![](./res/git-fetch.jpg)
+
+此时`git status` 当前是有y一个commit的，`git log`也能看到log。
+
+2. 修改代码，然后提交到本地。
+
+```sh
+git add
+#使用 --amend 重新更新这个commit信息。
+git commit --amend
+```
+
+3. push到gerrit
+
+> 需要指定具体push到哪个id
+
+```sh
+git push origin HEAD:refs/changes/<change id>
+```
