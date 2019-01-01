@@ -14,8 +14,8 @@
       <td>网络设备</td>
    </tr>
    <tr>
-      <td>网络层</td>
-      <td rowspan="3">网络层</td>
+      <td>应用层</td>
+      <td rowspan="3">应用层</td>
       <td rowspan="3">telnet/DHCP/TFTP/FTP/MQTT/NFS/DNS/FTP/SNMP</td>
       <td rowspan="3"></td>
    </tr>
