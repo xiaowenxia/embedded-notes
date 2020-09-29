@@ -29,7 +29,7 @@ else
 fi 
 ```
 ### [] 条件测试
-> [] 中前后一定要加空格
+> [] 中前后一定要加空格。
 
 ### shell常用命令
 |命令|说明|
@@ -54,16 +54,14 @@ fi
 |`dirname`                  | 返回文件所在路径比如：`dirname /bin/tux` 将返回 `/bin` |
 |`head`                     | 输出文本文件开头几行 |
 |`tail`                     | 输出文本文件末尾几行 |
-|`sed`                      | `sed` 是一个基本的查找替换程序。可以从标准输入（比如命令管道）读入文本，并将结果输出到标准输出（屏幕）。该命令采用正则表达式（见参考）进行搜索。不要和shell中的通配符相混淆。比如：将 linuxfocus 替换为 LinuxFocus ：`cat text.file | sed 's/linuxfocus/LinuxFocus/' > newtext.file` |
-|`awk`                      | `awk` 用来从文本文件中提取字段。缺省地，字段分割符是空格，可以使用 `-F` 指定其他分割符。`cat file.txt | awk -F, '{print $1 "," $3 }'`这里我们使用，作为字段分割符，同时打印第一个和第三个字段。如果该文件内容如下： Adam Bor, 34, IndiaKerry Miller, 22, 该命令输出结果为：Adam Bor, IndiaKerry Miller, USA |
+|`sed`                      | `sed` 是一个基本的查找替换程序。可以从标准输入（比如命令管道）读入文本，并将结果输出到标准输出（屏幕）。该命令采用正则表达式（见参考）进行搜索。不要和shell中的通配符相混淆。比如：将 linuxfocus 替换为 LinuxFocus ：`cat text.file \| sed 's/linuxfocus/LinuxFocus/' > newtext.file` |
+|`awk`                      | `awk` 用来从文本文件中提取字段。缺省地，字段分割符是空格，可以使用 `-F` 指定其他分割符。`cat file.txt \| awk -F, '{print $1 "," $3 }'`这里我们使用，作为字段分割符，同时打印第一个和第三个字段。如果该文件内容如下： Adam Bor, 34, IndiaKerry Miller, 22, 该命令输出结果为：Adam Bor, IndiaKerry Miller, USA |
 |`env`                      |系统预设的环境变量|
 ### shell变量类型
-> shell变量名只能包含数字、字母和下划线
+> shell变量名只能包含数字、字母和下划线。
 
 #### 局部变量
-在脚本或命令中定义，仅在当前shell实例中有效
-
-#### 环境变量
+在脚本或命令中定义，仅在当前shell实例中有效。
 
 #### shell变量特殊变量
 
@@ -78,9 +76,6 @@ fi
 |`$$`|当前Shell进程ID。对于 Shell 脚本，就是这些脚本所在的进程ID。|
 
 ### 条件语句
-##### for
-##### while
-##### if
 
 操作符：
 |操作符|说明|
@@ -127,8 +122,9 @@ fi
 |`-o`  |逻辑或|
 |`!`   |逻辑否|
 
-反引号` 设置系统的命令输出到变量
-echo *  以串行形式，打印当前整个目录
+反引号` 设置系统的命令输出到变量。
+echo *  以串行形式，打印当前整个目录。
+
 替换运算符
 * `${var_name:-def_Val}`
     如果变量var_name存在且为非null，返回该变量的值，否则返回默认值def-Val
@@ -143,109 +139,162 @@ echo *  以串行形式，打印当前整个目录
     如果变量var_name存在且为非null，返回val，否则返回null
     注意var_name与:之间没有空格，:与+之间也不能有空格。
 * `${#val_name}`
-    返回变量长度
+    返回变量长度。
+* `$(())`
+    算术运算操作。
+* `$((var1 opr var2))`
+    例如:  `$((5+1))` 只能是 `+` `-` `*` `/` 和 `()` 运算符，并且只能做整数运算
+* `$()`
+    命令代换，类似于反引号（`` ` ``）， 例如：`echo $(date)`。
 
-$(())   算术运算操作
-    $((var1 opr var2))  例如:  $((5+1)) 只能是+-*/ 和()运算符，并且只能做整数运算
-$() 命令代换 类似于 反引号` 例如：echo $(date)
 循环语句用法：
-    for i in $path
-    for i in `seq 1 9`
-    for i in $(seq 1 9)
-    for i in {a..z}
-    for (( i=1; i<=10; i++ ))
-    while [ $cnt -ge  0 ]
-    until [ $cnt -lt 0 ]
+* `for i in $path`
+* ``for i in `seq 1 9` ``
+* `for i in $(seq 1 9)`
+* `for i in {a..z}`
+* `for (( i=1; i<=10; i++ ))`
+* `while [ $cnt -ge  0 ]`
+* `until [ $cnt -lt 0 ]`
+
 case语句
-    name=`basename $0 .sh`
-    case $1 in
-      s|start)
-        echo "start..."
+```bash
+name=`basename $0 .sh`
+case $1 in
+    s|start)
+    echo "start..."
+    ;;
+    stop)
+    echo "stop ..."
         ;;
-      stop)
-        echo "stop ..."
-            ;;
-      reload)
-            echo "reload..."
-            ;;
-      *)
-            echo "Usage: $name [start|stop|reload]"
-            exit 1
-            ;;
-    esac
-    exit 0
-    1、*) 相当于其他语言中的default。
-    2、除了*)模式，各个分支中;;是必须的，;;相当于其他语言中的break
-    3、 | 分割多个模式，相当于or
-help    查看所有bash保留的关键词
-readonly定义变量只读
-unset   删除变量
-echo -e "Value of a is $a \n"   使转义字符\n生效
-    可以使用的转义符：\\ \a \b \f \n \r \t \v
+    reload)
+        echo "reload..."
+        ;;
+    *)
+        echo "Usage: $name [start|stop|reload]"
+        exit 1
+        ;;
+esac
+exit 0
+```
+> `*)` 相当于其他语言中的 default 。
+> 除了 `*)` 模式，各个分支中 `;;` 是必须的，`;;` 相当于其他语言中的 break。
+> `|` 分割多个模式，相当于 or
 
-${var}  变量本来的值
-${var:-word}    如果变量 var 为空或已被删除(unset)，那么返回 word，但不改变 var 的值。
-${var:=word}    如果变量 var 为空或已被删除(unset)，那么返回 word，并将 var 的值设置为 word。
-${var:?message} 如果变量 var 为空或已被删除(unset)，那么将消息 message 送到标准错误输出，可以用来检测变量 var 是否可以被正常赋值。若此替换出现在Shell脚本中，那么脚本将停止运行。
-${var:+word}    如果变量 var 被定义，那么返回 word，但不改变 var 的值。
+* `help`
+    查看所有 bash 保留的关键词
+* `readonly`
+    定义变量只读
+* `unset`
+    删除变量
+* `echo -e "Value of a is $a \n"`
+    使转义字符\n生效，可以使用的转义符：`\\` `\a` `\b` `\f` `\n` `\r` `\t` `\v`
 
-val=`expr 2 + 2`算数运算
-echo ${#string} 活取字符串长度
-echo ${string:1:4}  输出第1位到第4位的字符串（从0开始）
+* `${var}`
+    变量本来的值
+* `${var:-word}`
+    如果变量 var 为空或已被删除(unset)，那么返回 word，但不改变 var 的值。
+* `${var:=word}`
+    如果变量 var 为空或已被删除(unset)，那么返回 word，并将 var 的值设置为 word
+* `${var:?message}`
+    如果变量 var 为空或已被删除(unset)，那么将消息 message 送到标准错误输出，可以用来检测变量 var 是否可以被正常赋值。若此替换出现在Shell脚本中，那么脚本将停止运行
+* `${var:+word}`
+    如果变量 var 被定义，那么返回 word，但不改变 var 的值
+
+* `` val=`expr 2 + 2` ``
+    算数运算
+* `echo ${#string}`
+    活取字符串长度
+* `echo ${string:1:4}`
+    输出第1位到第4位的字符串（从0开始）
+
+### 数组
 定义数组：
-    array_name=(value0 value1 value2 value3)
-或者    array_name=(
+```bash
+array_name=(value0 value1 value2 value3)
+# 或者
+array_name=(
     value0
     value1
     value2
     value3
     )
-或者    array_name[0]=value0
-    array_name[1]=value1
-    array_name[2]=value2
-${array_name[2]}    获取数组的值
-${array_name[*]}    获取数组的所有元素
-${array_name[@]}    获取数组的所有元素
-${#array_name[@]}   获取数组个数
-${#array_name[*]}   获取数组个数
-${#array_name[2]}   获取数组单个元素的长度
+# 或者
+array_name[0]=value0
+array_name[1]=value1
+array_name[2]=value2
+```
 
-command 2 > file    将stderr重定向到 file
-command < file      将stdin重定向到file
-command > file      将stdout重定向到file
-command > file 2>&1 将stdout stderr都重定向到file
-command < file1 >file2  将stdin重定向到file1 stdout重定向到file2
+数组访问：
+```bash
+# 获取数组的值
+echo ${array_name[2]}
+# 获取数组的所有元素
+echo ${array_name[*]}
+# 获取数组的所有元素
+echo ${array_name[@]}
+# 获取数组个数
+echo ${#array_name[@]}
+# 获取数组个数
+echo ${#array_name[*]}
+# 获取数组单个元素的长度
+echo ${#array_name[2]}
+```
+### 重定向
 
--cp 表示cp命令报错了不会停止，继续执行下面的操作
-@cp 终端中不会打印出命令的执行
-declare 
-    -i  整型变量
-    -a  数组
-    -f  列出所有定义过的函数
-    -x  将声明的变量作为脚本的环境变量导出
-shift   左移参数，shift 3表示$4变成$1 不带参数的话默认为shift 1
+```bash
+# 将stderr重定向到 file
+$ command 2 > file
+# 将stdin重定向到file
+$ command < file
+# 将stdout重定向到file
+$ command > file
+# 将stdout stderr都重定向到file
+$ command > file 2>&1
+# 将stdin重定向到file1 stdout重定向到file2
+$ command < file1 > file2
+```
+
+* `-cp`
+    表示cp命令报错了不会停止，继续执行下面的操作
+* `@cp`
+    终端中不会打印出命令的执行
+* `declare`
+    * `-i` 整型变量
+    * `-a` 数组
+    * `-f` 列出所有定义过的函数
+    * `-x` 将声明的变量作为脚本的环境变量导出
+* `shift`
+    左移参数，shift 3表示$4变成$1 不带参数的话默认为 `shift 1`
+
+### 字符串操作
+
+```bash
 file=/dir1/dir2/dir3/my.file.txt
-${file#*/}：    删掉第一个/ 及其左边的字符串：dir1/dir2/dir3/my.file.txt
-${file##*/}：   删掉最后一个/   及其左边的字符串：my.file.txt
-${file#*.}：    删掉第一个.     及其左边的字符串：file.txt
-${file##*.}：   删掉最后一个.   及其左边的字符串：txt
-${file%/*}：    删掉最后一个 /      及其右边的字符串：/dir1/dir2/dir3
-${file%%/*}：   删掉第一个/     及其右边的字符串：(空值)
-${file%.*}：    删掉最后一个 .      及其右边的字符串：/dir1/dir2/dir3/my.file
-${file%%.*}：   删掉第一个 .    及其右边的字符串：/dir1/dir2/dir3/my
-    记忆的方法为：
-    # 是 去掉左边（键盘上#在 $ 的左边）
-    %是去掉右边（键盘上% 在$ 的右边）
-    单一符号是最小匹配；两个符号是最大匹配
-${file:0:5}：   提取最左边的5 个字节：/dir1
-${file:5:5}：   提取第5 个字节右边的连续5个字节：/dir2
-${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt
-${file//dir/path}：将全部dir 替换为path：/path1/path2/path3/my.file.txt
-${#file}:   计算字符串长度：27
+
+${file#*/}          # 删掉第一个 / 及其左边的字符串：dir1/dir2/dir3/my.file.txt
+${file##*/}         # 删掉最后一个 / 及其左边的字符串：my.file.txt
+${file#*.}          # 删掉第一个 . 及其左边的字符串：file.txt
+${file##*.}         # 删掉最后一个 . 及其左边的字符串：txt
+${file%/*}          # 删掉最后一个 / 及其右边的字符串：/dir1/dir2/dir3
+${file%%/*}         # 删掉第一个 / 及其右边的字符串：(空值)
+${file%.*}          # 删掉最后一个 . 及其右边的字符串：/dir1/dir2/dir3/my.file
+${file%%.*}         # 删掉第一个 . 及其右边的字符串：/dir1/dir2/dir3/my
+${file:0:5}         # 提取最左边的5个字节：/dir1
+${file:5:5}         # 提取第5个字节右边的连续5个字节：/dir2
+${file/dir/path}    # 将第一个 dir 替换为 path：/path1/dir2/dir3/my.file.txt
+${file//dir/path}   # 将全部 dir 替换为path：/path1/path2/path3/my.file.txt
+${#file}:           # 计算字符串长度：27
+```
+
+> 记忆的方法为：
+> `#` 是 去掉左边（键盘上 `#` 在 `$` 的左边）。
+> `%` 是去掉右边（键盘上 `%` 在 `$` 的右边）。
+> 单一符号是最小匹配；两个符号是最大匹配。
+
 
 ### 命令中出现的双横杆是什么：`--`
 双横杆 `--` 是为了告诉命令，后面的内容不是命令参数，标识命令参数结束（marks the end of options），比如我要生成一个名为 `-f` 的文件：
-```
+```bash
 # 使用该命令会保存
 $ touch -f
 usage:
