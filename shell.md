@@ -32,7 +32,7 @@ fi
 > [] 中前后一定要加空格
 
 ### shell常用命令
-|                           |                              |
+|命令|说明|
 |---------------------------|------------------------------|
 |`echo`                     |将文字内容打印在屏幕上 |
 |`ls`                       |文件列表 |
@@ -40,31 +40,34 @@ fi
 |`cp`                       | 文件拷贝 |
 |`mv`                       | 重命名文件或移动文件 |
 |`rm`                       | 删除文件 |
-|`grep`                     | 在文件内搜索字符串比如：grep 'searchstring' file.txt |
-|`cut -b`                   |  指定欲显示的文件内容范围，并将它们输出到标准输出设备比如：输出每行第5个到第9个字符cut -b5-9 file.txt千万不要和cat命令混淆，这是两个完全不同的命令 |
+|`grep`                     | 在文件内搜索字符串比如：`grep 'searchstring' file.txt` |
+|`cut -b`                   |  指定欲显示的文件内容范围，并将它们输出到标准输出设备比如：输出每行第5个到第9个字符`cut -b5-9 file.txt`，千万不要和cat命令混淆，这是两个完全不同的命令 |
 |`cat`                      | 输出文件内容到标准输出设备（屏幕）上 |
 |`file`                     | 得到文件类型 |
 |`read var`                 | 提示用户输入，并将输入赋值给变量 |
-|`sort`                     | 对file.txt文件中的行进行排序 |
-|`uniq`                     | 删除文本文件中出现的行列比如： sort file.txt | uniq |
-|`expr`                     | 进行数学运算Example: add 2 and 3expr 2 "+" 3 |
-|`find`                     | 搜索文件比如：根据文件名搜索find . -name filename -print |
-|`tee`                      | 将数据输出到标准输出设备(屏幕) 和文件比如：somecommand | tee outfile |
-|`basename`                 | 返回不包含路径的文件名比如： basename /bin/tux将返回 tux |
-|`dirname`                  | 返回文件所在路径比如：dirname /bin/tux将返回 /bin |
-|`head`                     | 打印文本文件开头几行 |
-|`tail`                     | 打印文本文件末尾几行 |
-|`sed`                      | Sed是一个基本的查找替换程序。可以从标准输入（比如命令管道）读入文本，并将结果输出到标准输出（屏幕）。该命令采用正则表达式（见参考）进行搜索。不要和shell中的通配符相混淆。比如：将linuxfocus 替换为 LinuxFocus ：cat text.file | sed 's/linuxfocus/LinuxFocus/' > newtext.file |
-|awk                        | awk 用来从文本文件中提取字段。缺省地，字段分割符是空格，可以使用-F指定其他分割符。cat file.txt | awk -F, '{print $1 "," $3 }'这里我们使用，作为字段分割符，同时打印第一个和第三个字段。如果该文件内容如下： Adam Bor, 34, IndiaKerry Miller, 22, USA命令输出结果为：Adam Bor, IndiaKerry Miller, USA |
+|`sort`                     | 对 file.txt 文件中的行进行排序 |
+|`uniq`                     | 删除文本文件中出现的行列比如： `sort file.txt | uniq` |
+|`expr`                     | 进行数学运算，比如运行 `expr 2 "+" 3` 得到结果为 5 |
+|`find`                     | 搜索文件比如：根据文件名搜索`find . -name filename -print` |
+|`tee`                      | 将数据输出到标准输出设备(屏幕) 和文件比如：`ls | tee outfile` |
+|`basename`                 | 返回不包含路径的文件名比如： `basename /bin/tux` 将返回 `tux` |
+|`dirname`                  | 返回文件所在路径比如：`dirname /bin/tux` 将返回 `/bin` |
+|`head`                     | 输出文本文件开头几行 |
+|`tail`                     | 输出文本文件末尾几行 |
+|`sed`                      | `sed` 是一个基本的查找替换程序。可以从标准输入（比如命令管道）读入文本，并将结果输出到标准输出（屏幕）。该命令采用正则表达式（见参考）进行搜索。不要和shell中的通配符相混淆。比如：将 linuxfocus 替换为 LinuxFocus ：`cat text.file | sed 's/linuxfocus/LinuxFocus/' > newtext.file` |
+|`awk`                      | `awk` 用来从文本文件中提取字段。缺省地，字段分割符是空格，可以使用 `-F` 指定其他分割符。`cat file.txt | awk -F, '{print $1 "," $3 }'`这里我们使用，作为字段分割符，同时打印第一个和第三个字段。如果该文件内容如下： Adam Bor, 34, IndiaKerry Miller, 22, 该命令输出结果为：Adam Bor, IndiaKerry Miller, USA |
+|`env`                      |系统预设的环境变量|
 ### shell变量类型
 > shell变量名只能包含数字、字母和下划线
+
 #### 局部变量
 在脚本或命令中定义，仅在当前shell实例中有效
+
 #### 环境变量
 
 #### shell变量特殊变量
 
-|特殊变量列表|  说明 |
+|特殊变量|  说明 |
 |:-:|--------|
 |`$0`|当前脚本的文件名|
 |`$n`|传递给脚本或函数的参数。n 是一个数字，表示第几个参数。例如，第一个参数是`$1`，第二个参数是`$2`。|
@@ -75,65 +78,72 @@ fi
 |`$$`|当前Shell进程ID。对于 Shell 脚本，就是这些脚本所在的进程ID。|
 
 ### 条件语句
-for
-while
-if
+##### for
+##### while
+##### if
 
-!!  表示执行上一条指令
-!n  表示执行命令历史中第n条指令
-*   匹配零个或多个字符
-?   匹配一个字符
-env 系统预设的环境变量
+操作符：
+|操作符|说明|
+|:-:|---|
+|`!!`  |表示执行上一条指令|
+|`!n`  |表示执行命令历史中第n条指令|
+|`*`   |匹配零个或多个字符|
+|`?`   |匹配一个字符|
+
+
 数值比较运算符：
--eq 相等
--ne 不等
--gt 大于
--lt 小于
--le 小于等于
--ge 大于等于
-字符串比较运算符：
-=   相等
-!=  不等
--z  空串
--n  非空串
-文件比较运算符：
--d  目录
--f  文件
--L  链接
--r  可读
--w  可写
--x  可执行
--s  文件非空
-逻辑运算符
--a  逻辑与
--o  逻辑或
-!   逻辑否
+|运算符|说明|
+|:-:|---|
+|`-eq` |相等|
+|`-ne` |不等|
+|`-gt` |大于|
+|`-lt` |小于|
+|`-le` |小于等于|
+|`-ge` |大于等于|
 
-$?  上次执行命令或函数的返回值
-$*  传递给脚本或函数的所有参数
-$@  传递给脚本或函数的所有参数。被双引号(" ")包含时，与 $* 稍有不同，下面将会讲到。
-$$  脚本运行的当前进程id
-$!  最后执行的后台命令的PID
-$#  传递给shell脚本的参数个数
+字符串比较运算符：
+|运算符|说明|
+|:-:|---|
+|`=`   |相等|
+|`!=`  |不等|
+|`-z`  |空串|
+|`-n`  |非空串|
+
+文件比较运算符：
+|运算符|说明|
+|:-:|---|
+|`-d`  |目录|
+|`-f`  |文件|
+|`-L`  |链接|
+|`-r`  |可读|
+|`-w`  |可写|
+|`-x`  |可执行|
+|`-s`  |文件非空|
+
+逻辑运算符：
+|运算符|说明|
+|:-:|---|
+|`-a`  |逻辑与|
+|`-o`  |逻辑或|
+|`!`   |逻辑否|
+
 反引号` 设置系统的命令输出到变量
 echo *  以串行形式，打印当前整个目录
 替换运算符
-    1) ${var_name:-def_Val}    
-        如果变量var_name存在且为非null，返回该变量的值，否则返回默认值def-Val
-        注意var_name与:之间没有空格，:与-之间可以有空格。主要用途，如果变量未定义，则用默认值.
-    2) ${var_name:=val}   
-        如果变量var_name存在且为非null，返回该变量的值，否则，把val的值赋给变量var_name，并返回var_name的值val
-        注意var_name与:之间没有空格，:与=之间也不能有空格。
-    3)${var_name:?message}，  
-        如果变量var_name存在且为非null，返回该变量的值，否则返回该变量的名字var_name:提示信息meesage，并退出当前命令或脚本
-        注意var_name与:之间没有空格，:与?之间也不能有空格。
-    4) ${var_name:+val}   
-        如果变量var_name存在且为非null，返回val，否则返回null
-        注意var_name与:之间没有空格，:与+之间也不能有空格。
-${#val_name}    返回变量长度
-$* $@   显示所有命令行参数
-$0  脚本程序名称
-$n  第n个参数
+* `${var_name:-def_Val}`
+    如果变量var_name存在且为非null，返回该变量的值，否则返回默认值def-Val
+    注意var_name与:之间没有空格，:与-之间可以有空格。主要用途，如果变量未定义，则用默认值.
+* `${var_name:=val}`
+    如果变量var_name存在且为非null，返回该变量的值，否则，把val的值赋给变量var_name，并返回var_name的值val
+    注意var_name与:之间没有空格，:与=之间也不能有空格。
+* `${var_name:?message}`
+    如果变量var_name存在且为非null，返回该变量的值，否则返回该变量的名字var_name:提示信息meesage，并退出当前命令或脚本
+    注意var_name与:之间没有空格，:与?之间也不能有空格。
+* `${var_name:+val}`
+    如果变量var_name存在且为非null，返回val，否则返回null
+    注意var_name与:之间没有空格，:与+之间也不能有空格。
+* `${#val_name}`
+    返回变量长度
 
 $(())   算术运算操作
     $((var1 opr var2))  例如:  $((5+1)) 只能是+-*/ 和()运算符，并且只能做整数运算
@@ -232,3 +242,21 @@ ${file:5:5}：   提取第5 个字节右边的连续5个字节：/dir2
 ${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt
 ${file//dir/path}：将全部dir 替换为path：/path1/path2/path3/my.file.txt
 ${#file}:   计算字符串长度：27
+
+### 命令中出现的双横杆是什么：`--`
+双横杆 `--` 是为了告诉命令，后面的内容不是命令参数，标识命令参数结束（marks the end of options），比如我要生成一个名为 `-f` 的文件：
+```
+# 使用该命令会保存
+$ touch -f
+usage:
+touch [-A [-][[hh]mm]SS] [-acfhm] [-r file] [-t [[CC]YY]MMDDhhmm[.SS]] file ...
+
+# 加双横杆
+$ touch -- -f
+
+# 查看生成的文件
+$ ll
+-rw-r--r--   1 xxw  staff     0B  9 29 17:43 -f
+```
+
+> 参考：https://unix.stackexchange.com/questions/11376/what-does-double-dash-mean .
