@@ -1,6 +1,5 @@
-# 目录
-## 说明
-git操作笔记
+## git 使用说明
+git操作笔记，初级使用教程请参考 [git cheatsheet](#git-cheatsheet) 。
 
 ### 添加文件
 ```sh
@@ -71,3 +70,10 @@ git commit --amend
 ```sh
 git push origin HEAD:refs/changes/<change id>
 ```
+
+## 附录
+
+### git cheatsheet
+
+![git cheatsheet](res/git-cheatsheet.png)
+> [Gitlab](http://gitlab.com/) 官方提供的 git cheatsheet 。

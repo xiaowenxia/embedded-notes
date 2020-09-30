@@ -1,5 +1,5 @@
 # 面试要点记录
-> 主要涉及到嵌入式软件开发、嵌入式驱动开发、RTOS开发、IOT开发等知识点。
+> 主要涉及到嵌入式软件开发、嵌入式驱动开发、IOT开发、git等知识点。
 > 最新的请参考[wiki](https://github.com/xiaowenxia/embedded-notes/wiki)和我的[个人博客](https://xiaowenxia.github.io/embedded-notes/)
 ---
 ### 要点
@@ -12,6 +12,7 @@
 - [x] linux 多线程 多进程通讯 linux系统任务调度和中断
 - [ ] bash命令 shell makefile python github go javascript
 - [ ] linux 启动过程
+- [ ] git 命令
 ---
 #目录
 * [c语言基础](./c基础.md)
@@ -64,8 +65,11 @@
     * [shell](./linux.md#shell)
 * [freertos 源码详解](./freertos-inside.md)
     * [协程--croutine.c](./freertos-inside.md#协程--croutine.c)
-* [tcpip协议栈知识点](./tcpip协议栈.md)
+* [tcpip 协议栈知识点](./tcpip协议栈.md)
     * [tcpip模型](./tcpip协议栈.md#tcpip模型)
     * [以太网协议](./tcpip协议栈.md#以太网协议)
     * [ARP协议](./tcpip协议栈.md#ARP协议)
     * [TCP协议](./tcpip协议栈.md#TCP协议)
+* [git 使用说明](./git.md)
+    * [git cheatsheet](./git.md#git-cheatsheet)
+* [git 底层技术](./git-inside.md)
