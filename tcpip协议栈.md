@@ -14,37 +14,37 @@
       <td>网络设备</td>
    </tr>
    <tr>
-      <td>应用层</td>
+      <td>应用层 application</td>
       <td rowspan="3">应用层</td>
       <td rowspan="3">telnet/DHCP/TFTP/FTP/MQTT/NFS/DNS/FTP/SNMP</td>
       <td rowspan="3"></td>
    </tr>
    <tr>
-      <td>表示层</td>
+      <td>表示层 presentation</td>
    </tr>
    <tr>
-      <td>会话层</td>
+      <td>会话层 session</td>
    </tr>
    <tr>
-      <td>传输层</td>
+      <td>传输层 transport</td>
       <td>传输层</td>
       <td>TCP/UDP</td>
       <td>四层交换机</td>
    </tr>
    <tr>
       <td>网络层</td>
-      <td>网络层</td>
+      <td>网络层 Network</td>
       <td>IP/ICMP/IGMP/ARP</td>
       <td>路由器，三层交换机</td>
    </tr>
    <tr>
-      <td>数据链路层</td>
+      <td>数据链路层 Datalink</td>
       <td rowspan="2">网络接口层</td>
       <td rowspan="2">Ethernet/PPP/PPPoE</td>
       <td>交换机（二层交换机），网桥，网卡（一半物理层，一半链路层）</td>
    </tr>
    <tr>
-      <td>物理层</td>
+      <td>物理层 physcial</td>
       <td>中继器、集线器</td>
    </tr>
 </table>
