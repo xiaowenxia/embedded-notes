@@ -48,8 +48,11 @@
       <td>中继器、集线器</td>
    </tr>
 </table>
+
+![tcp协议解](res/OSImodel-8d93f19d50e543348f82110aa11f7a93.jpg)
+
 ![osi模型 简易标识](/res/original-seven-layers-of-osi-model-1627523878-JYjV8oybcC.png)
-![osi模型 数据类型](/res/original-seven-layers-of-osi-model-1627523878-JYjV8oybcC.png)
+
 
 ## 以太网协议
 
